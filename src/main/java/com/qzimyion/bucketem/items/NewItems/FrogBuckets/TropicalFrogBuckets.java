@@ -7,8 +7,8 @@ import net.minecraft.entity.passive.FrogVariant;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BucketItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -16,6 +16,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("OptionalGetWithoutIsPresent")
 public class TropicalFrogBuckets extends BucketItem {
 
     public TropicalFrogBuckets(Fluid fluid, Settings settings) {
@@ -31,10 +32,11 @@ public class TropicalFrogBuckets extends BucketItem {
     }
 
     public void spawnEntity(ServerWorld world, ItemStack stack, BlockPos pos) {
+        RegistryEntry<FrogVariant> variantRegistryEntry = world.getRegistryManager().get(RegistryKeys.FROG_VARIANT).getEntry(FrogVariant.WARM).get();
         FrogEntity entity = EntityType.FROG.spawnFromItemStack(world, stack, null, pos, SpawnReason.BUCKET, true, false);
         if (entity != null) {
             entity.setPersistent();
-            entity.setVariant((RegistryEntry<FrogVariant>) FrogVariant.WARM);
+            entity.setVariant(variantRegistryEntry);
         }
     }
 }
