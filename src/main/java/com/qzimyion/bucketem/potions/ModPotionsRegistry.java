@@ -9,8 +9,6 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 
-import static net.minecraft.util.Identifier.ofVanilla;
-
 public class ModPotionsRegistry {
 
     public static final RegistryEntry<Potion> BLISTERED_VISION_SHORT =
