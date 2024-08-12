@@ -2,6 +2,7 @@ package com.qzimyion.bucketem.items;
 
 import com.qzimyion.bucketem.Bucketem;
 import com.qzimyion.bucketem.items.NewItems.Bottles.EntityBottle;
+import com.qzimyion.bucketem.items.NewItems.Bottles.SlimeBottle;
 import com.qzimyion.bucketem.items.NewItems.EntityBook;
 import com.qzimyion.bucketem.items.NewItems.FrogBuckets.DryVariants.DryTemperateFrogBuckets;
 import com.qzimyion.bucketem.items.NewItems.FrogBuckets.DryVariants.DryTropicalFrogBuckets;
@@ -44,7 +45,7 @@ public class ModItems {
     public static final Item BEE_BOTTLE = registerItem("bee_bottle", new EntityBottle(EntityType.BEE ,new Item.Settings().maxCount(1)));
     public static final Item SILVERFISH_BOTTLE = registerItem("silverfish_bottle", new EntityBottle(EntityType.SILVERFISH, new Item.Settings().maxCount(1)));
     public static final Item ENDERMITE_BOTTLE = registerItem("endermite_bottle", new EntityBottle(EntityType.ENDERMITE, new Item.Settings().maxCount(1)));
-    public static final Item SLIME_BOTTLE = registerItem("slime_bottle", new EntityBottle(EntityType.SLIME ,new Item.Settings().maxCount(1).recipeRemainder(GLASS_BOTTLE)));
+    public static final Item SLIME_BOTTLE = registerItem("slime_bottle", new SlimeBottle(EntityType.SLIME ,new Item.Settings().maxCount(1).recipeRemainder(GLASS_BOTTLE)));
     public static final Item MAGMA_CUBE_BOTTLE = registerItem("magma_bottle", new EntityBottle(EntityType.MAGMA_CUBE ,new Item.Settings().maxCount(1).recipeRemainder(GLASS_BOTTLE)));
 
     private static Item registerItem(String name, Item item)
