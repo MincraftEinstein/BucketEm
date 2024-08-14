@@ -11,7 +11,11 @@ import com.qzimyion.bucketem.items.NewItems.FrogBuckets.DryVariants.DryTundraFro
 import com.qzimyion.bucketem.items.NewItems.FrogBuckets.TemperateFrogBuckets;
 import com.qzimyion.bucketem.items.NewItems.FrogBuckets.TropicalFrogBuckets;
 import com.qzimyion.bucketem.items.NewItems.FrogBuckets.TundraFrogBuckets;
+import com.qzimyion.bucketem.items.NewItems.goldBuckets.GoldenBucketItem;
+import com.qzimyion.bucketem.items.NewItems.goldBuckets.MilkGoldenBucket;
+import com.qzimyion.bucketem.items.NewItems.goldBuckets.PowderSnowGoldenBucket;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.EntityBucketItem;
@@ -37,6 +41,11 @@ public class ModItems {
     public static final Item DRY_TEMPERATE_FROG_BUCKET = registerItem("dry_temperate_frog_bucket", new DryTemperateFrogBuckets(new FabricItemSettings().maxCount(1)));
     public static final Item DRY_TROPICAL_FROG_BUCKET = registerItem("dry_tropical_frog_bucket", new DryTropicalFrogBuckets(new FabricItemSettings().maxCount(1)));
     public static final Item DRY_TUNDRA_FROG_BUCKET = registerItem("dry_tundra_frog_bucket", new DryTundraFrogBuckets(new FabricItemSettings().maxCount(1)));
+    public static final Item GOLDEN_BUCKET = registerItem("golden_bucket", new GoldenBucketItem(Fluids.EMPTY, new Item.Settings().maxCount(16)));
+    public static final Item GOLDEN_WATER_BUCKET = registerItem("golden_water_bucket", new GoldenBucketItem(Fluids.WATER, new Item.Settings().maxCount(1)));
+    public static final Item GOLDEN_LAVA_BUCKET = registerItem("golden_lava_bucket", new GoldenBucketItem(Fluids.LAVA, new Item.Settings().maxCount(1)));
+    public static final Item GOLDEN_MILK_BUCKET = registerItem("golden_milk_bucket", new MilkGoldenBucket(new Item.Settings().maxCount(1)));
+    public static final Item GOLDEN_POWDER_SNOW_BUCKET = registerItem("golden_powder_snow_bucket", new PowderSnowGoldenBucket(Blocks.POWDER_SNOW, SoundEvents.ITEM_BUCKET_EMPTY_POWDER_SNOW, new Item.Settings().maxCount(1)));
 
 
     //Books
