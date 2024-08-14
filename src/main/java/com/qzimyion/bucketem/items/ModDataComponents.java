@@ -6,6 +6,7 @@ import net.minecraft.component.ComponentType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.dynamic.Codecs;
 
 public class ModDataComponents {
 
@@ -13,6 +14,12 @@ public class ModDataComponents {
             Registries.DATA_COMPONENT_TYPE,
             Identifier.of(Bucketem.MOD_ID, "slime_chunk_f"),
             ComponentType.<Boolean>builder().codec(Codec.BOOL).build()
+    );
+
+    public static final ComponentType<Integer> FLUID_LEVEL = Registry.register(
+            Registries.DATA_COMPONENT_TYPE,
+            Identifier.of(Bucketem.MOD_ID, "fluidlevel"),
+            ComponentType.<Integer>builder().codec(Codecs.rangedInt(0, 2)).codec(Codec.INT).build()
     );
 
     public static void registerComponents() {

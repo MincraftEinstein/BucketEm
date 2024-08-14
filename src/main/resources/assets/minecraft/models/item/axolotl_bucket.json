@@ -1,0 +1,20 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/axolotl_bucket"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "age": 0
+      },
+      "model": "minecraft:item/axolotl_bucket_baby"
+    },
+    {
+      "predicate": {
+        "age": 1
+      },
+      "model": "minecraft:item/axolotl_bucket"
+    }
+  ]
+}

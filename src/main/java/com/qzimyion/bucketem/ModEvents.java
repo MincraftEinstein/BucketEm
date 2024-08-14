@@ -1,16 +1,12 @@
 package com.qzimyion.bucketem;
 
-import com.qzimyion.bucketem.items.ModItems;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.Bucketable;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.SlimeEntity;
-import net.minecraft.entity.passive.AllayEntity;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.entity.passive.FrogEntity;
-import net.minecraft.entity.passive.FrogVariant;
+import net.minecraft.entity.passive.*;
 import net.minecraft.item.*;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -19,12 +15,12 @@ import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.MathHelper;
 
+import static com.qzimyion.bucketem.items.ModItems.*;
 import static net.minecraft.item.Items.*;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings("deprecation, OptionalGetWithoutIsPresent")
 public class ModEvents {
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
     public static void registerEvents() {
 
         UseEntityCallback.EVENT.register(((player, world, hand, entity, hitResult) -> {
@@ -38,27 +34,66 @@ public class ModEvents {
                 RegistryEntry<FrogVariant> tropicalVariant = world.getRegistryManager().get(RegistryKeys.FROG_VARIANT).getEntry(FrogVariant.WARM).get();
                 RegistryEntry<FrogVariant> tundraVariant = world.getRegistryManager().get(RegistryKeys.FROG_VARIANT).getEntry(FrogVariant.COLD).get();
                 if (frog.getVariant()==temperateVariant){
-                    bucket = new ItemStack(ModItems.TEMPERATE_FROG_BUCKET);
+                    bucket = new ItemStack(TEMPERATE_FROG_BUCKET);
                     Bucketable.copyDataToStack(frog, bucket);
                     ItemStack itemstack = ItemUsage.exchangeStack(heldItem ,player, bucket, false);
                     player.setStackInHand(hand, itemstack);
                     entity.discard();
                 }
                 if (frog.getVariant()==tundraVariant){
-                    bucket = new ItemStack(ModItems.TUNDRA_FROG_BUCKET);
+                    bucket = new ItemStack(TUNDRA_FROG_BUCKET);
                     Bucketable.copyDataToStack(frog, bucket);
                     ItemStack itemstack = ItemUsage.exchangeStack(heldItem ,player, bucket, false);
                     player.setStackInHand(hand, itemstack);
                     entity.discard();
                 }
                 if (frog.getVariant()==tropicalVariant){
-                    bucket = new ItemStack(ModItems.TROPICAL_FROG_BUCKET);
+                    bucket = new ItemStack(TROPICAL_FROG_BUCKET);
                     Bucketable.copyDataToStack(frog, bucket);
                     ItemStack itemstack = ItemUsage.exchangeStack(heldItem ,player, bucket, false);
                     player.setStackInHand(hand, itemstack);
                     entity.discard();
                 }
             }
+
+            //Axolotl Buckets
+            if (heldItem.getItem() == WATER_BUCKET && entity.isAlive() && entity instanceof AxolotlEntity axolotlEntity){
+                player.playSound(SoundEvents.ITEM_BUCKET_FILL_FISH, 1.0f, 1.0f);
+                ItemStack bucket;
+                if (axolotlEntity.getVariant()==AxolotlEntity.Variant.WILD){
+                    bucket = new ItemStack(BROWN_AXOLOTL_BUCKET);
+                    NbtComponent.set(DataComponentTypes.BUCKET_ENTITY_DATA, bucket, nbt -> nbt.putInt("Age", axolotlEntity.getBreedingAge()));
+                    Bucketable.copyDataToStack(axolotlEntity, bucket);
+                    ItemStack itemstack = ItemUsage.exchangeStack(heldItem ,player, bucket, false);
+                    player.setStackInHand(hand, itemstack);
+                    entity.discard();
+                }
+                if (axolotlEntity.getVariant()==AxolotlEntity.Variant.CYAN){
+                    bucket = new ItemStack(CYAN_AXOLOTL_BUCKET);
+                    NbtComponent.set(DataComponentTypes.BUCKET_ENTITY_DATA, bucket, nbt -> nbt.putInt("Age", axolotlEntity.getBreedingAge()));
+                    Bucketable.copyDataToStack(axolotlEntity, bucket);
+                    ItemStack itemstack = ItemUsage.exchangeStack(heldItem ,player, bucket, false);
+                    player.setStackInHand(hand, itemstack);
+                    entity.discard();
+                }
+                if (axolotlEntity.getVariant()==AxolotlEntity.Variant.BLUE){
+                    bucket = new ItemStack(BLUE_AXOLOTL_BUCKET);
+                    NbtComponent.set(DataComponentTypes.BUCKET_ENTITY_DATA, bucket, nbt -> nbt.putInt("Age", axolotlEntity.getBreedingAge()));
+                    Bucketable.copyDataToStack(axolotlEntity, bucket);
+                    ItemStack itemstack = ItemUsage.exchangeStack(heldItem ,player, bucket, false);
+                    player.setStackInHand(hand, itemstack);
+                    entity.discard();
+                }
+                if (axolotlEntity.getVariant()==AxolotlEntity.Variant.GOLD){
+                    bucket = new ItemStack(GOLD_AXOLOTL_BUCKET);
+                    NbtComponent.set(DataComponentTypes.BUCKET_ENTITY_DATA, bucket, nbt -> nbt.putInt("Age", axolotlEntity.getBreedingAge()));
+                    Bucketable.copyDataToStack(axolotlEntity, bucket);
+                    ItemStack itemstack = ItemUsage.exchangeStack(heldItem ,player, bucket, false);
+                    player.setStackInHand(hand, itemstack);
+                    entity.discard();
+                }
+            }
+
             //Dry variant
             if (heldItem.getItem() == BUCKET && entity.isAlive() && entity instanceof FrogEntity frog){
                 if (!player.isCreative()) heldItem.decrement(1);
@@ -68,21 +103,21 @@ public class ModEvents {
                 RegistryEntry<FrogVariant> tropicalVariant = world.getRegistryManager().get(RegistryKeys.FROG_VARIANT).getEntry(FrogVariant.WARM).get();
                 RegistryEntry<FrogVariant> tundraVariant = world.getRegistryManager().get(RegistryKeys.FROG_VARIANT).getEntry(FrogVariant.COLD).get();
                 if (frog.getVariant()==temperateVariant){
-                    bucket = new ItemStack(ModItems.DRY_TEMPERATE_FROG_BUCKET);
+                    bucket = new ItemStack(DRY_TEMPERATE_FROG_BUCKET);
                     Bucketable.copyDataToStack(frog, bucket);
                     ItemStack itemstack = ItemUsage.exchangeStack(heldItem ,player, bucket, false);
                     player.setStackInHand(hand, itemstack);
                     entity.discard();
                 }
                 if (frog.getVariant()==tundraVariant){
-                    bucket = new ItemStack(ModItems.DRY_TUNDRA_FROG_BUCKET);
+                    bucket = new ItemStack(DRY_TUNDRA_FROG_BUCKET);
                     Bucketable.copyDataToStack(frog, bucket);
                     ItemStack itemstack = ItemUsage.exchangeStack(heldItem ,player, bucket, false);
                     player.setStackInHand(hand, itemstack);
                     entity.discard();
                 }
                 if (frog.getVariant()==tropicalVariant){
-                    bucket = new ItemStack(ModItems.DRY_TROPICAL_FROG_BUCKET);
+                    bucket = new ItemStack(DRY_TROPICAL_FROG_BUCKET);
                     Bucketable.copyDataToStack(frog, bucket);
                     ItemStack itemstack = ItemUsage.exchangeStack(heldItem ,player, bucket, false);
                     player.setStackInHand(hand, itemstack);
@@ -92,7 +127,7 @@ public class ModEvents {
 
             //Slimes
             if (heldItem.getItem() == GLASS_BOTTLE && entity.isAlive() && entity instanceof SlimeEntity slime) {
-                ItemStack bottle = new ItemStack(ModItems.SLIME_BOTTLE);
+                ItemStack bottle = new ItemStack(SLIME_BOTTLE);
                 if (!player.isCreative()) heldItem.decrement(1);
                 int i = MathHelper.clamp(slime.getSize(), 2, 127);
                 if (slime.getType() == EntityType.SLIME && slime.getSize() == 1) {
@@ -108,7 +143,7 @@ public class ModEvents {
                 }
                 if (slime.getType() == EntityType.MAGMA_CUBE && slime.getSize() == 1) {
                     player.playSound(SoundEvents.ITEM_BOTTLE_FILL_DRAGONBREATH, 1.0f, 1.0f);
-                    bottle = new ItemStack(ModItems.MAGMA_CUBE_BOTTLE);
+                    bottle = new ItemStack(MAGMA_CUBE_BOTTLE);
                     Bucketable.copyDataToStack(slime, bottle);
                     ItemStack itemstack2 = ItemUsage.exchangeStack(heldItem, player, bottle, false);
                     player.setStackInHand(hand, itemstack2);
@@ -125,8 +160,7 @@ public class ModEvents {
             if (heldItem.getItem() == GLASS_BOTTLE && entity.isAlive() && entity instanceof BeeEntity bee){
                 player.playSound(SoundEvents.ITEM_BOTTLE_FILL_DRAGONBREATH, 1.0f, 1.0f);
                 if (!player.isCreative()) heldItem.decrement(1);
-                Item bottle = ModItems.BEE_BOTTLE;
-                ItemStack bottleItem = new ItemStack(bottle);
+                ItemStack bottleItem = new ItemStack(BEE_BOTTLE);
                 NbtComponent.set(DataComponentTypes.BUCKET_ENTITY_DATA, bottleItem, nbt ->
                 {
                     nbt.putBoolean("HasNectar", bee.hasNectar());
@@ -146,10 +180,11 @@ public class ModEvents {
             }
 
             //Allay
+            //RegistryEntry<Enchantment> cursed = world.getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Enchantments.BINDING_CURSE).get();
             if (heldItem.getItem() == BOOK && player.isSneaking() && entity.isAlive() && entity instanceof AllayEntity allay){
                 player.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, 1.0f, 1.0f);
                 if (!player.isCreative()) heldItem.decrement(1);
-                ItemStack newStack = ModItems.ALLAY_POSSESSED_BOOK.getDefaultStack();
+                ItemStack newStack = ALLAY_POSSESSED_BOOK.getDefaultStack();
                 NbtComponent.set(DataComponentTypes.BUCKET_ENTITY_DATA, newStack, nbt ->
                 {
                     allay.writeInventory(nbt, allay.getRegistryManager());

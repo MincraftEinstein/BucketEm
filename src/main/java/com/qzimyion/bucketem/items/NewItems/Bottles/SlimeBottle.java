@@ -3,8 +3,10 @@ package com.qzimyion.bucketem.items.NewItems.Bottles;
 import com.qzimyion.bucketem.items.ModDataComponents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
@@ -16,6 +18,11 @@ public class SlimeBottle extends EntityBottle{
 
     public SlimeBottle(EntityType<?> getType, Settings settings) {
         super(getType, settings);
+    }
+
+    @Override
+    public boolean allowComponentsUpdateAnimation(PlayerEntity player, Hand hand, ItemStack oldStack, ItemStack newStack) {
+        return false;
     }
 
     public static boolean isSlimeChunk(ServerWorld world, int x, int z) {

@@ -1,6 +1,10 @@
 package com.qzimyion.bucketem.items;
 
 import com.qzimyion.bucketem.Bucketem;
+import com.qzimyion.bucketem.items.NewItems.AxolotlBuckets.BlueBucket;
+import com.qzimyion.bucketem.items.NewItems.AxolotlBuckets.BrownBucket;
+import com.qzimyion.bucketem.items.NewItems.AxolotlBuckets.CyanBucket;
+import com.qzimyion.bucketem.items.NewItems.AxolotlBuckets.GoldBucket;
 import com.qzimyion.bucketem.items.NewItems.Bottles.EntityBottle;
 import com.qzimyion.bucketem.items.NewItems.Bottles.SlimeBottle;
 import com.qzimyion.bucketem.items.NewItems.EntityBook;
@@ -10,6 +14,10 @@ import com.qzimyion.bucketem.items.NewItems.FrogBuckets.DryVariants.DryTundraFro
 import com.qzimyion.bucketem.items.NewItems.FrogBuckets.TemperateFrogBuckets;
 import com.qzimyion.bucketem.items.NewItems.FrogBuckets.TropicalFrogBuckets;
 import com.qzimyion.bucketem.items.NewItems.FrogBuckets.TundraFrogBuckets;
+import com.qzimyion.bucketem.items.NewItems.GoldenBucketItem;
+import com.qzimyion.bucketem.items.NewItems.MilkGoldenBucket;
+import com.qzimyion.bucketem.items.NewItems.PowderSnowGoldenBucket;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.EntityBucketItem;
@@ -35,6 +43,15 @@ public class ModItems {
     public static final Item DRY_TEMPERATE_FROG_BUCKET = registerItem("dry_temperate_frog_bucket", new DryTemperateFrogBuckets(new Item.Settings().maxCount(1)));
     public static final Item DRY_TROPICAL_FROG_BUCKET = registerItem("dry_tropical_frog_bucket", new DryTropicalFrogBuckets(new Item.Settings().maxCount(1)));
     public static final Item DRY_TUNDRA_FROG_BUCKET = registerItem("dry_tundra_frog_bucket", new DryTundraFrogBuckets(new Item.Settings().maxCount(1)));
+    public static final Item BLUE_AXOLOTL_BUCKET = registerItem("blue_axolotl_bucket", new BlueBucket(Fluids.WATER ,new Item.Settings().maxCount(1)));
+    public static final Item BROWN_AXOLOTL_BUCKET = registerItem("brown_axolotl_bucket", new BrownBucket(Fluids.WATER ,new Item.Settings().maxCount(1)));
+    public static final Item GOLD_AXOLOTL_BUCKET = registerItem("gold_axolotl_bucket", new GoldBucket(Fluids.WATER ,new Item.Settings().maxCount(1)));
+    public static final Item CYAN_AXOLOTL_BUCKET = registerItem("cyan_axolotl_bucket", new CyanBucket(Fluids.WATER ,new Item.Settings().maxCount(1)));
+    public static final Item GOLDEN_BUCKET = registerItem("golden_bucket", new GoldenBucketItem(Fluids.EMPTY, new Item.Settings().maxCount(16)));
+    public static final Item GOLDEN_WATER_BUCKET = registerItem("golden_water_bucket", new GoldenBucketItem(Fluids.WATER, new Item.Settings().maxCount(1)));
+    public static final Item GOLDEN_LAVA_BUCKET = registerItem("golden_lava_bucket", new GoldenBucketItem(Fluids.LAVA, new Item.Settings().maxCount(1)));
+    public static final Item GOLDEN_MILK_BUCKET = registerItem("golden_milk_bucket", new MilkGoldenBucket(new Item.Settings().maxCount(1)));
+    public static final Item GOLDEN_POWDER_SNOW_BUCKET = registerItem("golden_powder_snow_bucket", new PowderSnowGoldenBucket(Blocks.POWDER_SNOW, SoundEvents.ITEM_BUCKET_EMPTY_POWDER_SNOW, new Item.Settings().maxCount(1)));
 
 
     //Books

@@ -24,5 +24,9 @@
   "item.minecraft.splash_potion.effect.blistered_vision_short": "Splash Potion of Blistered Vision",
   "item.minecraft.lingering_potion.effect.blistered_vision_short": "Lingering Potion of Blistered Vision",
   "item.minecraft.tipped_arrow.effect.blistered_vision": "Arrow of Blistered Vision",
-  "item.minecraft.tipped_arrow.effect.blistered_vision_short": "Arrow of Blistered Vision"
+  "item.minecraft.tipped_arrow.effect.blistered_vision_short": "Arrow of Blistered Vision",
+  "item.bucketem.blue_axolotl_bucket": "Bucket of Blue Axolotl",
+  "item.bucketem.brown_axolotl_bucket": "Bucket of Brown Axolotl",
+  "item.bucketem.gold_axolotl_bucket": "Bucket of Gold Axolotl",
+  "item.bucketem.cyan_axolotl_bucket": "Bucket of Cyan Axolotl"
 }
