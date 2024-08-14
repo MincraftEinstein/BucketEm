@@ -1,37 +1,41 @@
 package com.qzimyion.bucketem;
 
-import com.qzimyion.bucketem.items.ModItems;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
+import net.minecraft.entity.passive.AxolotlEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
+
+import static com.qzimyion.bucketem.items.ModItems.*;
 
 @SuppressWarnings("deprecation")
 public class BucketemClient implements ClientModInitializer {
 
     public static void itemPredicates(){
-        FabricModelPredicateProviderRegistry.register(Items.AXOLOTL_BUCKET, new Identifier("variant"), (itemStack, clientWorld, livingEntity, i) -> {
-            float axolotlType = 0;
-            if (itemStack.getNbt() != null && itemStack.getNbt().contains("Variant"))
-                axolotlType = itemStack.getNbt().getInt("Variant");
-            return axolotlType * 0.01f + 0.0001f;
-        });
 
-        FabricModelPredicateProviderRegistry.register(Items.AXOLOTL_BUCKET, new Identifier("age"), (itemStack, clientWorld, livingEntity, i) -> {
+        FabricModelPredicateProviderRegistry.register(TURTLE_BUCKET, new Identifier("age"), (itemStack, clientWorld, livingEntity, i) -> {
             float age = 1;
             if (itemStack.getNbt() != null && itemStack.getNbt().contains("Age") && itemStack.getNbt().getInt("Age") < 0)
                 age = 0;
             return age;
         });
 
-        FabricModelPredicateProviderRegistry.register(ModItems.TURTLE_BUCKET, new Identifier("age"), (itemStack, clientWorld, livingEntity, i) -> {
-            float age = 1;
-            if (itemStack.getNbt() != null && itemStack.getNbt().contains("Age") && itemStack.getNbt().getInt("Age") < 0)
-                age = 0;
-            return age;
+        FabricModelPredicateProviderRegistry.register(SLIME_BOTTLE,new Identifier("slime_chunk"), (itemStack, clientWorld, livingEntity, i) -> {
+            if (livingEntity instanceof PlayerEntity) {
+                NbtCompound nbt = itemStack.getOrCreateNbt();
+                boolean chunk = nbt.contains("SlimeChunk") && nbt.getBoolean("SlimeChunk");
+                if (chunk){
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+            else {
+                return 1;
+            }
         });
-
-
     }
 
     public void onInitializeClient(){

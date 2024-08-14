@@ -2,5 +2,19 @@
   "parent": "item/generated",
   "textures": {
     "layer0": "bucketem:item/turtle_bucket"
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "age": 0
+      },
+      "model": "bucketem:item/turtle_bucket_baby"
+    },
+    {
+      "predicate": {
+        "age": 1
+      },
+      "model": "bucketem:item/turtle_bucket"
+    }
+  ]
 }
