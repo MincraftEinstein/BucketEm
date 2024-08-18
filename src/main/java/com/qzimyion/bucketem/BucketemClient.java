@@ -45,23 +45,18 @@ public class BucketemClient implements ClientModInitializer {
             }
         });
 
-        FabricModelPredicateProviderRegistry.register(Items.AXOLOTL_BUCKET, new Identifier("variant"),
-                (itemStack, world, holder, seed) -> {
-                    Item item = itemStack.getItem();
-                    if (!(item instanceof EntityBucketItem)) {
-                        return 0f;
-                    }
-
-                    Entity entity = ((EntityBucketItemAccessor) item).getEntityType().create(MINECRAFT.world);
-                    if (!(entity instanceof AxolotlEntity) || entity == null) {
-                        return 0f;
-                    }
-
-                    ((Bucketable) entity).copyDataFromNbt(itemStack.getOrCreateNbt());
-
-                    return ((AxolotlEntity) entity).getVariant().ordinal() / 10f;
-                }
-        );
+        FabricModelPredicateProviderRegistry.register(Items.AXOLOTL_BUCKET, new Identifier("variant"), (itemStack, world, holder, seed) -> {
+            Item item = itemStack.getItem();
+            if (!(item instanceof EntityBucketItem)) {
+                return 0f;
+            }
+            Entity entity = ((EntityBucketItemAccessor) item).getEntityType().create(MINECRAFT.world);
+            if (!(entity instanceof AxolotlEntity) || entity == null) {
+                return 0f;
+            }
+            ((Bucketable) entity).copyDataFromNbt(itemStack.getOrCreateNbt());
+            return ((AxolotlEntity) entity).getVariant().ordinal() / 10f;
+        });
 
         FabricModelPredicateProviderRegistry.register(GOLDEN_WATER_BUCKET, new Identifier("level"), (stack, level, entity, hash) -> stack.getOrCreateNbt().getInt("fluidlevel"));
         FabricModelPredicateProviderRegistry.register(GOLDEN_LAVA_BUCKET, new Identifier("level"), (stack, level, entity, hash) -> stack.getOrCreateNbt().getInt("fluidlevel"));
