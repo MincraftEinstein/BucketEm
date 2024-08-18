@@ -45,6 +45,12 @@ public class BucketemClient implements ClientModInitializer {
             }
         });
 
+        FabricModelPredicateProviderRegistry.register(Items.AXOLOTL_BUCKET, new Identifier("age"), (itemStack, clientWorld, livingEntity, i) -> {
+            float age = 1;
+            if (itemStack.getNbt() != null && itemStack.getNbt().contains("Age") && itemStack.getNbt().getInt("Age") < 0)
+                age = 0;
+            return age;
+        });
         FabricModelPredicateProviderRegistry.register(Items.AXOLOTL_BUCKET, new Identifier("variant"), (itemStack, world, holder, seed) -> {
             Item item = itemStack.getItem();
             if (!(item instanceof EntityBucketItem)) {
