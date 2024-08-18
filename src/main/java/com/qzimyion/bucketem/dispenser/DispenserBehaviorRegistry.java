@@ -46,10 +46,6 @@ public class DispenserBehaviorRegistry {
         DispenserBlock.registerBehavior(TROPICAL_FROG_BUCKET, new ItemDispenserBehavior());
         DispenserBlock.registerBehavior(TUNDRA_FROG_BUCKET, new ItemDispenserBehavior());
         DispenserBlock.registerBehavior(TURTLE_BUCKET, new ItemDispenserBehavior());
-        DispenserBlock.registerBehavior(BROWN_AXOLOTL_BUCKET, new ItemDispenserBehavior());
-        DispenserBlock.registerBehavior(CYAN_AXOLOTL_BUCKET, new ItemDispenserBehavior());
-        DispenserBlock.registerBehavior(GLOW_SQUID_BUCKET, new ItemDispenserBehavior());
-        DispenserBlock.registerBehavior(BLUE_AXOLOTL_BUCKET, new ItemDispenserBehavior());
 
         //Books
         DispenserBlock.registerBehavior(ALLAY_POSSESSED_BOOK, BookDispenserBehavior);

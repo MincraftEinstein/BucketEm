@@ -55,45 +55,6 @@ public class ModEvents {
                     entity.discard();
                 }
             }
-
-            //Axolotl Buckets
-            if (heldItem.getItem() == WATER_BUCKET && entity.isAlive() && entity instanceof AxolotlEntity axolotlEntity){
-                player.playSound(SoundEvents.ITEM_BUCKET_FILL_FISH, 1.0f, 1.0f);
-                ItemStack bucket;
-                if (axolotlEntity.getVariant()==AxolotlEntity.Variant.WILD){
-                    bucket = new ItemStack(BROWN_AXOLOTL_BUCKET);
-                    NbtComponent.set(DataComponentTypes.BUCKET_ENTITY_DATA, bucket, nbt -> nbt.putInt("Age", axolotlEntity.getBreedingAge()));
-                    Bucketable.copyDataToStack(axolotlEntity, bucket);
-                    ItemStack itemstack = ItemUsage.exchangeStack(heldItem ,player, bucket, false);
-                    player.setStackInHand(hand, itemstack);
-                    entity.discard();
-                }
-                if (axolotlEntity.getVariant()==AxolotlEntity.Variant.CYAN){
-                    bucket = new ItemStack(CYAN_AXOLOTL_BUCKET);
-                    NbtComponent.set(DataComponentTypes.BUCKET_ENTITY_DATA, bucket, nbt -> nbt.putInt("Age", axolotlEntity.getBreedingAge()));
-                    Bucketable.copyDataToStack(axolotlEntity, bucket);
-                    ItemStack itemstack = ItemUsage.exchangeStack(heldItem ,player, bucket, false);
-                    player.setStackInHand(hand, itemstack);
-                    entity.discard();
-                }
-                if (axolotlEntity.getVariant()==AxolotlEntity.Variant.BLUE){
-                    bucket = new ItemStack(BLUE_AXOLOTL_BUCKET);
-                    NbtComponent.set(DataComponentTypes.BUCKET_ENTITY_DATA, bucket, nbt -> nbt.putInt("Age", axolotlEntity.getBreedingAge()));
-                    Bucketable.copyDataToStack(axolotlEntity, bucket);
-                    ItemStack itemstack = ItemUsage.exchangeStack(heldItem ,player, bucket, false);
-                    player.setStackInHand(hand, itemstack);
-                    entity.discard();
-                }
-                if (axolotlEntity.getVariant()==AxolotlEntity.Variant.GOLD){
-                    bucket = new ItemStack(GOLD_AXOLOTL_BUCKET);
-                    NbtComponent.set(DataComponentTypes.BUCKET_ENTITY_DATA, bucket, nbt -> nbt.putInt("Age", axolotlEntity.getBreedingAge()));
-                    Bucketable.copyDataToStack(axolotlEntity, bucket);
-                    ItemStack itemstack = ItemUsage.exchangeStack(heldItem ,player, bucket, false);
-                    player.setStackInHand(hand, itemstack);
-                    entity.discard();
-                }
-            }
-
             //Dry variant
             if (heldItem.getItem() == BUCKET && entity.isAlive() && entity instanceof FrogEntity frog){
                 if (!player.isCreative()) heldItem.decrement(1);

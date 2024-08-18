@@ -8,6 +8,7 @@
     "BlockEntityMixins.FurnaceFuelSlotMixin",
     "EntityMixins.BeeEntityMixin",
     "EntityMixins.EndermiteEntityMixin",
+    "EntityMixins.EntityBucketItemAccessor",
     "EntityMixins.GlowSquidEntityMixin",
     "EntityMixins.LivingEntityMixin",
     "EntityMixins.SliverFishEntityMixin",

@@ -6,15 +6,73 @@
   "overrides": [
     {
       "predicate": {
-        "age": 0
+        "age": 0,
+        "variant": 0
       },
       "model": "minecraft:item/axolotl_bucket_baby"
     },
     {
       "predicate": {
-        "age": 1
+        "age": 1,
+        "variant": 0
       },
       "model": "minecraft:item/axolotl_bucket"
+    },
+    {
+      "predicate": {
+        "age": 0,
+        "variant": 0.1
+      },
+      "model": "bucketem:item/brown_axolotl_bucket_baby"
+    },
+    {
+      "predicate": {
+        "age": 1,
+        "variant": 0.1
+      },
+      "model": "bucketem:item/brown_axolotl_bucket"
+    },
+    {
+      "predicate": {
+        "age": 0,
+        "variant": 0.2
+      },
+      "model": "bucketem:item/gold_axolotl_bucket_baby"
+    },
+    {
+      "predicate": {
+        "age": 1,
+        "variant": 0.2
+      },
+      "model": "bucketem:item/gold_axolotl_bucket"
+    },
+    {
+      "predicate": {
+        "age": 0,
+        "variant": 0.3
+      },
+      "model": "bucketem:item/cyan_axolotl_bucket_baby"
+    },
+    {
+      "predicate": {
+        "age": 1,
+        "variant": 0.3
+      },
+      "model": "bucketem:item/cyan_axolotl_bucket"
+    },
+    {
+      "predicate": {
+        "age": 0,
+        "variant": 0.4
+      },
+      "model": "bucketem:item/blue_axolotl_bucket_baby"
+    },
+    {
+      "predicate": {
+        "age": 1,
+        "variant": 0.4
+      },
+      "model": "bucketem:item/blue_axolotl_bucket"
     }
   ]
 }
