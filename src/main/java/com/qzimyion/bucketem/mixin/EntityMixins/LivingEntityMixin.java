@@ -21,8 +21,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class LivingEntityMixin extends Entity {
     @Shadow public abstract boolean hasStatusEffect(StatusEffect effect);
 
-    @Shadow protected abstract boolean shouldSwimInFluids();
-
     @Shadow public abstract boolean isInSwimmingPose();
 
     public LivingEntityMixin(EntityType<?> type, World world) {
