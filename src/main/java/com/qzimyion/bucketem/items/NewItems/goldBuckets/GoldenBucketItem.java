@@ -1,5 +1,8 @@
 package com.qzimyion.bucketem.items.NewItems.goldBuckets;
 
+import com.ordana.spelunkery.reg.ModFluids;
+import com.qzimyion.bucketem.compact.IsModLoaded;
+import com.qzimyion.bucketem.compact.spelunkery.SpelunkeryBucketemItems;
 import com.qzimyion.bucketem.items.ModItems;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.*;
@@ -32,8 +35,8 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class GoldenBucketItem extends Item implements FluidModificationItem {
-    private final Fluid fluid;
-    private static final String NBT_TAG = "FluidLevel";
+    public final Fluid fluid;
+    public static final String NBT_TAG = "FluidLevel";
 
     public GoldenBucketItem(Fluid fluid, Settings settings) {
         super(settings);
@@ -70,7 +73,7 @@ public class GoldenBucketItem extends Item implements FluidModificationItem {
     }
 
     @Override
-    public void onCraft(ItemStack stack, World world) {
+    public void onCraft(ItemStack stack, World world, PlayerEntity player) {
         resetFluidLevel(stack);
     }
 
@@ -95,9 +98,14 @@ public class GoldenBucketItem extends Item implements FluidModificationItem {
                 if (this.getFluid() == Fluids.EMPTY || (bucketLevel < 2 && sourceState.getFluidState().getFluid() == this.getFluid())) {
                     // Picking up raw fluids & powder snow
                     if (sourceState.getBlock() instanceof FluidDrainable bucketPickup) {
-                        bucketPickup.tryDrainFluid(player ,world, pos, sourceState);
+                        bucketPickup.tryDrainFluid(world, pos, sourceState);
                         Fluid fluid = sourceState.getFluidState().isOf(Fluids.WATER) ? Fluids.WATER : sourceState.getFluidState().isOf(Fluids.LAVA) ? Fluids.LAVA : Fluids.EMPTY;
                         ItemStack newBucket = ItemStack.EMPTY;
+
+                        //Spelunkery
+                        if (IsModLoaded.isSpelunkeryModLoaded()){
+                            fluid = sourceState.getFluidState().isOf(ModFluids.PORTAL_FLUID.get()) ? ModFluids.PORTAL_FLUID.get() : sourceState.getFluidState().isOf(ModFluids.SPRING_WATER.get()) ? ModFluids.SPRING_WATER.get() : Fluids.EMPTY;
+                        }
 
                         if (fluid != Fluids.EMPTY && getFilledBucket(sourceState) != null) {
                             newBucket = ItemUsage.exchangeStack(stack, player, getFilledBucket(sourceState));
@@ -169,13 +177,17 @@ public class GoldenBucketItem extends Item implements FluidModificationItem {
     }
 
     private boolean canBlockContainFluid(World worldIn, BlockPos posIn, BlockState blockstate, PlayerEntity player) {
-        return blockstate.getBlock() instanceof FluidFillable && ((FluidFillable) blockstate.getBlock()).canFillWithFluid(player, worldIn, posIn, blockstate, this.getFluid());
+        return blockstate.getBlock() instanceof FluidFillable && ((FluidFillable) blockstate.getBlock()).canFillWithFluid(worldIn, posIn, blockstate, this.getFluid());
     }
 
 
     public static ItemStack getFilledBucket(Fluid fluid) {
         if (fluid == Fluids.WATER) return new ItemStack(ModItems.GOLDEN_WATER_BUCKET);
         if (fluid == Fluids.LAVA) return new ItemStack(ModItems.GOLDEN_LAVA_BUCKET);
+        if (IsModLoaded.isSpelunkeryModLoaded()){
+            if (fluid == ModFluids.PORTAL_FLUID) return new ItemStack(SpelunkeryBucketemItems.GOLDEN_PORTAL_FLUID_BUCKET);
+            if (fluid == ModFluids.SPRING_WATER) return new ItemStack(SpelunkeryBucketemItems.GOLDEN_SPRING_WATER_BUCKET);
+        }
         return null;
     }
 
@@ -183,6 +195,10 @@ public class GoldenBucketItem extends Item implements FluidModificationItem {
         if (state.getFluidState().isOf(Fluids.WATER)) return new ItemStack(ModItems.GOLDEN_WATER_BUCKET);
         if (state.getFluidState().isOf(Fluids.LAVA)) return new ItemStack(ModItems.GOLDEN_LAVA_BUCKET);
         if (state.isOf(Blocks.POWDER_SNOW)) return new ItemStack(ModItems.GOLDEN_POWDER_SNOW_BUCKET);
+        if (IsModLoaded.isSpelunkeryModLoaded()){
+            if (state.getFluidState().isOf(ModFluids.PORTAL_FLUID.get())) return new ItemStack(SpelunkeryBucketemItems.GOLDEN_PORTAL_FLUID_BUCKET);
+            if (state.getFluidState().isOf(ModFluids.SPRING_WATER.get())) return new ItemStack(SpelunkeryBucketemItems.GOLDEN_SPRING_WATER_BUCKET);
+        }
         return null;
     }
 
@@ -209,9 +225,9 @@ public class GoldenBucketItem extends Item implements FluidModificationItem {
             BlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
             boolean replaceable = state.canBucketPlace(this.getFluid());
-            if (!(state.isAir() || replaceable || block instanceof FluidFillable && ((FluidFillable) block).canFillWithFluid(player, world, pos, state, this.getFluid()))) {
+            if (!(state.isAir() || replaceable || block instanceof FluidFillable && ((FluidFillable) block).canFillWithFluid(world, pos, state, this.getFluid()))) {
                 return hitResult != null && this.placeFluid(player, world, hitResult.getBlockPos().offset(hitResult.getSide()), null);
-            } else if (world.getDimension().ultrawarm() && this.getFluid().isIn(FluidTags.WATER)) {
+            } else if (world.getDimension().ultrawarm() && this.getFluid().isIn(FluidTags.WATER) || this.getFluid().getDefaultState().isOf(ModFluids.SPRING_WATER.get())) {
                 int i = pos.getX();
                 int j = pos.getY();
                 int k = pos.getZ();
@@ -219,10 +235,20 @@ public class GoldenBucketItem extends Item implements FluidModificationItem {
                 for (int l = 0; l < 8; ++l) {
                     world.addParticle(ParticleTypes.LARGE_SMOKE, (double) i + Math.random(), (double) j + Math.random(), (double) k + Math.random(), 0.0D, 0.0D, 0.0D);
                 }
-
                 return true;
-            } else if (block instanceof FluidFillable && ((FluidFillable) block).canFillWithFluid(player, world, pos, state, getFluid())) {
-                ((FluidFillable) block).canFillWithFluid(player, world, pos, state, ((FlowableFluid) this.getFluid()).getStill(false).getFluid());
+                //Spelunkery
+            } else if (IsModLoaded.isSpelunkeryModLoaded() && world.getDimension().ultrawarm() && this.getFluid().getDefaultState().isOf(ModFluids.SPRING_WATER.get())) {
+                int i = pos.getX();
+                int j = pos.getY();
+                int k = pos.getZ();
+                world.playSound(player, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.random.nextFloat() - world.random.nextFloat()) * 0.8F);
+                for (int l = 0; l < 8; ++l) {
+                    world.addParticle(ParticleTypes.LARGE_SMOKE, (double) i + Math.random(), (double) j + Math.random(), (double) k + Math.random(), 0.0D, 0.0D, 0.0D);
+                }
+                return true;
+            }
+            else if (block instanceof FluidFillable && ((FluidFillable) block).canFillWithFluid(world, pos, state, getFluid())) {
+                ((FluidFillable) block).canFillWithFluid(world, pos, state, ((FlowableFluid) this.getFluid()).getStill(false).getFluid());
                 this.playEmptySound(player, world, pos);
                 return true;
             } else {

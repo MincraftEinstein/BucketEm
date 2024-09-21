@@ -39,7 +39,7 @@ public class PowderSnowGoldenBucket extends BlockItem implements FluidModificati
         BlockState state = world.getBlockState(pos);
         int fluidLevel = stack.getOrCreateNbt().getInt("FluidLevel");
         if (state.getBlock() instanceof PowderSnowBlock powderSnowBlock && player != null && !player.isSneaking() && fluidLevel < 2) {
-            powderSnowBlock.tryDrainFluid(player ,world, pos, state);
+            powderSnowBlock.tryDrainFluid(world, pos, state);
             player.playSound(SoundEvents.ITEM_BUCKET_FILL_POWDER_SNOW, 1.0F, 1.0F);
             stack.getOrCreateNbt().putInt("FluidLevel", fluidLevel + 1);
             if (!world.isClient) {
