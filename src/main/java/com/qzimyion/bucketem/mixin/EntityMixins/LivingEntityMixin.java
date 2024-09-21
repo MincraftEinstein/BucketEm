@@ -2,7 +2,6 @@ package com.qzimyion.bucketem.mixin.EntityMixins;
 
 import com.qzimyion.bucketem.potions.StatusEffects.ModStatusEffectsRegistry;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;

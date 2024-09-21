@@ -28,6 +28,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(BackgroundRenderer.class)
 public class LavaFogMixin {
 
+
     @Inject(at = @At("TAIL"), method = "applyFog")
     private static void applyFog(Camera camera, BackgroundRenderer.FogType fogType, float viewDistance, boolean thickFog, float tickDelta, CallbackInfo ci){
         CameraSubmersionType cameraSubmersionType = camera.getSubmersionType();
