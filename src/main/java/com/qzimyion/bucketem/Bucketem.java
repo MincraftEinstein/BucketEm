@@ -1,5 +1,6 @@
 package com.qzimyion.bucketem;
 
+import com.qzimyion.bucketem.compact.BucketemCompactReg;
 import com.qzimyion.bucketem.dispenser.DispenserBehaviorRegistry;
 import com.qzimyion.bucketem.items.ModItemGroups;
 import com.qzimyion.bucketem.items.ModItems;
@@ -24,5 +25,6 @@ public class Bucketem implements ModInitializer {
 		ModStatusEffectsRegistry.registerStatusEffects();
 		ModPotionsRegistry.registerPotions();
 		ModPotionsRegistry.registerPotionRecipes();
+		BucketemCompactReg.initializeCompacts();
 	}
 }
