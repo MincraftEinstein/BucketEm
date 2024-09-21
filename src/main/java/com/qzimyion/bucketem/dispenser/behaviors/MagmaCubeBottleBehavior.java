@@ -14,8 +14,8 @@ public class MagmaCubeBottleBehavior extends ItemDispenserBehavior {
 
     @Override
     protected ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
-        Direction direction = pointer.state().get(DispenserBlock.FACING);
-        SlimeEntity entity = EntityType.MAGMA_CUBE.spawnFromItemStack(pointer.world(), stack, null, pointer.pos().offset(direction), SpawnReason.DISPENSER, direction != Direction.UP, false);
+        Direction direction = pointer.getBlockState().get(DispenserBlock.FACING);
+        SlimeEntity entity = EntityType.MAGMA_CUBE.spawnFromItemStack(pointer.getWorld(), stack, null, pointer.getPos().offset(direction), SpawnReason.DISPENSER, direction != Direction.UP, false);
         if (entity != null) {
             entity.setPersistent();
             entity.setSize(1, false);

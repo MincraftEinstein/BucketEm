@@ -14,9 +14,9 @@ public class BottleBehavior extends ItemDispenserBehavior {
 
     @Override
     protected ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
-        Direction direction = pointer.state().get(DispenserBlock.FACING);
+        Direction direction = pointer.getBlockState().get(DispenserBlock.FACING);
         EntityType<?> entitytype = ((EntityBottle) stack.getItem()).getType(stack.getNbt());
-        entitytype.spawnFromItemStack(pointer.world(), stack, null, pointer.pos().offset(direction), SpawnReason.DISPENSER, direction != Direction.UP, false);
+        entitytype.spawnFromItemStack(pointer.getWorld(), stack, null, pointer.getPos().offset(direction), SpawnReason.DISPENSER, direction != Direction.UP, false);
         return new ItemStack(Items.GLASS_BOTTLE);
     }
 }
