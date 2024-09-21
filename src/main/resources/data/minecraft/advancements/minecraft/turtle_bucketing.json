@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "Bucket up a Turtle in a water bucket"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "bucketem:turtle_bucket"
     },
-    "show_toast": true,
     "title": {
       "translate": "I like Turtles"
     }

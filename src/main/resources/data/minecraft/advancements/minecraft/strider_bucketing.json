@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "Bucket up a strider using a lava bucket"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "bucketem:strider_bucket"
     },
-    "show_toast": true,
     "title": {
       "translate": "Hardcore Bucketing"
     }

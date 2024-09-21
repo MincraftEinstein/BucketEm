@@ -14,7 +14,7 @@
       "predicate": {
         "age": 1
       },
-      "model": "bucketem:item/turtle_bucket"
+      "model": "bucketem:item/turtle_bucket_adult"
     }
   ]
 }

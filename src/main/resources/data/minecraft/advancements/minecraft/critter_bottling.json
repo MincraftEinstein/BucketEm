@@ -27,16 +27,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "Bottle up slimes and magma cubes"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "bucketem:slime_bottle"
     },
-    "show_toast": true,
     "title": {
       "translate": "Slime Rancher"
     }

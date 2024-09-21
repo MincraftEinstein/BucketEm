@@ -1,12 +1,24 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_bottle": {
+    "has_gold_blocks": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:magma_cream"
+              "minecraft:gold_block"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_gold_ingots": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:gold_ingot"
             ]
           }
         ]
@@ -15,7 +27,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:magma_cream"
+        "recipe": "bucketem:golden_bucket"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -23,12 +35,13 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_bottle"
+      "has_gold_blocks",
+      "has_gold_ingots"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:magma_cream"
+      "bucketem:golden_bucket"
     ]
   }
 }

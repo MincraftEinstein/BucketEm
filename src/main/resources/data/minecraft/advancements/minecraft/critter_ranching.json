@@ -63,16 +63,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "Bottle up all the critters out there"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "bucketem:bee_bottle"
     },
-    "show_toast": true,
     "title": {
       "translate": "Critter Rancher"
     }
