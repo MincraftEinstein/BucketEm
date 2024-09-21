@@ -4,7 +4,6 @@ import com.qzimyion.bucketem.Bucketem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 
 import static com.qzimyion.bucketem.items.ModItems.*;
-import static com.qzimyion.bucketem.items.ModItems.VEX_POSSESSED_BOOK;
 import static net.minecraft.item.Items.*;
 
 public class ModItemGroups {

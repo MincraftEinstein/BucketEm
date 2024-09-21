@@ -5,9 +5,8 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancement.Advancement;
-import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.advancement.AdvancementFrame;
-import net.minecraft.advancement.AdvancementRequirements;
+import net.minecraft.advancement.CriterionMerger;
 import net.minecraft.advancement.criterion.ChangedDimensionCriterion;
 import net.minecraft.advancement.criterion.InventoryChangedCriterion;
 import net.minecraft.advancement.criterion.OnKilledCriterion;
@@ -34,8 +33,8 @@ public class ModAdvancementsDatagen implements DataGeneratorEntrypoint {
         }
 
         @Override
-        public void generateAdvancement(Consumer<AdvancementEntry> consumer) {
-            AdvancementEntry NetherAdvancementEntry = Advancement.Builder.create()
+        public void generateAdvancement(Consumer<Advancement> consumer) {
+            Advancement NetherAdvancementEntry = Advancement.Builder.create()
                     .display(Blocks.RED_NETHER_BRICKS,
                             Text.translatable("advancements.nether.root.title"),
                             Text.translatable("advancements.nether.root.description"),
@@ -43,17 +42,17 @@ public class ModAdvancementsDatagen implements DataGeneratorEntrypoint {
                             AdvancementFrame.TASK, false, false, false)
                     .criterion("entered_nether", ChangedDimensionCriterion.Conditions.to(World.NETHER)).build(consumer, "nether/root");
 
-            AdvancementEntry AdventureAdvancementEntry = Advancement.Builder.create().display(Items.MAP,
+            Advancement AdventureAdvancementEntry = Advancement.Builder.create().display(Items.MAP,
                             Text.translatable("advancements.adventure.root.title"),
                             Text.translatable("advancements.adventure.root.description"),
-                    new Identifier("textures/gui/advancements/backgrounds/adventure.png"),
-                    AdvancementFrame.TASK, false, false, false)
-                    .criteriaMerger(AdvancementRequirements.CriterionMerger.OR).criterion("killed_something",
+                            new Identifier("textures/gui/advancements/backgrounds/adventure.png"),
+                            AdvancementFrame.TASK, false, false, false)
+                    .criteriaMerger(CriterionMerger.OR).criterion("killed_something",
                             OnKilledCriterion.Conditions.createPlayerKilledEntity()).criterion("killed_by_something",
                             OnKilledCriterion.Conditions.createEntityKilledPlayer()).build(consumer, "adventure/root");
 
 
-            AdvancementEntry rootAdvancement = Advancement.Builder.create().parent(NetherAdvancementEntry)
+            Advancement rootAdvancement = Advancement.Builder.create().parent(NetherAdvancementEntry)
                     .display(
                             STRIDER_BUCKET,
                             Text.translatable("Hardcore Bucketing"),
@@ -67,7 +66,7 @@ public class ModAdvancementsDatagen implements DataGeneratorEntrypoint {
                     .criterion("got_strider_bucket", InventoryChangedCriterion.Conditions.items(STRIDER_BUCKET))
                     .build(consumer, "minecraft" + "/strider_bucketing");
 
-            AdvancementEntry rootAdvancement1 = Advancement.Builder.create().parent(AdventureAdvancementEntry)
+            Advancement rootAdvancement1 = Advancement.Builder.create().parent(AdventureAdvancementEntry)
                     .display(
                             SLIME_BOTTLE,
                             Text.translatable("Slime Rancher"),
@@ -82,7 +81,7 @@ public class ModAdvancementsDatagen implements DataGeneratorEntrypoint {
                     .criterion("got_magma_cube_bottle", InventoryChangedCriterion.Conditions.items(MAGMA_CUBE_BOTTLE))
                     .build(consumer, "minecraft" + "/critter_bottling");
 
-            AdvancementEntry rootAdvancement2 = Advancement.Builder.create().parent(rootAdvancement1)
+            Advancement rootAdvancement2 = Advancement.Builder.create().parent(rootAdvancement1)
                     .display(
                             BEE_BOTTLE,
                             Text.translatable("Critter Rancher"),
@@ -100,7 +99,7 @@ public class ModAdvancementsDatagen implements DataGeneratorEntrypoint {
                     .criterion("got_magma_cube_bottle", InventoryChangedCriterion.Conditions.items(MAGMA_CUBE_BOTTLE))
                     .build(consumer, "minecraft" + "/critter_ranching");
 
-            AdvancementEntry turtleAdvancement = Advancement.Builder.create().parent(AdventureAdvancementEntry)
+            Advancement turtleAdvancement = Advancement.Builder.create().parent(AdventureAdvancementEntry)
                     .display(
                             TURTLE_BUCKET,
                             Text.translatable("I like Turtles"),
