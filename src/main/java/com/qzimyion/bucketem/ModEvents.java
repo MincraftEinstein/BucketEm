@@ -1,22 +1,22 @@
 package com.qzimyion.bucketem;
 
-import com.qzimyion.bucketem.items.ModItems;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.minecraft.entity.Bucketable;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.SlimeEntity;
-import net.minecraft.entity.passive.AllayEntity;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.entity.passive.FrogEntity;
-import net.minecraft.entity.passive.FrogVariant;
+import net.minecraft.entity.passive.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.math.MathHelper;
+
+import static com.qzimyion.bucketem.items.ModItems.*;
+import static net.minecraft.item.Items.*;
 
 @SuppressWarnings("deprecation")
 public class ModEvents {
@@ -27,15 +27,15 @@ public class ModEvents {
             ItemStack itemStack = player.getStackInHand(hand);
 
             //Frog buckets
-            if (itemStack.getItem() == Items.WATER_BUCKET && entity.isAlive() && entity instanceof FrogEntity frog){
+            if (itemStack.getItem() == WATER_BUCKET && entity.isAlive() && entity instanceof FrogEntity frog){
                 player.playSound(SoundEvents.ITEM_BUCKET_FILL_FISH, 1.0f, 1.0f);
                 ItemStack bucket;
                 if (frog.getVariant()== FrogVariant.TEMPERATE){
-                    bucket = new ItemStack(ModItems.TEMPERATE_FROG_BUCKET);
+                    bucket = new ItemStack(TEMPERATE_FROG_BUCKET);
                 } else if (frog.getVariant()== FrogVariant.WARM) {
-                    bucket = new ItemStack(ModItems.TROPICAL_FROG_BUCKET);
+                    bucket = new ItemStack(TROPICAL_FROG_BUCKET);
                 } else if (frog.getVariant()== FrogVariant.COLD) {
-                    bucket = new ItemStack(ModItems.TUNDRA_FROG_BUCKET);
+                    bucket = new ItemStack(TUNDRA_FROG_BUCKET);
                 } else {
                     return ActionResult.SUCCESS;
                 }
@@ -46,15 +46,15 @@ public class ModEvents {
                 entity.discard();
             }
             //Dry variant
-            if (itemStack.getItem() == Items.BUCKET && entity.isAlive() && entity instanceof FrogEntity frog){
+            if (itemStack.getItem() == BUCKET && entity.isAlive() && entity instanceof FrogEntity frog){
                 player.playSound(SoundEvents.ITEM_BUCKET_FILL_FISH, 1.0f, 1.0f);
                 ItemStack bucket;
                 if (frog.getVariant()== FrogVariant.TEMPERATE){
-                    bucket = new ItemStack(ModItems.DRY_TEMPERATE_FROG_BUCKET);
+                    bucket = new ItemStack(DRY_TEMPERATE_FROG_BUCKET);
                 } else if (frog.getVariant()== FrogVariant.WARM) {
-                    bucket = new ItemStack(ModItems.DRY_TROPICAL_FROG_BUCKET);
+                    bucket = new ItemStack(DRY_TROPICAL_FROG_BUCKET);
                 } else if (frog.getVariant()== FrogVariant.COLD) {
-                    bucket = new ItemStack(ModItems.DRY_TUNDRA_FROG_BUCKET);
+                    bucket = new ItemStack(DRY_TUNDRA_FROG_BUCKET);
                 } else {
                     return ActionResult.SUCCESS;
                 }
@@ -64,43 +64,42 @@ public class ModEvents {
 
                 entity.discard();
             }
-
-            //Turtles
-
-            //Bottles
-            if (itemStack.getItem() == Items.GLASS_BOTTLE && entity.isAlive() && entity instanceof SlimeEntity slime) {
-                player.playSound(SoundEvents.ITEM_BOTTLE_FILL_DRAGONBREATH, 1.0f, 1.0f);
-                ItemStack bottle;
+            //Slimes
+            if (itemStack.getItem() == GLASS_BOTTLE && entity.isAlive() && entity instanceof SlimeEntity slime) {
+                ItemStack bottle = new ItemStack(SLIME_BOTTLE);
+                if (!player.isCreative()) itemStack.decrement(1);
+                int i = MathHelper.clamp(slime.getSize(), 2, 127);
                 if (slime.getType() == EntityType.SLIME && slime.getSize() == 1) {
-                    bottle = new ItemStack(ModItems.SLIME_BOTTLE);
-                } else if (slime.getType() == EntityType.SLIME && slime.getSize() == 2) {
-                    return ActionResult.FAIL;
-                } else if (slime.getType() == EntityType.SLIME && slime.getSize() == 3) {
-                    return ActionResult.FAIL;
-                } else if (slime.getType() == EntityType.SLIME && slime.getSize() == 4) {
-                    return ActionResult.FAIL;
-                } else if (slime.getType() == EntityType.MAGMA_CUBE && slime.getSize() == 1) {
-                    bottle = new ItemStack(ModItems.MAGMA_CUBE_BOTTLE);
-                } else if (slime.getType() == EntityType.MAGMA_CUBE && slime.getSize() == 2) {
-                    return ActionResult.FAIL;
-                } else if (slime.getType() == EntityType.MAGMA_CUBE && slime.getSize() == 3) {
-                    return ActionResult.FAIL;
-                } else if (slime.getType() == EntityType.MAGMA_CUBE && slime.getSize() == 4) {
-                    return ActionResult.FAIL;
+                    player.playSound(SoundEvents.ITEM_BOTTLE_FILL_DRAGONBREATH, 1.0f, 1.0f);
+                    Bucketable.copyDataToStack(slime, bottle);
+                    ItemStack itemstack2 = ItemUsage.exchangeStack(itemStack, player, bottle, false);
+                    player.setStackInHand(hand, itemstack2);
+                    entity.discard();
                 } else {
-                    return ActionResult.SUCCESS;
+                    if (slime.getType() == EntityType.SLIME && (slime.getSize() == i)){
+                        return ActionResult.FAIL;
+                    }
                 }
-                Bucketable.copyDataToStack(slime, bottle);
-                ItemStack itemstack2 = ItemUsage.exchangeStack(itemStack, player, bottle, false);
-                player.setStackInHand(hand, itemstack2);
-
-                entity.discard();
+                if (slime.getType() == EntityType.MAGMA_CUBE && slime.getSize() == 1) {
+                    player.playSound(SoundEvents.ITEM_BOTTLE_FILL_DRAGONBREATH, 1.0f, 1.0f);
+                    bottle = new ItemStack(MAGMA_CUBE_BOTTLE);
+                    Bucketable.copyDataToStack(slime, bottle);
+                    ItemStack itemstack2 = ItemUsage.exchangeStack(itemStack, player, bottle, false);
+                    player.setStackInHand(hand, itemstack2);
+                    entity.discard();
+                } else {
+                    if (slime.getType() == EntityType.MAGMA_CUBE && (slime.getSize() == i)){
+                        return ActionResult.FAIL;
+                    }
+                }
+                return ActionResult.SUCCESS;
             }
 
+
             //Bee
-            if (itemStack.getItem() == Items.GLASS_BOTTLE && entity.isAlive() && entity instanceof BeeEntity bee){
+            if (itemStack.getItem() == GLASS_BOTTLE && entity.isAlive() && entity instanceof BeeEntity bee){
                 player.playSound(SoundEvents.ITEM_BOTTLE_FILL_DRAGONBREATH, 1.0f, 1.0f);
-                Item bottle = ModItems.BEE_BOTTLE;
+                Item bottle = BEE_BOTTLE;
                 if (bottle != null)
                 {
                     ItemStack bottleItem = new ItemStack(bottle);
@@ -124,16 +123,29 @@ public class ModEvents {
             }
 
             //Allay
-            if (itemStack.getItem() == Items.BOOK && player.isSneaking() && entity.isAlive() && entity instanceof AllayEntity allay){
+            if (itemStack.getItem() == BOOK && player.isSneaking() && entity.isAlive() && entity instanceof AllayEntity allay){
                 player.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, 1.0f, 1.0f);
-                ItemStack newStack = ModItems.ALLAY_POSSESSED_BOOK.getDefaultStack();
+                ItemStack newStack = ALLAY_POSSESSED_BOOK.getDefaultStack();
                 Bucketable.copyDataToStack(allay, newStack);
                 ItemStack itemstack2 = ItemUsage.exchangeStack(itemStack ,player, newStack, false);
                 player.setStackInHand(hand, itemstack2);
-
                 entity.discard();
                 return ActionResult.SUCCESS;
 
+            }
+
+            //Golden Bucket Milking
+            if (itemStack.getItem() == GOLDEN_BUCKET || itemStack.getItem() == GOLDEN_MILK_BUCKET  && entity.isAlive() && entity instanceof LivingEntity milkableEntity && !milkableEntity.isBaby()){
+                NbtCompound compound = itemStack.getOrCreateNbt();
+                ItemStack milkBucket = ItemUsage.exchangeStack(itemStack.copy(), player, GOLDEN_MILK_BUCKET.getDefaultStack(), false);
+                boolean fullBucket = false;
+                if (itemStack.getItem() == GOLDEN_MILK_BUCKET){
+                    fullBucket = compound.getInt("FluidLevel") >=2;
+                    if (!fullBucket && !player.isCreative()){
+                        milkBucket.getOrCreateNbt().putInt("FluidLevel", compound.getInt("FluidLevel") + 1);
+                    }
+                    return ActionResult.SUCCESS;
+                }
             }
             return ActionResult.PASS;
 
