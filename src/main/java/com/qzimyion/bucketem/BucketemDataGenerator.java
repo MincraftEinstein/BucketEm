@@ -16,7 +16,7 @@ public class BucketemDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(ModItemTagsDatagen::new);
 		pack.addProvider(ModModelDatagen::new);
 		pack.addProvider(ModRecipeDatagen::new);
-		pack.addProvider(ModEntityDatagen::new);
+		pack.addProvider(ModTagEntityDatagen::new);
 
 		//Lang Datagen
 		pack.addProvider(AmericanEnglishDatagen::new);
