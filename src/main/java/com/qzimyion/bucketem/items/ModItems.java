@@ -11,9 +11,9 @@ import com.qzimyion.bucketem.items.NewItems.FrogBuckets.DryVariants.DryTundraFro
 import com.qzimyion.bucketem.items.NewItems.FrogBuckets.TemperateFrogBuckets;
 import com.qzimyion.bucketem.items.NewItems.FrogBuckets.TropicalFrogBuckets;
 import com.qzimyion.bucketem.items.NewItems.FrogBuckets.TundraFrogBuckets;
-import com.qzimyion.bucketem.items.NewItems.goldBuckets.GoldenBucketItem;
-import com.qzimyion.bucketem.items.NewItems.goldBuckets.MilkGoldenBucket;
-import com.qzimyion.bucketem.items.NewItems.goldBuckets.PowderSnowGoldenBucket;
+import com.qzimyion.bucketem.items.NewItems.GoldBuckets.GoldenBucketItem;
+import com.qzimyion.bucketem.items.NewItems.GoldBuckets.GoldenMilkBucket;
+import com.qzimyion.bucketem.items.NewItems.GoldBuckets.PowderSnowGoldenBucket;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
@@ -47,7 +47,7 @@ public class ModItems {
     public static final Item GOLDEN_BUCKET = registerItem("golden_bucket", new GoldenBucketItem(Fluids.EMPTY, new Item.Settings().maxCount(16)));
     public static final Item GOLDEN_WATER_BUCKET = registerItem("golden_water_bucket", new GoldenBucketItem(Fluids.WATER, new Item.Settings().maxCount(1)));
     public static final Item GOLDEN_LAVA_BUCKET = registerItem("golden_lava_bucket", new GoldenBucketItem(Fluids.LAVA, new Item.Settings().maxCount(1)));
-    public static final Item GOLDEN_MILK_BUCKET = registerItem("golden_milk_bucket", new MilkGoldenBucket(new Item.Settings().maxCount(1)));
+    public static final Item GOLDEN_MILK_BUCKET = registerItem("golden_milk_bucket", new GoldenMilkBucket(new Item.Settings().maxCount(1)));
     public static final Item GOLDEN_POWDER_SNOW_BUCKET = registerItem("golden_powder_snow_bucket", new PowderSnowGoldenBucket(Blocks.POWDER_SNOW, SoundEvents.ITEM_BUCKET_EMPTY_POWDER_SNOW, new Item.Settings().maxCount(1)));
 
 
@@ -61,7 +61,6 @@ public class ModItems {
     public static final Item ENDERMITE_BOTTLE = registerItem("endermite_bottle", new EntityBottle(EntityType.ENDERMITE, new FabricItemSettings().maxCount(1)));
     public static final Item SLIME_BOTTLE = registerItem("slime_bottle", new SlimeBottle(new FabricItemSettings().maxCount(1).recipeRemainder(GLASS_BOTTLE)));
     public static final Item MAGMA_CUBE_BOTTLE = registerItem("magma_bottle", new MagmaCubeBottle(new FabricItemSettings().maxCount(1).recipeRemainder(GLASS_BOTTLE)));
-
 
     private static Item registerItem(String name, Item item)
     {

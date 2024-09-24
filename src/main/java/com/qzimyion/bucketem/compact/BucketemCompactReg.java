@@ -7,7 +7,7 @@ public class BucketemCompactReg {
 
     public static void initializeCompacts(){
         //Spelunkery
-        if (IsModLoaded.isSpelunkeryModLoaded()) SpelunkeryBucketemItems.registerItems();
+        //if (IsModLoaded.isSpelunkeryModLoaded()) SpelunkeryBucketemItems.registerItems();
     }
 
     public static void initializeClientCompacts(){

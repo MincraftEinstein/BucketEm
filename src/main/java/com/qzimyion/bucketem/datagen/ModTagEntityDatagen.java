@@ -8,14 +8,17 @@ import net.minecraft.registry.RegistryWrapper;
 
 import java.util.concurrent.CompletableFuture;
 
-public class ModEntityDatagen extends FabricTagProvider.EntityTypeTagProvider {
+public class ModTagEntityDatagen extends FabricTagProvider.EntityTypeTagProvider {
 
-    public ModEntityDatagen(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+    public ModTagEntityDatagen(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
         super(output, completableFuture);
     }
 
     @Override
     public void configure(RegistryWrapper.WrapperLookup arg) {
-        getOrCreateTagBuilder(ModTags.EntityTypeTags.MILKABLE_ENTITY).add(EntityType.COW, EntityType.GOAT);
+        getOrCreateTagBuilder(ModTags.EntityTypeTags.MILKABLE_ENTITY)
+                .add(EntityType.COW)
+                .add(EntityType.GOAT)
+        ;
     }
 }

@@ -1,6 +1,6 @@
 package com.qzimyion.bucketem.client;
 
-import com.qzimyion.bucketem.mixin.EntityBucketItemAccessor;
+import com.qzimyion.bucketem.mixin.ItemMixins.EntityBucketItemAccessor;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Bucketable;
@@ -82,10 +82,17 @@ public class ModItemModelPredicates {
             return 0;
         });
 
+        //Golden Buckets
         FabricModelPredicateProviderRegistry.register(GOLDEN_WATER_BUCKET, new Identifier("level"), (stack, level, entity, hash) -> (float) stack.getOrCreateNbt().getInt("FluidLevel") / 10);
         FabricModelPredicateProviderRegistry.register(GOLDEN_LAVA_BUCKET, new Identifier("level"), (stack, level, entity, hash) -> (float) stack.getOrCreateNbt().getInt("FluidLevel") / 10);
         FabricModelPredicateProviderRegistry.register(GOLDEN_MILK_BUCKET, new Identifier("level"), (stack, level, entity, hash) -> (float) stack.getOrCreateNbt().getInt("FluidLevel") / 10);
         FabricModelPredicateProviderRegistry.register(GOLDEN_POWDER_SNOW_BUCKET, new Identifier("level"), (stack, level, entity, hash) -> (float) stack.getOrCreateNbt().getInt("FluidLevel") / 10);
+
+        //Stews
+        FabricModelPredicateProviderRegistry.register(Items.MUSHROOM_STEW, new Identifier("level"), (stack, level, entity, hash) -> (float) stack.getOrCreateNbt().getInt("SoupLevel") / 10);
+        FabricModelPredicateProviderRegistry.register(Items.BEETROOT_SOUP, new Identifier("level"), (stack, level, entity, hash) -> (float) stack.getOrCreateNbt().getInt("SoupLevel") / 10);
+        FabricModelPredicateProviderRegistry.register(Items.RABBIT_STEW, new Identifier("level"), (stack, level, entity, hash) -> (float) stack.getOrCreateNbt().getInt("SoupLevel") / 10);
+        FabricModelPredicateProviderRegistry.register(Items.SUSPICIOUS_STEW, new Identifier("level"), (stack, level, entity, hash) -> (float) stack.getOrCreateNbt().getInt("SoupLevel") / 10);
 
     }
 }
