@@ -1,4 +1,4 @@
-package com.qzimyion.bucketem.items.NewItems.goldBuckets;
+package com.qzimyion.bucketem.items.NewItems.GoldBuckets;
 
 import com.qzimyion.bucketem.items.ModItems;
 import net.minecraft.advancement.criterion.Criteria;

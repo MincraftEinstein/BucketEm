@@ -13,7 +13,9 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.event.GameEvent;
 
 import static com.qzimyion.bucketem.items.ModItems.*;
 import static net.minecraft.item.Items.*;
@@ -122,6 +124,27 @@ public class ModEvents {
                 }
             }
 
+            //Milking
+            if (entity.getType().isIn(ModTags.EntityTypeTags.MILKABLE_ENTITY)) {
+                if (entity instanceof LivingEntity livingEntity && !livingEntity.isBaby() && (itemStack.getItem() == GOLDEN_MILK_BUCKET || itemStack.getItem() == GOLDEN_BUCKET)) {
+                    NbtCompound tag = itemStack.getOrCreateNbt();
+                    ItemStack milkBucket = ItemUsage.exchangeStack(itemStack.copy(), player, GOLDEN_MILK_BUCKET.getDefaultStack());
+                    boolean fullBucket = false;
+                    if (itemStack.getItem() == GOLDEN_MILK_BUCKET) {
+                        fullBucket = tag.getInt("FluidLevel") >= 2;
+                        if (!fullBucket && !player.isCreative()) {
+                            milkBucket.getOrCreateNbt().putInt("FluidLevel", tag.getInt("FluidLevel") + 1);
+                        }
+                    }
+                    if (!fullBucket) {
+                        player.playSound(entity instanceof GoatEntity goat ? goat.isScreaming() ? SoundEvents.ENTITY_GOAT_SCREAMING_MILK : SoundEvents.ENTITY_GOAT_MILK : SoundEvents.ENTITY_COW_MILK, 1.0F, 1.0F);
+                        entity.emitGameEvent(GameEvent.ENTITY_INTERACT);
+                        player.setStackInHand(hand, milkBucket);
+                        return TypedActionResult.success(world.isClient()).getResult();
+                    }
+                }
+            }
+
             //Allay
             if (itemStack.getItem() == BOOK && player.isSneaking() && entity.isAlive() && entity instanceof AllayEntity allay){
                 player.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, 1.0f, 1.0f);
@@ -134,22 +157,31 @@ public class ModEvents {
 
             }
 
-            //Golden Bucket Milking
-            if (itemStack.getItem() == GOLDEN_BUCKET || itemStack.getItem() == GOLDEN_MILK_BUCKET  && entity.isAlive() && entity instanceof LivingEntity milkableEntity && !milkableEntity.isBaby()){
-                NbtCompound compound = itemStack.getOrCreateNbt();
-                ItemStack milkBucket = ItemUsage.exchangeStack(itemStack.copy(), player, GOLDEN_MILK_BUCKET.getDefaultStack(), false);
-                boolean fullBucket = false;
-                if (itemStack.getItem() == GOLDEN_MILK_BUCKET){
-                    fullBucket = compound.getInt("FluidLevel") >=2;
-                    if (!fullBucket && !player.isCreative()){
-                        milkBucket.getOrCreateNbt().putInt("FluidLevel", compound.getInt("FluidLevel") + 1);
-                    }
-                    return ActionResult.SUCCESS;
-                }
-            }
-            return ActionResult.PASS;
+            //Stuff
 
+            //Golden Entity buckets
+            //Puffer
+//            if (itemStack.getItem() == GOLDEN_WATER_BUCKET && entity.isAlive() && entity instanceof PufferfishEntity pufferfish){
+//                if (itemStack.getItem() instanceof GoldenEntityBucketItem goldBItem && goldBItem.hasNoEntities()){
+//                    pufferfish.playSound(SoundEvents.ITEM_BUCKET_EMPTY_FISH, 1, 1);
+//                    ItemStack itemStack2 = new ItemStack(GOLDEN_PUFFERFISH_BUCKET);
+//                    pufferfish.copyDataToStack(itemStack2);
+//                    ItemStack itemStack3 = ItemUsage.exchangeStack(itemStack, player, itemStack2, false);
+//                    player.setStackInHand(hand, itemStack3);
+//                    pufferfish.getWorld();
+//                    if (!world.isClient) {
+//                        Criteria.FILLED_BUCKET.trigger((ServerPlayerEntity)player, itemStack2);
+//                    }
+//                    entity.discard();
+//                    return ActionResult.SUCCESS;
+//                } else {
+//                    return ActionResult.valueOf(String.valueOf(Optional.empty()));
+//                }
+//            }
+
+            return ActionResult.PASS;
         }));
+
         Bucketem.LOGGER.info("Registering mod Events");
     }
 }
