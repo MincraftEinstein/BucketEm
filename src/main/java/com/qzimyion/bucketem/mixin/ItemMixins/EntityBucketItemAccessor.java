@@ -1,4 +1,4 @@
-package com.qzimyion.bucketem.mixin;
+package com.qzimyion.bucketem.mixin.ItemMixins;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.EntityBucketItem;
