@@ -1,7 +1,7 @@
 package com.qzimyion.bucketem.mixin.BlockEntityMixins;
 
 import com.qzimyion.bucketem.items.ModItems;
-import com.qzimyion.bucketem.items.NewItems.goldBuckets.GoldenBucketItem;
+import com.qzimyion.bucketem.items.NewItems.GoldBuckets.GoldenBucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.FurnaceFuelSlot;
 import org.spongepowered.asm.mixin.Mixin;
