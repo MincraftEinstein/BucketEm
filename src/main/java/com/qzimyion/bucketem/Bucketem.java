@@ -2,6 +2,7 @@ package com.qzimyion.bucketem;
 
 import com.qzimyion.bucketem.compact.BucketemCompactReg;
 import com.qzimyion.bucketem.dispenser.DispenserBehaviorRegistry;
+import com.qzimyion.bucketem.events.ModEvents;
 import com.qzimyion.bucketem.items.ModItemGroups;
 import com.qzimyion.bucketem.items.ModItems;
 import com.qzimyion.bucketem.potions.ModPotionsRegistry;

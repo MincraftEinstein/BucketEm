@@ -1,5 +1,6 @@
 package com.qzimyion.bucketem.compact;
 
+import com.qzimyion.bucketem.compact.WW.WWBucketEmClient;
 import com.qzimyion.bucketem.compact.spelunkery.SpelunkeryBucketemClient;
 import com.qzimyion.bucketem.compact.spelunkery.SpelunkeryBucketemItems;
 
@@ -12,7 +13,10 @@ public class BucketemCompactReg {
 
     public static void initializeClientCompacts(){
         //Spelunkery
-        if (IsModLoaded.isSpelunkeryModLoaded()) SpelunkeryBucketemClient.SItemPredicateModels();
+        //if (IsModLoaded.isSpelunkeryModLoaded()) SpelunkeryBucketemClient.SItemPredicateModels();
+
+        //WW
+        if (IsModLoaded.isWWModLoaded()) WWBucketEmClient.WWBucketemItemPredicateModels();
     }
 
 }

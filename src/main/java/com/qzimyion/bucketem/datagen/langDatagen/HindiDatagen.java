@@ -30,7 +30,7 @@ public class HindiDatagen extends FabricLanguageProvider {
         translationBuilder.add(ENDERMITE_BOTTLE, "बोतल में एंडर्माइट");
         translationBuilder.add(SLIME_BOTTLE, "बोतल में स्लाइम");
         translationBuilder.add(MAGMA_CUBE_BOTTLE, "बोतल में मैग्मा घन");
-        translationBuilder.add(ModStatusEffectsRegistry.BLISTERED_VISION, "छालेदार दृष्टि");
+        translationBuilder.add(ModStatusEffectsRegistry.MAGMA_VISION, "छालेदार दृष्टि");
 
     }
 }
