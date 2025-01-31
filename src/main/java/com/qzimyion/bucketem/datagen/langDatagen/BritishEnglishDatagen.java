@@ -39,6 +39,6 @@ public class BritishEnglishDatagen extends FabricLanguageProvider {
         translationBuilder.add(GOLDEN_POWDER_SNOW_BUCKET, "Golden Powder Snow Bucket");
         translationBuilder.add(GOLDEN_MILK_BUCKET, "Golden Milk Bucket");
         //Status effect
-        translationBuilder.add(ModStatusEffectsRegistry.BLISTERED_VISION, "Blistered Vision");
+        translationBuilder.add(ModStatusEffectsRegistry.MAGMA_VISION, "Blistered Vision");
     }
 }
