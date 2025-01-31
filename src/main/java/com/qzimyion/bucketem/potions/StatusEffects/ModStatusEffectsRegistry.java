@@ -7,7 +7,7 @@ import net.minecraft.util.Identifier;
 
 public class ModStatusEffectsRegistry {
 
-    public static final BlisteredVision MAGMA_VISION = new BlisteredVision();
+    public static final MagmaVision MAGMA_VISION = new MagmaVision();
     public static final Echolocation ECHOLOCATION = new Echolocation();
 
     public static void registerStatusEffects(){

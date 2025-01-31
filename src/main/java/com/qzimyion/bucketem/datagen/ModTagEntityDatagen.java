@@ -16,7 +16,7 @@ public class ModTagEntityDatagen extends FabricTagProvider.EntityTypeTagProvider
 
     @Override
     public void configure(RegistryWrapper.WrapperLookup arg) {
-        getOrCreateTagBuilder(ModTags.EntityTypeTags.MILKABLE_ENTITY)
+        getOrCreateTagBuilder(ModTags.EntityTypeTagsForMod.MILKABLE_ENTITY)
                 .add(EntityType.COW)
                 .add(EntityType.GOAT)
         ;
