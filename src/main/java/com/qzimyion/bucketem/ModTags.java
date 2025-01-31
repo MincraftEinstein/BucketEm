@@ -6,8 +6,8 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
 public class ModTags {
-
-    public static class EntityTypeTags{
+    public static class EntityTypeTagsForMod {
+        
         public static final TagKey<EntityType<?>> MILKABLE_ENTITY = createTag("milkable_entity");
 
         private static TagKey<EntityType<?>> createTag(String name) {
