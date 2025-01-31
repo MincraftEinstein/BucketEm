@@ -23,13 +23,15 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Shadow public abstract boolean isInSwimmingPose();
 
+    @Shadow protected abstract float getBaseMovementSpeedMultiplier();
+
     public LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
     }
 
     @Inject(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;hasNoGravity()Z"), slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isInLava()Z"), to = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isFallFlying()Z")))
     private void modifyLavaSpeed(Vec3d movementInput, CallbackInfo ci){
-        if (this.hasStatusEffect(ModStatusEffectsRegistry.BLISTERED_VISION)){
+        if (this.hasStatusEffect(ModStatusEffectsRegistry.MAGMA_VISION)){
             this.setVelocity(movementInputToVelocity(movementInput, 0.21f, this.getYaw()));
         }
     }
