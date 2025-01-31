@@ -1,0 +1,92 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/tropical_fish_bucket"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "size": 0,
+        "variant": 0
+      },
+      "model": "bucketem:item/tropical_fish_bucket_kob"
+    },
+    {
+      "predicate": {
+        "size": 0,
+        "variant": 0.1
+      },
+      "model": "bucketem:item/tropical_fish_bucket_sunstreak"
+    },
+    {
+      "predicate": {
+        "size": 0,
+        "variant": 0.2
+      },
+      "model": "bucketem:item/tropical_fish_bucket_snooper"
+    },
+    {
+      "predicate": {
+        "size": 0,
+        "variant": 0.3
+      },
+      "model": "bucketem:item/tropical_fish_bucket_dasher"
+    },
+    {
+      "predicate": {
+        "size": 0,
+        "variant": 0.4
+      },
+      "model": "bucketem:item/tropical_fish_bucket_brinely"
+    },
+    {
+      "predicate": {
+        "size": 0,
+        "variant": 0.5
+      },
+      "model": "bucketem:item/tropical_fish_bucket_spotty"
+    },
+    {
+      "predicate": {
+        "size": 1,
+        "variant": 0
+      },
+      "model": "bucketem:item/tropical_fish_bucket_flopper"
+    },
+    {
+      "predicate": {
+        "size": 1,
+        "variant": 0.1
+      },
+      "model": "bucketem:item/tropical_fish_bucket_stripey"
+    },
+    {
+      "predicate": {
+        "size": 1,
+        "variant": 0.2
+      },
+      "model": "bucketem:item/tropical_fish_bucket_glitter"
+    },
+    {
+      "predicate": {
+        "size": 1,
+        "variant": 0.3
+      },
+      "model": "bucketem:item/tropical_fish_bucket_blockfish"
+    },
+    {
+      "predicate": {
+        "size": 1,
+        "variant": 0.4
+      },
+      "model": "bucketem:item/tropical_fish_bucket_betty"
+    },
+    {
+      "predicate": {
+        "size": 1,
+        "variant": 0.5
+      },
+      "model": "bucketem:item/tropical_fish_bucket_clayfish"
+    }
+  ]
+}
