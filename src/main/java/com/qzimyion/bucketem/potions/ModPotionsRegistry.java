@@ -14,23 +14,21 @@ import net.minecraft.util.Identifier;
 
 public class ModPotionsRegistry {
 
-    public static final Potion BLISTERED_VISION_SHORT = Registry.register(Registries.POTION, new Identifier(Bucketem.MOD_ID, "blistered_vision"),
-            new Potion(new StatusEffectInstance(ModStatusEffectsRegistry.BLISTERED_VISION, 3600, 0)));
+    public static final Potion MAGMA_VISION_SHORT = Registry.register(Registries.POTION, new Identifier(Bucketem.MOD_ID, "magma_vision"),
+            new Potion(new StatusEffectInstance(ModStatusEffectsRegistry.MAGMA_VISION, 3600, 0)));
 
-    public static final Potion BLISTERED_VISION_LONG = Registry.register(Registries.POTION, new Identifier(Bucketem.MOD_ID, "blistered_vision_long"),
-            new Potion(new StatusEffectInstance(ModStatusEffectsRegistry.BLISTERED_VISION, 9600, 0)));
+    public static final Potion MAGMA_VISION_LONG = Registry.register(Registries.POTION, new Identifier(Bucketem.MOD_ID, "magma_vision_long"),
+            new Potion(new StatusEffectInstance(ModStatusEffectsRegistry.MAGMA_VISION, 9600, 0)));
 
     public static void registerPotions(){
-
-
         Bucketem.LOGGER.info("Registering mod Potions");
     }
 
     public static void registerPotionRecipes(){
         BrewingRecipeRegistry.registerPotionRecipe(Potions.AWKWARD, ModItems.SLIME_BOTTLE, Potions.LEAPING);
-        BrewingRecipeRegistry.registerPotionRecipe(Potions.NIGHT_VISION, ModItems.MAGMA_CUBE_BOTTLE, BLISTERED_VISION_SHORT);
-        BrewingRecipeRegistry.registerPotionRecipe(Potions.LONG_NIGHT_VISION, ModItems.MAGMA_CUBE_BOTTLE, BLISTERED_VISION_LONG);
-        BrewingRecipeRegistry.registerPotionRecipe(BLISTERED_VISION_SHORT, Items.REDSTONE, BLISTERED_VISION_LONG);
+        BrewingRecipeRegistry.registerPotionRecipe(Potions.NIGHT_VISION, ModItems.MAGMA_CUBE_BOTTLE, MAGMA_VISION_SHORT);
+        BrewingRecipeRegistry.registerPotionRecipe(Potions.LONG_NIGHT_VISION, ModItems.MAGMA_CUBE_BOTTLE, MAGMA_VISION_LONG);
+        BrewingRecipeRegistry.registerPotionRecipe(MAGMA_VISION_SHORT, Items.REDSTONE, MAGMA_VISION_LONG);
 
         Bucketem.LOGGER.info("Registering mod Potion Recipes");
     }

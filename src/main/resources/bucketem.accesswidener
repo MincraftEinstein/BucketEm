@@ -5,6 +5,11 @@ accessible class net/minecraft/client/render/BackgroundRenderer$FogData
 accessible method net/minecraft/client/render/BackgroundRenderer$StatusEffectFogModifier getStatusEffect ()Lnet/minecraft/entity/effect/StatusEffect;
 accessible class net/minecraft/client/render/BackgroundRenderer$StatusEffectFogModifier
 accessible method net/minecraft/client/render/BackgroundRenderer getFogModifier (Lnet/minecraft/entity/Entity;F)Lnet/minecraft/client/render/BackgroundRenderer$StatusEffectFogModifier;
+accessible field net/minecraft/client/render/block/BlockRenderManager fluidRenderer Lnet/minecraft/client/render/block/FluidRenderer;
+accessible field net/minecraft/client/render/chunk/ChunkBuilder$BuiltChunk needsRebuild Z
+accessible field net/minecraft/client/texture/SpriteContents width I
+accessible field net/minecraft/client/texture/SpriteContents height I
+
 
 # Bee entity
 accessible method net/minecraft/entity/passive/BeeEntity setHasNectar (Z)V

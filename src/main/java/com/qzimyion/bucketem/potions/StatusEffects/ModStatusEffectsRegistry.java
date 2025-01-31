@@ -7,10 +7,12 @@ import net.minecraft.util.Identifier;
 
 public class ModStatusEffectsRegistry {
 
-    public static final BlisteredVision BLISTERED_VISION = new BlisteredVision();
+    public static final BlisteredVision MAGMA_VISION = new BlisteredVision();
+    public static final Echolocation ECHOLOCATION = new Echolocation();
 
     public static void registerStatusEffects(){
-        Registry.register(Registries.STATUS_EFFECT, new Identifier(Bucketem.MOD_ID, "blistered_vision"), BLISTERED_VISION);
+        Registry.register(Registries.STATUS_EFFECT, new Identifier(Bucketem.MOD_ID, "magma_vision"), MAGMA_VISION);
+        Registry.register(Registries.STATUS_EFFECT, new Identifier(Bucketem.MOD_ID, "echolocation"), ECHOLOCATION);
 
         Bucketem.LOGGER.info("Registering mod Status Effects");
     }
