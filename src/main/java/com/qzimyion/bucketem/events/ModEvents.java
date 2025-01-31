@@ -1,5 +1,7 @@
-package com.qzimyion.bucketem;
+package com.qzimyion.bucketem.events;
 
+import com.qzimyion.bucketem.Bucketem;
+import com.qzimyion.bucketem.ModTags;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.minecraft.entity.Bucketable;
 import net.minecraft.entity.EntityType;
@@ -63,7 +65,6 @@ public class ModEvents {
                 Bucketable.copyDataToStack(frog, bucket);
                 ItemStack itemstack2 = ItemUsage.exchangeStack(itemStack ,player, bucket, false);
                 player.setStackInHand(hand, itemstack2);
-
                 entity.discard();
             }
             //Slimes
@@ -96,8 +97,6 @@ public class ModEvents {
                 }
                 return ActionResult.SUCCESS;
             }
-
-
             //Bee
             if (itemStack.getItem() == GLASS_BOTTLE && entity.isAlive() && entity instanceof BeeEntity bee){
                 player.playSound(SoundEvents.ITEM_BOTTLE_FILL_DRAGONBREATH, 1.0f, 1.0f);
@@ -111,8 +110,7 @@ public class ModEvents {
                     nbt.putInt("Anger", bee.getAngerTime());
                     nbt.putInt("Age", bee.getBreedingAge());
                     nbt.putFloat("Health", bee.getHealth());
-                    if (bee.getAngryAt() != null)
-                        nbt.putUuid("AngryAt", bee.getAngryAt());
+                    if (bee.getAngryAt() != null) nbt.putUuid("AngryAt", bee.getAngryAt());
 
                     itemStack.decrement(1);
                     player.incrementStat(Stats.USED.getOrCreateStat(itemStack.getItem()));
@@ -125,7 +123,7 @@ public class ModEvents {
             }
 
             //Milking
-            if (entity.getType().isIn(ModTags.EntityTypeTags.MILKABLE_ENTITY)) {
+            if (entity.getType().isIn(ModTags.EntityTypeTagsForMod.MILKABLE_ENTITY)) {
                 if (entity instanceof LivingEntity livingEntity && !livingEntity.isBaby() && (itemStack.getItem() == GOLDEN_MILK_BUCKET || itemStack.getItem() == GOLDEN_BUCKET)) {
                     NbtCompound tag = itemStack.getOrCreateNbt();
                     ItemStack milkBucket = ItemUsage.exchangeStack(itemStack.copy(), player, GOLDEN_MILK_BUCKET.getDefaultStack());
