@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "wilderwild:item/jellyfish_bucket"
+  },
+  "overrides": [
+    { "predicate": { "age": 0 }, "model": "wilderwild:item/jellyfish_bucket_baby" },
+    { "predicate": { "age": 1 }, "model": "wilderwild:item/jellyfish_bucket" }
+  ]
+}
