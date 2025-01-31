@@ -3,9 +3,9 @@ package com.qzimyion.bucketem.potions.StatusEffects;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 
-public class BlisteredVision extends StatusEffect {
+public class MagmaVision extends StatusEffect {
 
-    public BlisteredVision(){
+    public MagmaVision(){
         super(StatusEffectCategory.BENEFICIAL, 0x661348);
     }
 
@@ -13,5 +13,4 @@ public class BlisteredVision extends StatusEffect {
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
         return true;
     }
-
 }
