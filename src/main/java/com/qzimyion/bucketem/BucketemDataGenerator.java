@@ -18,8 +18,6 @@ public class BucketemDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(ModRecipeDatagen::new);
 		pack.addProvider(ModTagEntityDatagen::new);
 
-		fabricDataGenerator.createPack().addProvider(ModTagItemDatagen::new);
-
 		//Lang Datagen
 		pack.addProvider(AmericanEnglishDatagen::new);
 		pack.addProvider(BritishEnglishDatagen::new);
