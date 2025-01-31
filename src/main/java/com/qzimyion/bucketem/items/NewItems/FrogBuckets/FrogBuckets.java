@@ -1,5 +1,6 @@
 package com.qzimyion.bucketem.items.NewItems.FrogBuckets;
 
+import net.frozenblock.wilderwild.entity.variant.JellyfishVariant;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.passive.FrogEntity;
@@ -17,10 +18,12 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
-public class TemperateFrogBuckets extends BucketItem {
+public class FrogBuckets extends BucketItem {
 
-    public TemperateFrogBuckets(Fluid fluid, Settings settings) {
+    final FrogVariant variant;
+    public FrogBuckets(FrogVariant variant ,Fluid fluid, Settings settings) {
         super(fluid, settings);
+        this.variant = variant;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class TemperateFrogBuckets extends BucketItem {
         FrogEntity entity = EntityType.FROG.spawnFromItemStack(world, stack, null, pos, SpawnReason.BUCKET, true, false);
         if (entity != null) {
             entity.setPersistent();
-            entity.setVariant(FrogVariant.TEMPERATE);
+            entity.setVariant(variant);
         }
     }
 }

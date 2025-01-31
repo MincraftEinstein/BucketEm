@@ -5,18 +5,16 @@ import com.qzimyion.bucketem.items.NewItems.Bottles.EntityBottle;
 import com.qzimyion.bucketem.items.NewItems.Bottles.MagmaCubeBottle;
 import com.qzimyion.bucketem.items.NewItems.Bottles.SlimeBottle;
 import com.qzimyion.bucketem.items.NewItems.EntityBook;
-import com.qzimyion.bucketem.items.NewItems.FrogBuckets.DryVariants.DryTemperateFrogBuckets;
-import com.qzimyion.bucketem.items.NewItems.FrogBuckets.DryVariants.DryTropicalFrogBuckets;
-import com.qzimyion.bucketem.items.NewItems.FrogBuckets.DryVariants.DryTundraFrogBuckets;
-import com.qzimyion.bucketem.items.NewItems.FrogBuckets.TemperateFrogBuckets;
-import com.qzimyion.bucketem.items.NewItems.FrogBuckets.TropicalFrogBuckets;
-import com.qzimyion.bucketem.items.NewItems.FrogBuckets.TundraFrogBuckets;
+import com.qzimyion.bucketem.items.NewItems.FrogBuckets.DryFrogBuckets;
+import com.qzimyion.bucketem.items.NewItems.FrogBuckets.FrogBuckets;
 import com.qzimyion.bucketem.items.NewItems.GoldBuckets.GoldenBucketItem;
+//import com.qzimyion.bucketem.items.NewItems.GoldBuckets.GoldenEntityBucketItem;
 import com.qzimyion.bucketem.items.NewItems.GoldBuckets.GoldenMilkBucket;
 import com.qzimyion.bucketem.items.NewItems.GoldBuckets.PowderSnowGoldenBucket;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.passive.FrogVariant;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.EntityBucketItem;
 import net.minecraft.item.Item;
@@ -35,15 +33,16 @@ public class ModItems {
     public static final Item SQUID_BUCKET = registerItem("squid_bucket", new EntityBucketItem(EntityType.SQUID, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item GLOW_SQUID_BUCKET = registerItem("glow_squid_bucket", new EntityBucketItem(EntityType.GLOW_SQUID, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     //Experimental
-    public static final Item FROG_BUCKET = registerItem("frog_bucket", new EntityBucketItem(EntityType.FROG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new Item.Settings().maxCount(1)));
+    //public static final Item FROG_BUCKET = registerItem("frog_bucket", new EntityBucketItem(EntityType.FROG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new Item.Settings().maxCount(1)));
+    //public static final Item GOLDEN_SQUID_BUCKET = registerItem("golden_squid_bucket", new GoldenEntityBucketItem(Fluids.WATER, EntityType.SQUID, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new Item.Settings().maxCount(1)));
 
-    public static final Item TEMPERATE_FROG_BUCKET = registerItem("temperate_frog_bucket", new TemperateFrogBuckets(Fluids.WATER ,new FabricItemSettings().maxCount(1)));
-    public static final Item TROPICAL_FROG_BUCKET = registerItem("tropical_frog_bucket", new TropicalFrogBuckets(Fluids.WATER , new FabricItemSettings().maxCount(1)));
-    public static final Item TUNDRA_FROG_BUCKET = registerItem("tundra_frog_bucket", new TundraFrogBuckets(Fluids.WATER ,new FabricItemSettings().maxCount(1)));
+    public static final Item TEMPERATE_FROG_BUCKET = registerItem("temperate_frog_bucket", new FrogBuckets(FrogVariant.TEMPERATE ,Fluids.WATER ,new FabricItemSettings().maxCount(1)));
+    public static final Item TROPICAL_FROG_BUCKET = registerItem("tropical_frog_bucket", new FrogBuckets(FrogVariant.WARM ,Fluids.WATER, new FabricItemSettings().maxCount(1)));
+    public static final Item TUNDRA_FROG_BUCKET = registerItem("tundra_frog_bucket", new FrogBuckets(FrogVariant.COLD, Fluids.WATER ,new FabricItemSettings().maxCount(1)));
     public static final Item TURTLE_BUCKET = registerItem("turtle_bucket", new EntityBucketItem(EntityType.TURTLE, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
-    public static final Item DRY_TEMPERATE_FROG_BUCKET = registerItem("dry_temperate_frog_bucket", new DryTemperateFrogBuckets(new FabricItemSettings().maxCount(1)));
-    public static final Item DRY_TROPICAL_FROG_BUCKET = registerItem("dry_tropical_frog_bucket", new DryTropicalFrogBuckets(new FabricItemSettings().maxCount(1)));
-    public static final Item DRY_TUNDRA_FROG_BUCKET = registerItem("dry_tundra_frog_bucket", new DryTundraFrogBuckets(new FabricItemSettings().maxCount(1)));
+    public static final Item DRY_TEMPERATE_FROG_BUCKET = registerItem("dry_temperate_frog_bucket", new DryFrogBuckets(FrogVariant.TEMPERATE ,new FabricItemSettings().maxCount(1)));
+    public static final Item DRY_TROPICAL_FROG_BUCKET = registerItem("dry_tropical_frog_bucket", new DryFrogBuckets(FrogVariant.WARM ,new FabricItemSettings().maxCount(1)));
+    public static final Item DRY_TUNDRA_FROG_BUCKET = registerItem("dry_tundra_frog_bucket", new DryFrogBuckets(FrogVariant.COLD ,new FabricItemSettings().maxCount(1)));
     public static final Item GOLDEN_BUCKET = registerItem("golden_bucket", new GoldenBucketItem(Fluids.EMPTY, new Item.Settings().maxCount(16)));
     public static final Item GOLDEN_WATER_BUCKET = registerItem("golden_water_bucket", new GoldenBucketItem(Fluids.WATER, new Item.Settings().maxCount(1)));
     public static final Item GOLDEN_LAVA_BUCKET = registerItem("golden_lava_bucket", new GoldenBucketItem(Fluids.LAVA, new Item.Settings().maxCount(1)));
@@ -62,7 +61,7 @@ public class ModItems {
     public static final Item SLIME_BOTTLE = registerItem("slime_bottle", new SlimeBottle(new FabricItemSettings().maxCount(1).recipeRemainder(GLASS_BOTTLE)));
     public static final Item MAGMA_CUBE_BOTTLE = registerItem("magma_bottle", new MagmaCubeBottle(new FabricItemSettings().maxCount(1).recipeRemainder(GLASS_BOTTLE)));
 
-    private static Item registerItem(String name, Item item)
+    public static Item registerItem(String name, Item item)
     {
         return Registry.register(Registries.ITEM, new Identifier(Bucketem.MOD_ID, name), item);
     }

@@ -1,4 +1,4 @@
-package com.qzimyion.bucketem.items.NewItems.FrogBuckets.DryVariants;
+package com.qzimyion.bucketem.items.NewItems.FrogBuckets;
 
 import com.qzimyion.bucketem.items.NewItems.Bottles.SlimeBottle;
 import net.minecraft.block.BlockState;
@@ -19,10 +19,11 @@ import net.minecraft.world.World;
 
 import java.util.Objects;
 
-public class DryTemperateFrogBuckets extends SlimeBottle {
-
-    public DryTemperateFrogBuckets(Settings settings) {
+public class DryFrogBuckets extends SlimeBottle {
+    private final FrogVariant variant;
+    public DryFrogBuckets(FrogVariant variant ,Settings settings) {
         super(settings);
+        this.variant = variant;
     }
 
     @Override
@@ -49,7 +50,7 @@ public class DryTemperateFrogBuckets extends SlimeBottle {
             FrogEntity entity = EntityType.FROG.spawnFromItemStack((ServerWorld) world, itemStack, null, blockPos1, SpawnReason.BUCKET, true, false);
             if (entity != null) {
                 entity.setPersistent();
-                entity.setVariant(FrogVariant.TEMPERATE);
+                entity.setVariant(variant);
             }
         }
         return ActionResult.CONSUME;
