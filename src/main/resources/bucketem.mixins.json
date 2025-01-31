@@ -15,14 +15,14 @@
     "EntityMixins.StriderEntityMixin",
     "EntityMixins.TurtleEntityMixin",
     "EntityMixins.VexEntityMixin",
-    "ItemMixins.EntityBucketItemAccessor",
-    "ItemMixins.StewItemMixin",
-    "ItemMixins.SussyStewItemMixin"
+    "ItemMixins.EntityBucketItemAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
+    "accessors.IFluidRendererAccessor",
+    "accessors.IWorldRendererAccessor",
     "RenderingMixins.LavaFogMixin"
   ]
 }
