@@ -5,8 +5,6 @@ import com.qzimyion.bucketem.dispenser.DispenserBehaviorRegistry;
 import com.qzimyion.bucketem.events.ModEvents;
 import com.qzimyion.bucketem.items.ModItemGroups;
 import com.qzimyion.bucketem.items.ModItems;
-import com.qzimyion.bucketem.potions.ModPotionsRegistry;
-import com.qzimyion.bucketem.potions.StatusEffects.ModStatusEffectsRegistry;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -23,9 +21,6 @@ public class Bucketem implements ModInitializer {
 		ModItemGroups.registerItemGroups();
 		ModEvents.registerEvents();
 		DispenserBehaviorRegistry.registerDispenserBehavior();
-		ModStatusEffectsRegistry.registerStatusEffects();
-		ModPotionsRegistry.registerPotions();
-		ModPotionsRegistry.registerPotionRecipes();
 		BucketemCompactReg.initializeCompacts();
 	}
 }

@@ -22,7 +22,6 @@
   },
   "client": [
     "accessors.IFluidRendererAccessor",
-    "accessors.IWorldRendererAccessor",
-    "RenderingMixins.LavaFogMixin"
+    "accessors.IWorldRendererAccessor"
   ]
 }

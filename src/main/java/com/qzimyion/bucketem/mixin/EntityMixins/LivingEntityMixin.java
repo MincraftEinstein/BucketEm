@@ -1,50 +1,64 @@
 package com.qzimyion.bucketem.mixin.EntityMixins;
 
-import com.qzimyion.bucketem.potions.StatusEffects.ModStatusEffectsRegistry;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Slice;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @SuppressWarnings("SameParameterValue")
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends Entity {
-    @Shadow public abstract boolean hasStatusEffect(StatusEffect effect);
+public abstract class LivingEntityMixin {
 
-    @Shadow public abstract boolean isInSwimmingPose();
+//    @Shadow protected abstract boolean shouldSwimInFluids();
+//
+//    @Shadow protected abstract float getBaseMovementSpeedMultiplier();
+//
+//    @Inject(method = "travel", at = @At("HEAD"), cancellable = true)
+//    private void modifyLavaMovement(Vec3d movementInput, CallbackInfo ci) {
+//        LivingEntity entity = (LivingEntity) (Object) this;
+//        World world = entity.getWorld();
+//
+//        if (entity.isInLava() && entity.hasStatusEffect(ModStatusEffectsRegistry.MAGMA_VISION)) {
+//            double ex = entity.getY();
+//            FluidState fluidState = world.getFluidState(entity.getBlockPos());
+//            if (shouldSwimInFluids() && !entity.canWalkOnFluid(fluidState)) {
+//                float f = entity.isSprinting() ? 0.9F : getBaseMovementSpeedMultiplier();
+//                float g = 0.02F;
+//                float h = (float) EnchantmentHelper.getDepthStrider(entity);
+//
+//                if (h > 3.0F) {
+//                    h = 3.0F;
+//                }
+//                if (!entity.isOnGround()) {
+//                    h *= 0.5F;
+//                }
+//                if (h > 0.0F) {
+//                    f += (0.54600006F - f) * h / 3.0F;
+//                    g += (entity.getMovementSpeed() - g) * h / 3.0F;
+//                }
+//                if (entity.hasStatusEffect(StatusEffects.DOLPHINS_GRACE)) {
+//                    f = 0.96F;
+//                }
+//
+//                entity.updateVelocity(g, movementInput);
+//                entity.move(MovementType.SELF, entity.getVelocity());
+//                Vec3d vec3d = entity.getVelocity();
+//                if (entity.horizontalCollision && entity.isClimbing()) {
+//                    vec3d = new Vec3d(vec3d.x, 0.2, vec3d.z);
+//                }
+//                if (movementInput.y <= 0) {
+//                    entity.setVelocity(entity.getVelocity().add(0.0, -0.1, 0.0));
+//                } else {
+//                    entity.setVelocity(entity.getVelocity().add(0.0, 0.02, 0.0));
+//                }
+//                entity.setVelocity(vec3d.multiply(f, 0.8F, f));
+//                Vec3d vec3d2 = entity.applyFluidMovingSpeed(0.08, entity.getVelocity().y <= 0.0, entity.getVelocity());
+//                entity.setVelocity(vec3d2);
+//
+//                if (entity.horizontalCollision && entity.doesNotCollide(vec3d2.x, vec3d2.y + 0.6F - entity.getY() + ex, vec3d2.z)) {
+//                    entity.setVelocity(vec3d2.x, 0.3F, vec3d2.z);
+//                }
+//                ci.cancel();
+//            }
+//        }
+//    }
 
-    @Shadow protected abstract float getBaseMovementSpeedMultiplier();
-
-    public LivingEntityMixin(EntityType<?> type, World world) {
-        super(type, world);
-    }
-
-    @Inject(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;hasNoGravity()Z"), slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isInLava()Z"), to = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isFallFlying()Z")))
-    private void modifyLavaSpeed(Vec3d movementInput, CallbackInfo ci){
-        if (this.hasStatusEffect(ModStatusEffectsRegistry.MAGMA_VISION)){
-            this.setVelocity(movementInputToVelocity(movementInput, 0.21f, this.getYaw()));
-        }
-    }
-
-    @Unique
-    private static Vec3d movementInputToVelocity(Vec3d movementInput, float speed, float yaw) {
-        double d = movementInput.lengthSquared();
-        if (d < 1.0E-7) {
-            return Vec3d.ZERO;
-        }
-        Vec3d vec3d = (d > 1.0 ? movementInput.normalize() : movementInput).multiply(speed);
-        float f = MathHelper.sin(yaw * ((float)Math.PI / 180));
-        float g = MathHelper.cos(yaw * ((float)Math.PI / 180));
-        return new Vec3d(vec3d.x * (double)g - vec3d.z * (double)f, vec3d.y, vec3d.z * (double)g + vec3d.x * (double)f);
-    }
 }

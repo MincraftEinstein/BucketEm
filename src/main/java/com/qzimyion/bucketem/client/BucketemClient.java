@@ -1,7 +1,6 @@
 package com.qzimyion.bucketem.client;
 
 import com.qzimyion.bucketem.compact.BucketemCompactReg;
-import com.qzimyion.bucketem.events.ModClientEvents;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.client.color.item.ItemColorProvider;
@@ -25,6 +24,5 @@ public class BucketemClient implements ClientModInitializer {
         BucketemCompactReg.initializeClientCompacts();
         ItemColorProvider provider = getItemColor(getItemColors(), Items.TROPICAL_FISH_BUCKET);
         ColorProviderRegistry.ITEM.register(new TropicalFishBucketItemColour(provider), Items.TROPICAL_FISH_BUCKET);
-        ModClientEvents.register();
     }
 }
