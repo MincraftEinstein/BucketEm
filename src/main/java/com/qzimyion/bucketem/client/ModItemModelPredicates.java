@@ -110,27 +110,6 @@ public class ModItemModelPredicates {
             return anger;
         });
 
-        //Tropical fish
-        FabricModelPredicateProviderRegistry.register(Items.TROPICAL_FISH_BUCKET, new Identifier("variant"), (stack, clientWorld, livingEntity, id) -> {
-            Item item = stack.getItem();
-            if (!(item instanceof EntityBucketItem)) {
-                return 0f;
-            }
-            Entity entity = ((EntityBucketItemAccessor) item).getEntityType().create(MINECRAFT.world);
-            if (!(entity instanceof TropicalFishEntity) || entity == null) {
-                return 0f;
-            }
-            ((Bucketable) entity).copyDataFromNbt(stack.getOrCreateNbt());
-            return ((TropicalFishEntity) entity).getVariant().ordinal() / 10f;
-        });
-        FabricModelPredicateProviderRegistry.register(Items.TROPICAL_FISH_BUCKET, new Identifier("size"), (stack, clientWorld, livingEntity, i) -> {
-            float size = 0;
-            if (livingEntity instanceof TropicalFishEntity tropicalFish && tropicalFish.getVariant().getSize().ordinal() == 1){
-                size = 1;
-            }
-            return size;
-        });
-
 
         //Golden Buckets
         FabricModelPredicateProviderRegistry.register(GOLDEN_WATER_BUCKET, new Identifier("level"), (stack, level, entity, hash) -> stack.getOrCreateNbt().getInt("FluidLevel") / 10f);
