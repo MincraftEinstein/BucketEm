@@ -1,6 +1,5 @@
 package com.qzimyion.bucketem.datagen.langDatagen;
 
-import com.qzimyion.bucketem.potions.StatusEffects.ModStatusEffectsRegistry;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
@@ -38,7 +37,5 @@ public class AmericanEnglishDatagen extends FabricLanguageProvider {
         translationBuilder.add(GOLDEN_LAVA_BUCKET, "Golden Lava Bucket");
         translationBuilder.add(GOLDEN_POWDER_SNOW_BUCKET, "Golden Powder Snow Bucket");
         translationBuilder.add(GOLDEN_MILK_BUCKET, "Golden Milk Bucket");
-        //Status effect
-        translationBuilder.add(ModStatusEffectsRegistry.MAGMA_VISION, "Blistered Vision");
     }
 }

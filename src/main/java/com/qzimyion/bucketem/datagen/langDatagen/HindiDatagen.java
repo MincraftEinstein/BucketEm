@@ -1,6 +1,5 @@
 package com.qzimyion.bucketem.datagen.langDatagen;
 
-import com.qzimyion.bucketem.potions.StatusEffects.ModStatusEffectsRegistry;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
@@ -30,7 +29,5 @@ public class HindiDatagen extends FabricLanguageProvider {
         translationBuilder.add(ENDERMITE_BOTTLE, "बोतल में एंडर्माइट");
         translationBuilder.add(SLIME_BOTTLE, "बोतल में स्लाइम");
         translationBuilder.add(MAGMA_CUBE_BOTTLE, "बोतल में मैग्मा घन");
-        translationBuilder.add(ModStatusEffectsRegistry.MAGMA_VISION, "छालेदार दृष्टि");
-
     }
 }
