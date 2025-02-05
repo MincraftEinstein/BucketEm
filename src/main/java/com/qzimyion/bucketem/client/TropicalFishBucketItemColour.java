@@ -4,7 +4,6 @@ import net.minecraft.client.color.item.ItemColorProvider;
 import net.minecraft.entity.passive.TropicalFishEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.ColorHelper;
 
