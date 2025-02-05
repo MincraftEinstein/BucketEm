@@ -6,26 +6,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.math.ColorHelper;
 
 public class TropicalFishBucketItemColour implements ItemColorProvider {
-    private final ItemColorProvider itemColorProvider;
-
-    public TropicalFishBucketItemColour(ItemColorProvider parent) {
-        this.itemColorProvider = parent;
-    }
-
 
     @Override
     public int getColor(ItemStack stack, int tintLayer) {
-        if (tintLayer == 1 || tintLayer == 2){
-            NbtCompound nbtCompound = stack.getNbt();
-            if (nbtCompound != null && nbtCompound.contains(TropicalFishEntity.BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)){
-                int variant = nbtCompound.getInt(TropicalFishEntity.BUCKET_VARIANT_TAG_KEY);
-                DyeColor color = tintLayer == 1 ? TropicalFishEntity.getBaseDyeColor(variant) : TropicalFishEntity.getPatternDyeColor(variant);
-                float[] colors = color.getColorComponents();
-                return (int) (colors[0] * 255) << 16 | (int) (colors[1] * 255) << 8 | (int) (colors[2] * 255);
-            }
+        if (tintLayer == 0) return 0xFFFFFF;
+        NbtCompound nbt = stack.getNbt();
+        float[] colorComponents = (tintLayer == 1 ? DyeColor.ORANGE : DyeColor.WHITE).getColorComponents();
+
+        if (nbt != null && nbt.contains(TropicalFishEntity.BUCKET_VARIANT_TAG_KEY)) {
+            int variant = nbt.getInt(TropicalFishEntity.BUCKET_VARIANT_TAG_KEY);
+            colorComponents = (tintLayer == 1 ? TropicalFishEntity.getBaseDyeColor(variant) : TropicalFishEntity.getPatternDyeColor(variant)).getColorComponents();
         }
-        return itemColorProvider != null ? itemColorProvider.getColor(stack, tintLayer) : -1;
+        return ColorHelper.Argb.getArgb(255, (int) (colorComponents[0] * 255), (int) (colorComponents[1] * 255), (int) (colorComponents[2] * 255));
     }
 }
