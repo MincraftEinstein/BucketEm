@@ -27,5 +27,14 @@ public class ModRecipeDatagen extends FabricRecipeProvider {
                 .pattern("# #").pattern("A#A").input('#', Items.GOLD_BLOCK).input('A', Items.GOLD_INGOT)
                 .criterion("has_gold_blocks", RecipeProvider.conditionsFromItem(Items.GOLD_BLOCK)).criterion("has_gold_ingots", RecipeProvider.conditionsFromItem(Items.GOLD_INGOT))
                 .offerTo(exporter);
+
+        //New G milk bucket recipes
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, Items.CAKE)
+                .pattern("###").pattern("ABA").pattern("CCC").input('#', ModItems.GOLDEN_MILK_BUCKET).input('A', Items.SUGAR).input('B', Items.EGG).input('C', Items.WHEAT)
+                .criterion("has_milk_gold_buckets", RecipeProvider.conditionsFromItem(ModItems.GOLDEN_MILK_BUCKET))
+                .criterion("has_wheat", RecipeProvider.conditionsFromItem(Items.WHEAT))
+                .criterion("has_sugar", RecipeProvider.conditionsFromItem(Items.SUGAR))
+                .criterion("has_eggs", RecipeProvider.conditionsFromItem(Items.EGG)).group("cake")
+                .offerTo(exporter);
     }
 }
