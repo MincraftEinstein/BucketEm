@@ -20,9 +20,6 @@ public class BucketemCompactReg {
     public static void initializeClientCompacts(){
         //Spelunkery
         //if (IsModLoaded.isSpelunkeryModLoaded()) SpelunkeryBucketemClient.SItemPredicateModels();
-
-        //WW
-        if (IsModLoaded.isWWModLoaded()) WWBucketEmClient.WWBucketemItemPredicateModels();
     }
 
 }

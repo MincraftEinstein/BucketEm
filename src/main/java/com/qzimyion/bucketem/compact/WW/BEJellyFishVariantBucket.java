@@ -3,15 +3,13 @@ package com.qzimyion.bucketem.compact.WW;
 import net.frozenblock.wilderwild.entity.Jellyfish;
 import net.frozenblock.wilderwild.entity.variant.JellyfishVariant;
 import net.frozenblock.wilderwild.registry.WWEntityTypes;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.passive.FrogEntity;
-import net.minecraft.entity.passive.FrogVariant;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -48,5 +46,9 @@ public class BEJellyFishVariantBucket extends BucketItem {
             entity.setPersistent();
             entity.setVariant(this.variant);
         }
+        NbtCompound nbtCompound = stack.getOrCreateNbt();
+        int age = nbtCompound.contains("age") ? nbtCompound.getInt("age") : 0;
+        assert entity != null;
+        entity.setAge(age);
     }
 }

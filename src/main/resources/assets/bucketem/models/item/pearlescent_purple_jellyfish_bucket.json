@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "wilderwild:item/jellyfish_p_blue"
+    "layer0": "bucketem:item/jellyfish_p_purple"
   }
 }

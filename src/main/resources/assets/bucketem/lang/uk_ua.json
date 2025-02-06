@@ -1,5 +1,4 @@
 {
-  "effect.bucketem.blistered_vision": "Лавове бачення",
   "item.bucketem.allay_possessed_book": "Книга володіння збириком",
   "item.bucketem.bee_bottle": "Бджола в пляшці",
   "item.bucketem.dry_temperate_frog_bucket": "Сухе відро з помірною жабою",
@@ -7,6 +6,11 @@
   "item.bucketem.dry_tundra_frog_bucket": "Сухе відро з тундровою жабою",
   "item.bucketem.endermite_bottle": "Ендермайт у пляшці",
   "item.bucketem.glow_squid_bucket": "Відро із сяйним спрутом",
+  "item.bucketem.golden_bucket": "Golden Bucket",
+  "item.bucketem.golden_lava_bucket": "Golden Lava Bucket",
+  "item.bucketem.golden_milk_bucket": "Golden Milk Bucket",
+  "item.bucketem.golden_powder_snow_bucket": "Golden Powder Snow Bucket",
+  "item.bucketem.golden_water_bucket": "Golden Water Bucket",
   "item.bucketem.magma_bottle": "Магмокуб у пляшці",
   "item.bucketem.silverfish_bottle": "Лусківниця в пляшці",
   "item.bucketem.slime_bottle": "Слимак у пляшці",
@@ -17,12 +21,10 @@
   "item.bucketem.tundra_frog_bucket": "Відро з тундровою жабою",
   "item.bucketem.turtle_bucket": "Відро з черепахою",
   "item.bucketem.vex_possessed_book": "Книга володіння бісиком",
-  "item.minecraft.potion.effect.blistered_vision": "Зілля лавового бачення",
-  "item.minecraft.splash_potion.effect.blistered_vision": "Вибухове зілля лавового бачення",
-  "item.minecraft.lingering_potion.effect.blistered_vision": "Осідальне зілля лавового бачення",
-  "item.minecraft.potion.effect.blistered_vision_short": "Зілля лавового бачення",
-  "item.minecraft.splash_potion.effect.blistered_vision_short": "Вибухове зілля лавового бачення",
-  "item.minecraft.lingering_potion.effect.blistered_vision_short": "Осідальне зілля лавового бачення",
-  "item.minecraft.tipped_arrow.effect.blistered_vision": "Стріла лавового бачення",
-  "item.minecraft.tipped_arrow.effect.blistered_vision_short": "Стріла лавового бачення"
+  "item.bucketem.blue_jellyfish_bucket": "Bucket of Blue Jellyfish",
+  "item.bucketem.lime_jellyfish_bucket": "Bucket of Lime Jellyfish",
+  "item.bucketem.red_jellyfish_bucket": "Bucket of Red Jellyfish",
+  "item.bucketem.yellow_jellyfish_bucket": "Bucket of Yellow Jellyfish",
+  "item.bucketem.pearlescent_blue_jellyfish_bucket": "Bucket of Pearlescent Blue Jellyfish",
+  "item.bucketem.pearlescent_purple_jellyfish_bucket": "Bucket of Pearlescent Purple Jellyfish"
 }

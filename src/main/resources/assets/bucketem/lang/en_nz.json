@@ -1,5 +1,4 @@
 {
-  "effect.bucketem.blistered_vision": "Blistered Vision",
   "item.bucketem.allay_possessed_book": "Allay Possessed Book",
   "item.bucketem.bee_bottle": "Bee in a Bottle",
   "item.bucketem.dry_temperate_frog_bucket": "Dry Bucket of Temperate Frog",
@@ -21,5 +20,11 @@
   "item.bucketem.tropical_frog_bucket": "Bucket of Tropical Frog",
   "item.bucketem.tundra_frog_bucket": "Bucket of Tundra Frog",
   "item.bucketem.turtle_bucket": "Bucket of Turtle",
-  "item.bucketem.vex_possessed_book": "Vex Possessed Book"
+  "item.bucketem.vex_possessed_book": "Vex Possessed Book",
+  "item.bucketem.blue_jellyfish_bucket": "Bucket of Blue Jellyfish",
+  "item.bucketem.lime_jellyfish_bucket": "Bucket of Lime Jellyfish",
+  "item.bucketem.red_jellyfish_bucket": "Bucket of Red Jellyfish",
+  "item.bucketem.yellow_jellyfish_bucket": "Bucket of Yellow Jellyfish",
+  "item.bucketem.pearlescent_blue_jellyfish_bucket": "Bucket of Pearlescent Blue Jellyfish",
+  "item.bucketem.pearlescent_purple_jellyfish_bucket": "Bucket of Pearlescent Purple Jellyfish"
 }

@@ -9,7 +9,6 @@ public class WWBucketEmItems {
 
     public static final Item BLUE_JELLYFISH_BUCKET = ModItems.registerItem("blue_jellyfish_bucket", new BEJellyFishVariantBucket(Fluids.WATER, JellyfishVariant.BLUE,  new Item.Settings().maxCount(1)));
     public static final Item LIME_JELLYFISH_BUCKET = ModItems.registerItem("lime_jellyfish_bucket", new BEJellyFishVariantBucket(Fluids.WATER, JellyfishVariant.LIME,  new Item.Settings().maxCount(1)));
-    public static final Item PINK_JELLYFISH_BUCKET = ModItems.registerItem("pink_jellyfish_bucket", new BEJellyFishVariantBucket(Fluids.WATER, JellyfishVariant.PINK,  new Item.Settings().maxCount(1)));
     public static final Item RED_JELLYFISH_BUCKET = ModItems.registerItem("red_jellyfish_bucket", new BEJellyFishVariantBucket(Fluids.WATER, JellyfishVariant.RED,  new Item.Settings().maxCount(1)));
     public static final Item YELLOW_JELLYFISH_BUCKET = ModItems.registerItem("yellow_jellyfish_bucket", new BEJellyFishVariantBucket(Fluids.WATER, JellyfishVariant.YELLOW,  new Item.Settings().maxCount(1)));
     public static final Item PEARLESCENT_BLUE_JELLYFISH_BUCKET = ModItems.registerItem("pearlescent_blue_jellyfish_bucket", new BEJellyFishVariantBucket(Fluids.WATER, JellyfishVariant.PEARLESCENT_BLUE,  new Item.Settings().maxCount(1)));
