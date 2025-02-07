@@ -50,7 +50,8 @@ public class ModItemModelPredicates {
                 age = 0;
             return age;
         });
-        FabricModelPredicateProviderRegistry.register(Items.AXOLOTL_BUCKET, new Identifier("variant"), (stack, world, holder, seed) -> {
+        FabricModelPredicateProviderRegistry.register(Items.AXOLOTL_BUCKET, new Identifier("variant"),
+                (stack, world, holder, seed) -> {
             Item item = stack.getItem();
             if (!(item instanceof EntityBucketItem)) {
                 return 0f;

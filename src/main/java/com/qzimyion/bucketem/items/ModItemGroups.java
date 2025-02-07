@@ -17,7 +17,6 @@ public class ModItemGroups {
             content.addAfter(MILK_BUCKET, GOLDEN_BUCKET, GOLDEN_WATER_BUCKET, GOLDEN_LAVA_BUCKET, GOLDEN_MILK_BUCKET, GOLDEN_POWDER_SNOW_BUCKET);
         });
 
-
         Bucketem.LOGGER.info("Registering mod Item Groups");
     }
 }
