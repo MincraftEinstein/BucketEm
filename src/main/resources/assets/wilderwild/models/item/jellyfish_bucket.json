@@ -1,0 +1,106 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "wilderwild:item/jellyfish_bucket"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "age": 0,
+        "variant": 0
+      },
+      "model": "bucketem:item/jellyfish_bucket_baby"
+    },
+    {
+      "predicate": {
+        "age": 1,
+        "variant": 0
+      },
+      "model": "wilderwild:item/jellyfish_bucket"
+    },
+    {
+      "predicate": {
+        "age": 0,
+        "variant": 0.1
+      },
+      "model": "bucketem:item/blue_jellyfish_bucket_baby"
+    },
+    {
+      "predicate": {
+        "age": 1,
+        "variant": 0.1
+      },
+      "model": "bucketem:item/blue_jellyfish_bucket"
+    },
+    {
+      "predicate": {
+        "age": 0,
+        "variant": 0.2
+      },
+      "model": "bucketem:item/lime_jellyfish_bucket_baby"
+    },
+    {
+      "predicate": {
+        "age": 1,
+        "variant": 0.2
+      },
+      "model": "bucketem:item/lime_jellyfish_bucket"
+    },
+    {
+      "predicate": {
+        "age": 0,
+        "variant": 0.3
+      },
+      "model": "bucketem:item/red_jellyfish_bucket_baby"
+    },
+    {
+      "predicate": {
+        "age": 1,
+        "variant": 0.3
+      },
+      "model": "bucketem:item/red_jellyfish_bucket"
+    },
+    {
+      "predicate": {
+        "age": 0,
+        "variant": 0.4
+      },
+      "model": "bucketem:item/yellow_jellyfish_bucket_baby"
+    },
+    {
+      "predicate": {
+        "age": 1,
+        "variant": 0.4
+      },
+      "model": "bucketem:item/yellow_jellyfish_bucket"
+    },
+    {
+      "predicate": {
+        "age": 0,
+        "variant": 0.5
+      },
+      "model": "bucketem:item/pearlescent_blue_jellyfish_bucket_baby"
+    },
+    {
+      "predicate": {
+        "age": 1,
+        "variant": 0.5
+      },
+      "model": "bucketem:item/pearlescent_blue_jellyfish_bucket"
+    },
+    {
+      "predicate": {
+        "age": 0,
+        "variant": 0.6
+      },
+      "model": "bucketem:item/pearlescent_purple_jellyfish_bucket_baby"
+    },
+    {
+      "predicate": {
+        "age": 1,
+        "variant": 0.6
+      },
+      "model": "bucketem:item/pearlescent_purple_jellyfish_bucket"
+    }
+  ]
+}

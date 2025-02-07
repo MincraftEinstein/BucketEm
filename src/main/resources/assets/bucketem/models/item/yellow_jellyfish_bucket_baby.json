@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "bucketem:item/yellow_jellyfish_bucket_baby"
+  }
+}
