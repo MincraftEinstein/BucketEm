@@ -32,10 +32,6 @@ public class ModItems {
     public static final Item STRIDER_BUCKET = registerItem("strider_bucket", new EntityBucketItem(EntityType.STRIDER, Fluids.LAVA, SoundEvents.ITEM_BUCKET_EMPTY_LAVA, new Item.Settings().maxCount(1)));
     public static final Item SQUID_BUCKET = registerItem("squid_bucket", new EntityBucketItem(EntityType.SQUID, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item GLOW_SQUID_BUCKET = registerItem("glow_squid_bucket", new EntityBucketItem(EntityType.GLOW_SQUID, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
-    //Experimental
-    public static final Item FROG_BUCKET = registerItem("frog_bucket", new EntityBucketItem(EntityType.FROG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new Item.Settings().maxCount(1)));
-    //public static final Item GOLDEN_SQUID_BUCKET = registerItem("golden_squid_bucket", new GoldenEntityBucketItem(Fluids.WATER, EntityType.SQUID, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new Item.Settings().maxCount(1)));
-
     public static final Item TEMPERATE_FROG_BUCKET = registerItem("temperate_frog_bucket", new FrogBuckets(FrogVariant.TEMPERATE ,Fluids.WATER ,new FabricItemSettings().maxCount(1)));
     public static final Item TROPICAL_FROG_BUCKET = registerItem("tropical_frog_bucket", new FrogBuckets(FrogVariant.WARM ,Fluids.WATER, new FabricItemSettings().maxCount(1)));
     public static final Item TUNDRA_FROG_BUCKET = registerItem("tundra_frog_bucket", new FrogBuckets(FrogVariant.COLD, Fluids.WATER ,new FabricItemSettings().maxCount(1)));
@@ -48,7 +44,6 @@ public class ModItems {
     public static final Item GOLDEN_LAVA_BUCKET = registerItem("golden_lava_bucket", new GoldenBucketItem(Fluids.LAVA, new Item.Settings().maxCount(1)));
     public static final Item GOLDEN_MILK_BUCKET = registerItem("golden_milk_bucket", new GoldenMilkBucket(new Item.Settings().maxCount(1)));
     public static final Item GOLDEN_POWDER_SNOW_BUCKET = registerItem("golden_powder_snow_bucket", new PowderSnowGoldenBucket(Blocks.POWDER_SNOW, SoundEvents.ITEM_BUCKET_EMPTY_POWDER_SNOW, new Item.Settings().maxCount(1)));
-
 
     //Books
     public static final Item ALLAY_POSSESSED_BOOK = registerItem("allay_possessed_book", new EntityBook(EntityType.ALLAY ,new FabricItemSettings().maxCount(1).rarity(Rarity.UNCOMMON)));
