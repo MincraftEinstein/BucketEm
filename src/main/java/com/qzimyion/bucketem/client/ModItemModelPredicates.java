@@ -7,6 +7,8 @@ import net.minecraft.entity.Bucketable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.AxolotlEntity;
 import net.minecraft.entity.passive.BeeEntity;
+import net.minecraft.entity.passive.FrogEntity;
+import net.minecraft.entity.passive.FrogVariant;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EntityBucketItem;
 import net.minecraft.item.Item;
@@ -44,6 +46,7 @@ public class ModItemModelPredicates {
             }
         });
 
+        //==Axolotls==//
         FabricModelPredicateProviderRegistry.register(Items.AXOLOTL_BUCKET, new Identifier("age"), (stack, clientWorld, livingEntity, i) -> {
             float age = 1;
             if (stack.getNbt() != null && stack.getNbt().contains("Age") && stack.getNbt().getInt("Age") < 0)

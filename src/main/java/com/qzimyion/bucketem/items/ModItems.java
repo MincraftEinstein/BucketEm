@@ -33,7 +33,7 @@ public class ModItems {
     public static final Item SQUID_BUCKET = registerItem("squid_bucket", new EntityBucketItem(EntityType.SQUID, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item GLOW_SQUID_BUCKET = registerItem("glow_squid_bucket", new EntityBucketItem(EntityType.GLOW_SQUID, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     //Experimental
-    //public static final Item FROG_BUCKET = registerItem("frog_bucket", new EntityBucketItem(EntityType.FROG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new Item.Settings().maxCount(1)));
+    public static final Item FROG_BUCKET = registerItem("frog_bucket", new EntityBucketItem(EntityType.FROG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new Item.Settings().maxCount(1)));
     //public static final Item GOLDEN_SQUID_BUCKET = registerItem("golden_squid_bucket", new GoldenEntityBucketItem(Fluids.WATER, EntityType.SQUID, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new Item.Settings().maxCount(1)));
 
     public static final Item TEMPERATE_FROG_BUCKET = registerItem("temperate_frog_bucket", new FrogBuckets(FrogVariant.TEMPERATE ,Fluids.WATER ,new FabricItemSettings().maxCount(1)));

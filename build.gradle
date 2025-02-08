@@ -21,6 +21,10 @@ repositories {
 			includeGroup "com.jamieswhiteshirt"
 		}
 	}
+	maven {
+		name = "Terraformers"
+		url = "https://maven.terraformersmc.com/"
+	}
 }
 
 fabricApi {
@@ -44,6 +48,7 @@ dependencies {
 	modImplementation "maven.modrinth:wilder-wild:3.0.7-mc1.20.1"
 	modImplementation "maven.modrinth:frozenlib:1.9.3-mc1.20.1"
 	modApi("com.jamieswhiteshirt:reach-entity-attributes:2.4.0")
+	modImplementation("com.terraformersmc:modmenu:7.2.2")
 }
 
 loom {
