@@ -16,11 +16,17 @@ import net.minecraft.util.Identifier;
 public class WWBucketEmModelPredicates {
 
     public static void register(){
-        FabricModelPredicateProviderRegistry.register(WWItems.JELLYFISH_BUCKET, new Identifier("age"), ((stack, world, entity, seed) -> {
-            if (stack.hasNbt() && stack.getNbt().contains("isBaby")) {
-                return stack.getNbt().getBoolean("isBaby") ? 0 : 1;
+        FabricModelPredicateProviderRegistry.register(WWItems.JELLYFISH_BUCKET, new Identifier("age"), ((stack, world, livingEntity, seed) -> {
+            Item item = stack.getItem();
+            if (!(item instanceof EntityBucketItem)) {
+                return 0f;
             }
-            return 0;
+            Entity entity = ((EntityBucketItemAccessor) item).getEntityType().create(MinecraftClient.getInstance().world);
+            if (!(entity instanceof Jellyfish)) {
+                return 0f;
+            }
+            ((Bucketable) entity).copyDataFromNbt(stack.getOrCreateNbt());
+            return ((Jellyfish) entity).getAge() > 0 ? 1 : 0;
         }));
         FabricModelPredicateProviderRegistry.register(WWItems.JELLYFISH_BUCKET, new Identifier("variant"), (stack, world, holder, seed) -> {
             Item item = stack.getItem();
