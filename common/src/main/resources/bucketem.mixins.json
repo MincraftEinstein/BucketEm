@@ -1,0 +1,28 @@
+{
+  "required": true,
+  "package": "com.qzimyion.bucketem.core.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "BlockEntityMixins.AbstractFurnaceBlockEntityMixin",
+    "BlockEntityMixins.ChiseledBookshelfMixin",
+    "BlockEntityMixins.FurnaceFuelSlotMixin",
+    "EntityMixins.BeeEntityMixin",
+    "EntityMixins.EndermiteEntityMixin",
+    "EntityMixins.GlowSquidEntityMixin",
+    "EntityMixins.LivingEntityMixin",
+    "EntityMixins.SliverFishEntityMixin",
+    "EntityMixins.SquidEntityMixin",
+    "EntityMixins.StriderEntityMixin",
+    "EntityMixins.TurtleEntityMixin",
+    "EntityMixins.VexEntityMixin",
+    "ItemMixins.EntityBucketItemAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "accessors.IFluidRendererAccessor",
+    "accessors.IWorldRendererAccessor",
+    "ItemMixin.HeldItemMixin"
+  ]
+}
