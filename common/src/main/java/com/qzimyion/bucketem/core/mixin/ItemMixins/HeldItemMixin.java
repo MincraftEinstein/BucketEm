@@ -1,5 +1,6 @@
-package com.qzimyion.bucketem.core.mixin.ItemMixin;
+package com.qzimyion.bucketem.core.mixin.ItemMixins;
 
+import com.qzimyion.bucketem.core.api.IItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.world.InteractionHand;
