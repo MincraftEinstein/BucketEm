@@ -43,8 +43,6 @@ public abstract class StriderEntityMixin extends Animal implements Bucketable {
     public abstract void tick();
 
 
-    @Shadow public abstract boolean isSaddled();
-
     @Shadow @Final private ItemBasedSteering steering;
     @Unique
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(StriderEntityMixin.class, EntityDataSerializers.BOOLEAN);
@@ -90,9 +88,10 @@ public abstract class StriderEntityMixin extends Animal implements Bucketable {
         this.entityData.set(FROM_BUCKET, fromBucket);
     }
 
-    @Inject(at = @At("HEAD"), method = "mobInteract")
+    @Inject(at = @At("HEAD"), method = "mobInteract", cancellable = true)
     public void interactMob(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir){
-        tryLavaBucket(player, hand, this);
+        Optional<InteractionResult> result = tryLavaBucket(player, hand, this);
+        result.ifPresent(cir::setReturnValue);
     }
 
     @Override
