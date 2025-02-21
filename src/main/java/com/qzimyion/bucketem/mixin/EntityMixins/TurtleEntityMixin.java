@@ -1,25 +1,25 @@
 package com.qzimyion.bucketem.mixin.EntityMixins;
 
 import com.qzimyion.bucketem.items.ModItems;
-import net.minecraft.entity.Bucketable;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.TurtleEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Bucketable;
+import net.minecraft.world.entity.animal.Turtle;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -31,94 +31,94 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @SuppressWarnings("deprecation")
 @Debug(export = true)
-@Mixin(TurtleEntity.class)
-public abstract class TurtleEntityMixin extends AnimalEntity implements Bucketable {
+@Mixin(Turtle.class)
+public abstract class TurtleEntityMixin extends Animal implements Bucketable {
     @Shadow public abstract boolean hasEgg();
 
     @Shadow abstract void setHasEgg(boolean hasEgg);
 
-    protected TurtleEntityMixin(EntityType<? extends AnimalEntity> entityType, World world) {
+    protected TurtleEntityMixin(EntityType<? extends Animal> entityType, Level world) {
         super(entityType, world);
     }
 
     @Unique
-    private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(TurtleEntityMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(TurtleEntityMixin.class, EntityDataSerializers.BOOLEAN);
 
-    @Inject(at = @At("HEAD"), method = "initDataTracker")
-    public void initDataTracker(CallbackInfo ci){
-        this.dataTracker.startTracking(FROM_BUCKET, false);
+    @Inject(at = @At("HEAD"), method = "defineSynchedData")
+    public void defineSynchedData(CallbackInfo ci){
+        this.entityData.define(FROM_BUCKET, false);
     }
 
-    @Inject(at = @At("HEAD"), method = "writeCustomDataToNbt")
-    public void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo ci){
-        super.writeCustomDataToNbt(nbt);
-        nbt.putBoolean("FromBucket", this.isFromBucket());
+    @Inject(at = @At("HEAD"), method = "addAdditionalSaveData")
+    public void addAdditionalSaveData(CompoundTag nbt, CallbackInfo ci){
+        super.addAdditionalSaveData(nbt);
+        nbt.putBoolean("FromBucket", this.fromBucket());
     }
 
-    @Inject(at = @At("HEAD"), method = "readCustomDataFromNbt")
-    public void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo ci) {
-        super.readCustomDataFromNbt(nbt);
+    @Inject(at = @At("HEAD"), method = "readAdditionalSaveData")
+    public void readAdditionalSaveData(CompoundTag nbt, CallbackInfo ci) {
+        super.readAdditionalSaveData(nbt);
         this.setFromBucket(nbt.getBoolean("FromBucket"));
     }
 
     @Override
-    public boolean cannotDespawn() {
-        return super.cannotDespawn() || this.isFromBucket();
+    public boolean requiresCustomPersistence() {
+        return super.requiresCustomPersistence() || this.fromBucket();
     }
 
     @Override
-    public boolean canImmediatelyDespawn(double distanceSquared) {
-        return !this.isFromBucket() && !this.hasCustomName();
+    public boolean removeWhenFarAway(double distanceSquared) {
+        return !this.fromBucket() && !this.hasCustomName();
     }
 
     @Override
-    public boolean isFromBucket() {
-        return this.dataTracker.get(FROM_BUCKET);
+    public boolean fromBucket() {
+        return this.entityData.get(FROM_BUCKET);
     }
 
     @Override
     public void setFromBucket(boolean fromBucket) {
-        this.dataTracker.set(FROM_BUCKET, fromBucket);
+        this.entityData.set(FROM_BUCKET, fromBucket);
     }
 
     @Override
-    public void copyDataToStack(ItemStack stack) {
-        Bucketable.copyDataToStack(this, stack);
-        NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt("Age", this.getBreedingAge());
+    public void saveToBucketTag(ItemStack stack) {
+        Bucketable.saveDefaultDataToBucketTag(this, stack);
+        CompoundTag nbtCompound = stack.getOrCreateTag();
+        nbtCompound.putInt("Age", this.getAge());
         nbtCompound.putBoolean("HasEgg", this.hasEgg());
     }
 
     @Override
-    public void copyDataFromNbt(NbtCompound nbt) {
-        Bucketable.copyDataFromNbt(this, nbt);
+    public void loadFromBucketTag(CompoundTag nbt) {
+        Bucketable.loadDefaultDataFromBucketTag(this, nbt);
         if (nbt.contains("Age")) {
-            this.setBreedingAge(nbt.getInt("Age"));
+            this.setAge(nbt.getInt("Age"));
         }
         if (nbt.contains("HasEgg")) {
             this.setHasEgg(nbt.getBoolean("HasEgg"));
         }
     }
 
-    @Inject(at = @At("HEAD"), method = "initialize", cancellable = true)
-    public void initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, NbtCompound entityNbt, CallbackInfoReturnable<EntityData> cir) {
-        if (spawnReason == SpawnReason.BUCKET) {
+    @Inject(at = @At("HEAD"), method = "finalizeSpawn", cancellable = true)
+    public void initialize(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, SpawnGroupData entityData, CompoundTag entityNbt, CallbackInfoReturnable<SpawnGroupData> cir) {
+        if (spawnReason == MobSpawnType.BUCKET) {
             cir.setReturnValue(entityData);
         }
     }
 
     @Override
-    public ActionResult interactMob(PlayerEntity player, Hand hand) {
-        return Bucketable.tryBucket(player, hand, this).orElse(super.interactMob(player, hand));
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        return Bucketable.bucketMobPickup(player, hand, this).orElse(super.mobInteract(player, hand));
     }
 
     @Override
-    public ItemStack getBucketItem() {
+    public ItemStack getBucketItemStack() {
         return new ItemStack(ModItems.TURTLE_BUCKET);
     }
 
     @Override
-    public SoundEvent getBucketFillSound() {
-        return SoundEvents.ITEM_BUCKET_FILL_TADPOLE;
+    public SoundEvent getPickupSound() {
+        return SoundEvents.BUCKET_FILL_TADPOLE;
     }
 }

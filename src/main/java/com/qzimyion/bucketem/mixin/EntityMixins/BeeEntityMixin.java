@@ -1,26 +1,30 @@
 package com.qzimyion.bucketem.mixin.EntityMixins;
 
 import com.qzimyion.bucketem.items.ModItems;
-import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.entity.*;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsage;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.Bucketable;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
@@ -33,102 +37,102 @@ import java.util.Optional;
 
 @SuppressWarnings("deprecation")
 @Debug(export = true)
-@Mixin(BeeEntity.class)
-public abstract class BeeEntityMixin extends AnimalEntity implements Bucketable {
+@Mixin(Bee.class)
+public abstract class BeeEntityMixin extends Animal implements Bucketable {
 
     @Unique
-    private static final TrackedData<Boolean> FROM_BOTTLE = DataTracker.registerData(BeeEntityMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> FROM_BOTTLE = SynchedEntityData.defineId(BeeEntityMixin.class, EntityDataSerializers.BOOLEAN);
 
-    protected BeeEntityMixin(EntityType<? extends AnimalEntity> entityType, World world) {
+    protected BeeEntityMixin(EntityType<? extends Animal> entityType, Level world) {
         super(entityType, world);
     }
 
 
-    @Inject(at = @At("HEAD"), method = "initDataTracker")
+    @Inject(at = @At("HEAD"), method = "defineSynchedData")
     public void initDataTracker(CallbackInfo ci){
-        this.dataTracker.startTracking(FROM_BOTTLE, false);
+        this.entityData.define(FROM_BOTTLE, false);
     }
 
-    @Inject(at = @At("HEAD"), method = "writeCustomDataToNbt")
-    public void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo ci){
-        super.writeCustomDataToNbt(nbt);
-        nbt.putBoolean("FromBucket", this.isFromBucket());
+    @Inject(at = @At("HEAD"), method = "addAdditionalSaveData")
+    public void writeCustomDataToNbt(CompoundTag nbt, CallbackInfo ci){
+        super.addAdditionalSaveData(nbt);
+        nbt.putBoolean("FromBucket", this.fromBucket());
     }
 
-    @Inject(at = @At("HEAD"), method = "readCustomDataFromNbt")
-    public void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo ci) {
-        super.readCustomDataFromNbt(nbt);
+    @Inject(at = @At("HEAD"), method = "readAdditionalSaveData")
+    public void readCustomDataFromNbt(CompoundTag nbt, CallbackInfo ci) {
+        super.readAdditionalSaveData(nbt);
         this.setFromBucket(nbt.getBoolean("FromBottle"));
     }
 
     @Override
-    public boolean isFromBucket() {
-        return dataTracker.get(FROM_BOTTLE);
+    public boolean fromBucket() {
+        return entityData.get(FROM_BOTTLE);
     }
 
     @Override
     public void setFromBucket(boolean fromBucket) {
-        this.dataTracker.set(FROM_BOTTLE, fromBucket);
+        this.entityData.set(FROM_BOTTLE, fromBucket);
     }
 
     @Override
-    public boolean cannotDespawn() {
-        return super.cannotDespawn() || this.isFromBucket();
+    public boolean requiresCustomPersistence() {
+        return super.requiresCustomPersistence() || this.fromBucket();
     }
 
     @Override
-    public boolean canImmediatelyDespawn(double distanceSquared) {
-        return !this.isFromBucket() && !this.hasCustomName();
+    public boolean removeWhenFarAway(double distanceSquared) {
+        return !this.fromBucket() && !this.hasCustomName();
     }
 
     @Override
-    public ActionResult interactMob(PlayerEntity player, Hand hand) {
-        return tryBottling(player, hand, this).orElse(super.interactMob(player, hand));
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        return tryBottling(player, hand, this).orElse(super.mobInteract(player, hand));
     }
 
     @Override
-    public void copyDataToStack(ItemStack stack) {
-        Bucketable.copyDataToStack(this, stack);
+    public void saveToBucketTag(ItemStack stack) {
+        Bucketable.saveDefaultDataToBucketTag(this, stack);
     }
 
     @Override
-    public void copyDataFromNbt(NbtCompound nbt) {
-        Bucketable.copyDataFromNbt(this, nbt);
+    public void loadFromBucketTag(CompoundTag nbt) {
+        Bucketable.loadDefaultDataFromBucketTag(this, nbt);
     }
 
     @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        if (spawnReason == SpawnReason.BUCKET) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData entityData, @Nullable CompoundTag entityNbt) {
+        if (spawnReason == MobSpawnType.BUCKET) {
             return entityData;
         }
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        return super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
     @Override
-    public ItemStack getBucketItem() {
+    public ItemStack getBucketItemStack() {
         return new ItemStack(ModItems.BEE_BOTTLE);
     }
 
     @Override
-    public SoundEvent getBucketFillSound() {
-        return SoundEvents.ITEM_BOTTLE_FILL_DRAGONBREATH;
+    public SoundEvent getPickupSound() {
+        return SoundEvents.BOTTLE_FILL_DRAGONBREATH;
     }
 
     @Unique
-    private static <T extends LivingEntity> Optional<ActionResult> tryBottling(PlayerEntity player, Hand hand, T entity) {
-        ItemStack itemStack = player.getStackInHand(hand);
+    private static <T extends LivingEntity> Optional<InteractionResult> tryBottling(Player player, InteractionHand hand, T entity) {
+        ItemStack itemStack = player.getItemInHand(hand);
         if (itemStack.getItem() == Items.GLASS_BOTTLE && entity.isAlive()) {
-            entity.playSound(((Bucketable) entity).getBucketFillSound(), 1.0f, 1.0f);
-            ItemStack itemStack2 = ((Bucketable) entity).getBucketItem();
-            ((Bucketable) entity).copyDataToStack(itemStack2);
-            ItemStack itemStack3 = ItemUsage.exchangeStack(itemStack, player, itemStack2, false);
-            player.setStackInHand(hand, itemStack3);
-            World world = entity.getWorld();
-            if (!world.isClient) {
-                Criteria.FILLED_BUCKET.trigger((ServerPlayerEntity)player, itemStack2);
+            entity.playSound(((Bucketable) entity).getPickupSound(), 1.0f, 1.0f);
+            ItemStack itemStack2 = ((Bucketable) entity).getBucketItemStack();
+            ((Bucketable) entity).saveToBucketTag(itemStack2);
+            ItemStack itemStack3 = ItemUtils.createFilledResult(itemStack, player, itemStack2, false);
+            player.setItemInHand(hand, itemStack3);
+            Level world = entity.level();
+            if (!world.isClientSide) {
+                CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer)player, itemStack2);
             }
             entity.discard();
-            return Optional.of(ActionResult.success(world.isClient));
+            return Optional.of(InteractionResult.sidedSuccess(world.isClientSide));
         }
         return Optional.empty();
     }

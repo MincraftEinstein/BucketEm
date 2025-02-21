@@ -1,26 +1,6 @@
 package com.qzimyion.bucketem.mixin.EntityMixins;
 
 import com.qzimyion.bucketem.items.ModItems;
-import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.entity.Bucketable;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.VexEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsage;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -29,96 +9,116 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Optional;
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Bucketable;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Vex;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 
 @SuppressWarnings("deprecation")
 @Debug(export = true)
-@Mixin(VexEntity.class)
-public abstract class VexEntityMixin extends HostileEntity implements Bucketable {
+@Mixin(Vex.class)
+public abstract class VexEntityMixin extends Monster implements Bucketable {
 
-    protected VexEntityMixin(EntityType<? extends HostileEntity> entityType, World world) {
+    protected VexEntityMixin(EntityType<? extends Monster> entityType, Level world) {
         super(entityType, world);
     }
 
     @Unique
-    private static final TrackedData<Boolean> FROM_BOOK = DataTracker.registerData(VexEntityMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> FROM_BOOK = SynchedEntityData.defineId(VexEntityMixin.class, EntityDataSerializers.BOOLEAN);
 
-    @Inject(at = @At("HEAD"), method = "initDataTracker")
-    public void initDataTracker(CallbackInfo ci){
-        this.dataTracker.startTracking(FROM_BOOK, false);
+    @Inject(at = @At("HEAD"), method = "defineSynchedData")
+    public void defineSynchedData(CallbackInfo ci){
+        this.entityData.define(FROM_BOOK, false);
     }
 
-    @Inject(at = @At("HEAD"), method = "writeCustomDataToNbt")
-    public void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo ci){
-        super.writeCustomDataToNbt(nbt);
-        nbt.putBoolean("FromBucket", this.isFromBucket());
+    @Inject(at = @At("HEAD"), method = "addAdditionalSaveData")
+    public void writeCustomDataToNbt(CompoundTag nbt, CallbackInfo ci){
+        super.addAdditionalSaveData(nbt);
+        nbt.putBoolean("FromBucket", this.fromBucket());
     }
 
-    @Inject(at = @At("HEAD"), method = "readCustomDataFromNbt")
-    public void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo ci) {
-        super.readCustomDataFromNbt(nbt);
+    @Inject(at = @At("HEAD"), method = "readAdditionalSaveData")
+    public void readAdditionalSaveData(CompoundTag nbt, CallbackInfo ci) {
+        super.readAdditionalSaveData(nbt);
         this.setFromBucket(nbt.getBoolean("FromBucket"));
     }
 
     @Override
-    public boolean cannotDespawn() {
-        return super.cannotDespawn() || this.isFromBucket();
+    public boolean requiresCustomPersistence() {
+        return super.requiresCustomPersistence() || this.fromBucket();
     }
 
     @Override
-    public boolean canImmediatelyDespawn(double distanceSquared) {
-        return !this.isFromBucket() && !this.hasCustomName();
+    public boolean removeWhenFarAway(double distanceSquared) {
+        return !this.fromBucket() && !this.hasCustomName();
     }
 
     @Override
-    protected ActionResult interactMob(PlayerEntity player, Hand hand) {
-        return tryBook(player, hand, this).orElse(super.interactMob(player, hand));
+    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+        return tryBook(player, hand, this).orElse(super.mobInteract(player, hand));
     }
 
     @Override
-    public boolean isFromBucket() {
-        return this.dataTracker.get(FROM_BOOK);
+    public boolean fromBucket() {
+        return this.entityData.get(FROM_BOOK);
     }
 
     @Override
     public void setFromBucket(boolean fromBucket) {
-        this.dataTracker.set(FROM_BOOK, fromBucket);
+        this.entityData.set(FROM_BOOK, fromBucket);
     }
 
     @Override
-    public void copyDataToStack(ItemStack stack) {
-        Bucketable.copyDataToStack(this, stack);
+    public void saveToBucketTag(ItemStack stack) {
+        Bucketable.saveDefaultDataToBucketTag(this, stack);
     }
 
     @Override
-    public void copyDataFromNbt(NbtCompound nbt) {
-        Bucketable.copyDataFromNbt(this, nbt);
+    public void loadFromBucketTag(CompoundTag nbt) {
+        Bucketable.loadDefaultDataFromBucketTag(this, nbt);
     }
 
     @Override
-    public ItemStack getBucketItem() {
+    public ItemStack getBucketItemStack() {
         return new ItemStack(ModItems.VEX_POSSESSED_BOOK);
     }
 
     @Override
-    public SoundEvent getBucketFillSound() {
-        return SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE;
+    public SoundEvent getPickupSound() {
+        return SoundEvents.ENCHANTMENT_TABLE_USE;
     }
 
     @Unique
-    private static <T extends LivingEntity> Optional<ActionResult> tryBook(PlayerEntity player, Hand hand, T entity) {
-        ItemStack itemStack = player.getStackInHand(hand);
+    private static <T extends LivingEntity> Optional<InteractionResult> tryBook(Player player, InteractionHand hand, T entity) {
+        ItemStack itemStack = player.getItemInHand(hand);
         if (itemStack.getItem() == Items.BOOK && entity.isAlive()) {
-            entity.playSound(((Bucketable) entity).getBucketFillSound(), 1.0f, 1.0f);
-            ItemStack itemStack2 = ((Bucketable) entity).getBucketItem();
-            ((Bucketable) entity).copyDataToStack(itemStack2);
-            ItemStack itemStack3 = ItemUsage.exchangeStack(itemStack, player, itemStack2, false);
-            player.setStackInHand(hand, itemStack3);
-            World world = entity.getWorld();
-            if (!world.isClient) {
-                Criteria.FILLED_BUCKET.trigger((ServerPlayerEntity)player, itemStack2);
+            entity.playSound(((Bucketable) entity).getPickupSound(), 1.0f, 1.0f);
+            ItemStack itemStack2 = ((Bucketable) entity).getBucketItemStack();
+            ((Bucketable) entity).saveToBucketTag(itemStack2);
+            ItemStack itemStack3 = ItemUtils.createFilledResult(itemStack, player, itemStack2, false);
+            player.setItemInHand(hand, itemStack3);
+            Level world = entity.level();
+            if (!world.isClientSide) {
+                CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer)player, itemStack2);
             }
             entity.discard();
-            return Optional.of(ActionResult.success(world.isClient));
+            return Optional.of(InteractionResult.sidedSuccess(world.isClientSide));
         }
         return Optional.empty();
     }

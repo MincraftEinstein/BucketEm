@@ -1,14 +1,14 @@
 package com.qzimyion.bucketem.mixin.accessors;
 
-import net.minecraft.client.render.block.BlockRenderManager;
-import net.minecraft.client.render.block.FluidRenderer;
+import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.renderer.block.LiquidBlockRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
 @SuppressWarnings("UnusedReturnValue")
-@Mixin(BlockRenderManager.class)
+@Mixin(BlockRenderDispatcher.class)
 public interface IFluidRendererAccessor {
 
     @Accessor("fluidRenderer")
-    FluidRenderer fluidRenderer();
+    LiquidBlockRenderer fluidRenderer();
 }

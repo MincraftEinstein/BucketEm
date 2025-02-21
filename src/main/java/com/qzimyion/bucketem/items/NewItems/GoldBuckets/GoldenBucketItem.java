@@ -2,102 +2,106 @@ package com.qzimyion.bucketem.items.NewItems.GoldBuckets;
 
 //import com.ordana.spelunkery.reg.ModFluids;
 import com.qzimyion.bucketem.items.ModItems;
-import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.block.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FlowableFluid;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.FluidModificationItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsage;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.tag.FluidTags;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.stat.Stats;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.RaycastContext;
-import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DispensibleContainerItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BucketPickup;
+import net.minecraft.world.level.block.LiquidBlockContainer;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class GoldenBucketItem extends Item implements FluidModificationItem {
+public class GoldenBucketItem extends Item implements DispensibleContainerItem {
     public final Fluid fluid;
     public static final String NBT_TAG = "FluidLevel";
 
-    public GoldenBucketItem(Fluid fluid, Settings settings) {
+    public GoldenBucketItem(Fluid fluid, Properties settings) {
         super(settings);
         this.fluid = fluid;
     }
 
     public static ItemStack resetFluidLevel(ItemStack stack) {
-        stack.getOrCreateNbt().putInt(NBT_TAG, 0);
+        stack.getOrCreateTag().putInt(NBT_TAG, 0);
         return stack;
     }
 
     public static void setFluidLevel(ItemStack stack, int level) {
-        stack.getOrCreateNbt().putInt(NBT_TAG, level);
+        stack.getOrCreateTag().putInt(NBT_TAG, level);
     }
 
     public static void decreaseFluidLevel(ItemStack stack) {
-        int level = stack.getOrCreateNbt().getInt(NBT_TAG);
-        if (level > 0) stack.getOrCreateNbt().putInt(NBT_TAG, level - 1);
+        int level = stack.getOrCreateTag().getInt(NBT_TAG);
+        if (level > 0) stack.getOrCreateTag().putInt(NBT_TAG, level - 1);
     }
 
     public static ItemStack increaseFluidLevel(ItemStack stack) {
-        int level = stack.getOrCreateNbt().getInt(NBT_TAG);
-        if (level < 3) stack.getOrCreateNbt().putInt(NBT_TAG, level + 1);
+        int level = stack.getOrCreateTag().getInt(NBT_TAG);
+        if (level < 3) stack.getOrCreateTag().putInt(NBT_TAG, level + 1);
         return stack;
     }
 
     public static boolean canBeFilled(ItemStack stack) {
-        return stack.getOrCreateNbt().getInt(NBT_TAG) < 2;
+        return stack.getOrCreateTag().getInt(NBT_TAG) < 2;
     }
 
     @Override
-    public ItemStack getDefaultStack() {
+    public ItemStack getDefaultInstance() {
         return resetFluidLevel(new ItemStack(this));
     }
 
     @Override
-    public void onCraft(ItemStack stack, World world, PlayerEntity player) {
+    public void onCraftedBy(ItemStack stack, Level world, Player player) {
         resetFluidLevel(stack);
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getStackInHand(hand);
-        NbtCompound tag = stack.getOrCreateNbt();
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        CompoundTag tag = stack.getOrCreateTag();
         int bucketLevel = tag.getInt(NBT_TAG);
 
 
-        BlockHitResult result = raycast(world, player, (this.getFluid() == Fluids.EMPTY || bucketLevel < 2) && !(player.isSneaking() && this.getFluid() != Fluids.EMPTY) ? RaycastContext.FluidHandling.SOURCE_ONLY : RaycastContext.FluidHandling.NONE);
+        BlockHitResult result = getPlayerPOVHitResult(world, player, (this.getFluid() == Fluids.EMPTY || bucketLevel < 2) && !(player.isShiftKeyDown() && this.getFluid() != Fluids.EMPTY) ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
         if (result.getType() == HitResult.Type.MISS) {
-            return TypedActionResult.pass(stack);
+            return InteractionResultHolder.pass(stack);
         } else if (result.getType() != HitResult.Type.BLOCK) {
-            return TypedActionResult.pass(stack);
+            return InteractionResultHolder.pass(stack);
         } else {
             BlockPos pos = result.getBlockPos();
-            Direction direction = result.getSide();
-            BlockPos sourcePos = pos.offset(direction);
-            if (world.canPlayerModifyAt(player, pos) && player.canPlaceOn(sourcePos, direction, stack)) {
+            Direction direction = result.getDirection();
+            BlockPos sourcePos = pos.relative(direction);
+            if (world.mayInteract(player, pos) && player.mayUseItemAt(sourcePos, direction, stack)) {
                 BlockState sourceState = world.getBlockState(pos);
-                if (this.getFluid() == Fluids.EMPTY || (bucketLevel < 2 && sourceState.getFluidState().getFluid() == this.getFluid())) {
+                if (this.getFluid() == Fluids.EMPTY || (bucketLevel < 2 && sourceState.getFluidState().getType() == this.getFluid())) {
                     // Picking up raw fluids & powder snow
-                    if (sourceState.getBlock() instanceof FluidDrainable bucketPickup) {
-                        bucketPickup.tryDrainFluid(world, pos, sourceState);
-                        Fluid fluid = sourceState.getFluidState().isOf(Fluids.WATER) ? Fluids.WATER : sourceState.getFluidState().isOf(Fluids.LAVA) ? Fluids.LAVA : Fluids.EMPTY;
+                    if (sourceState.getBlock() instanceof BucketPickup bucketPickup) {
+                        bucketPickup.pickupBlock(world, pos, sourceState);
+                        Fluid fluid = sourceState.getFluidState().is(Fluids.WATER) ? Fluids.WATER : sourceState.getFluidState().is(Fluids.LAVA) ? Fluids.LAVA : Fluids.EMPTY;
                         ItemStack newBucket = ItemStack.EMPTY;
 
 //                        //Spelunkery
@@ -106,76 +110,76 @@ public class GoldenBucketItem extends Item implements FluidModificationItem {
 //                        }
 
                         if (fluid != Fluids.EMPTY && getFilledBucket(sourceState) != null) {
-                            newBucket = ItemUsage.exchangeStack(stack, player, getFilledBucket(sourceState));
+                            newBucket = ItemUtils.createFilledResult(stack, player, getFilledBucket(sourceState));
                             if (this.getFluid() != Fluids.EMPTY)
                                 setFluidLevel(newBucket, bucketLevel + 1);
                         }
 
-                        if (sourceState.isOf(Blocks.POWDER_SNOW)) {
-                            newBucket = ItemUsage.exchangeStack(stack, player, new ItemStack(ModItems.GOLDEN_POWDER_SNOW_BUCKET));
+                        if (sourceState.is(Blocks.POWDER_SNOW)) {
+                            newBucket = ItemUtils.createFilledResult(stack, player, new ItemStack(ModItems.GOLDEN_POWDER_SNOW_BUCKET));
                         }
 
                         if (!newBucket.isEmpty()) {
-                            player.incrementStat(Stats.USED.getOrCreateStat(this));
-                            bucketPickup.getBucketFillSound().ifPresent((soundEvent) -> player.playSound(soundEvent, 1.0F, 1.0F));
-                            world.emitGameEvent(player, GameEvent.FLUID_PICKUP, pos);
-                            if (!world.isClient) {
-                                Criteria.FILLED_BUCKET.trigger((ServerPlayerEntity) player, newBucket);
+                            player.awardStat(Stats.ITEM_USED.get(this));
+                            bucketPickup.getPickupSound().ifPresent((soundEvent) -> player.playSound(soundEvent, 1.0F, 1.0F));
+                            world.gameEvent(player, GameEvent.FLUID_PICKUP, pos);
+                            if (!world.isClientSide) {
+                                CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) player, newBucket);
                             }
 
-                            return TypedActionResult.success(newBucket, world.isClient());
+                            return InteractionResultHolder.sidedSuccess(newBucket, world.isClientSide());
                         }
                     }
 
-                    return TypedActionResult.fail(stack);
+                    return InteractionResultHolder.fail(stack);
                 } else {
-                    result = raycast(world, player, RaycastContext.FluidHandling.NONE);
+                    result = getPlayerPOVHitResult(world, player, ClipContext.Fluid.NONE);
                     if (result.getType() == HitResult.Type.MISS) {
-                        return TypedActionResult.pass(stack);
+                        return InteractionResultHolder.pass(stack);
                     } else if (result.getType() != HitResult.Type.BLOCK) {
-                        return TypedActionResult.pass(stack);
+                        return InteractionResultHolder.pass(stack);
                     }
 
                     // Placing contents
                     pos = result.getBlockPos();
-                    direction = result.getSide();
-                    sourcePos = pos.offset(direction);
+                    direction = result.getDirection();
+                    sourcePos = pos.relative(direction);
                     BlockState state = world.getBlockState(pos);
                     BlockPos newPos = canBlockContainFluid(world, pos, state, player) || (this.getFluid() != Fluids.EMPTY && bucketLevel < 2) ? pos : sourcePos;
-                    if (this.placeFluid(player, world, newPos, result)) {
-                        player.incrementStat(Stats.USED.getOrCreateStat(this));
-                        return TypedActionResult.success(getEmptySuccessItem(stack, player), world.isClient());
+                    if (this.emptyContents(player, world, newPos, result)) {
+                        player.awardStat(Stats.ITEM_USED.get(this));
+                        return InteractionResultHolder.sidedSuccess(getEmptySuccessItem(stack, player), world.isClientSide());
                     } else {
-                        return TypedActionResult.fail(stack);
+                        return InteractionResultHolder.fail(stack);
                     }
                 }
             } else {
-                return TypedActionResult.fail(stack);
+                return InteractionResultHolder.fail(stack);
             }
         }
     }
 
-    public static ItemStack getEmptySuccessItem(ItemStack stack, PlayerEntity player) {
-        int level = stack.getOrCreateNbt().getInt(NBT_TAG);
+    public static ItemStack getEmptySuccessItem(ItemStack stack, Player player) {
+        int level = stack.getOrCreateTag().getInt(NBT_TAG);
         ItemStack returnStack = level > 0 ? stack : getEmptyBucket();
-        if (player == null || !player.getAbilities().creativeMode)
+        if (player == null || !player.getAbilities().instabuild)
             decreaseFluidLevel(returnStack);
-        return player == null || !player.getAbilities().creativeMode ? returnStack : stack;
+        return player == null || !player.getAbilities().instabuild ? returnStack : stack;
     }
 
-    protected void playEmptySound(PlayerEntity player, World world, BlockPos pos) {
+    protected void playEmptySound(Player player, Level world, BlockPos pos) {
         SoundEvent soundevent;
-        soundevent = this.getFluid().isIn(FluidTags.LAVA) ? SoundEvents.ITEM_BUCKET_EMPTY_LAVA : SoundEvents.ITEM_BUCKET_EMPTY;
-        world.playSound(player, pos, soundevent, SoundCategory.BLOCKS, 1.0F, 1.0F);
-        world.emitGameEvent(player, GameEvent.FLUID_PLACE, pos);
+        soundevent = this.getFluid().is(FluidTags.LAVA) ? SoundEvents.BUCKET_EMPTY_LAVA : SoundEvents.BUCKET_EMPTY;
+        world.playSound(player, pos, soundevent, SoundSource.BLOCKS, 1.0F, 1.0F);
+        world.gameEvent(player, GameEvent.FLUID_PLACE, pos);
     }
 
     public Fluid getFluid() {
         return fluid;
     }
 
-    private boolean canBlockContainFluid(World worldIn, BlockPos posIn, BlockState blockstate, PlayerEntity player) {
-        return blockstate.getBlock() instanceof FluidFillable && ((FluidFillable) blockstate.getBlock()).canFillWithFluid(worldIn, posIn, blockstate, this.getFluid());
+    private boolean canBlockContainFluid(Level worldIn, BlockPos posIn, BlockState blockstate, Player player) {
+        return blockstate.getBlock() instanceof LiquidBlockContainer && ((LiquidBlockContainer) blockstate.getBlock()).canPlaceLiquid(worldIn, posIn, blockstate, this.getFluid());
     }
 
 
@@ -190,9 +194,9 @@ public class GoldenBucketItem extends Item implements FluidModificationItem {
     }
 
     public static ItemStack getFilledBucket(BlockState state) {
-        if (state.getFluidState().isOf(Fluids.WATER)) return new ItemStack(ModItems.GOLDEN_WATER_BUCKET);
-        if (state.getFluidState().isOf(Fluids.LAVA)) return new ItemStack(ModItems.GOLDEN_LAVA_BUCKET);
-        if (state.isOf(Blocks.POWDER_SNOW)) return new ItemStack(ModItems.GOLDEN_POWDER_SNOW_BUCKET);
+        if (state.getFluidState().is(Fluids.WATER)) return new ItemStack(ModItems.GOLDEN_WATER_BUCKET);
+        if (state.getFluidState().is(Fluids.LAVA)) return new ItemStack(ModItems.GOLDEN_LAVA_BUCKET);
+        if (state.is(Blocks.POWDER_SNOW)) return new ItemStack(ModItems.GOLDEN_POWDER_SNOW_BUCKET);
 //        if (IsModLoaded.isSpelunkeryModLoaded()){
 //            if (state.getFluidState().isOf(ModFluids.PORTAL_FLUID.get())) return new ItemStack(SpelunkeryBucketemItems.GOLDEN_PORTAL_FLUID_BUCKET);
 //            if (state.getFluidState().isOf(ModFluids.SPRING_WATER.get())) return new ItemStack(SpelunkeryBucketemItems.GOLDEN_SPRING_WATER_BUCKET);
@@ -202,7 +206,7 @@ public class GoldenBucketItem extends Item implements FluidModificationItem {
 
     @Override
     public ItemStack getRecipeRemainder(ItemStack stack) {
-        int level = stack.getOrCreateNbt().getInt(NBT_TAG);
+        int level = stack.getOrCreateTag().getInt(NBT_TAG);
         ItemStack newStack = getFilledBucket(this.getFluid());
         if (level > 0 && newStack != null) {
             setFluidLevel(newStack, level - 1);
@@ -216,20 +220,20 @@ public class GoldenBucketItem extends Item implements FluidModificationItem {
     }
 
     @Override
-    public boolean placeFluid(@Nullable PlayerEntity player, World world, BlockPos pos, @Nullable BlockHitResult hitResult) {
-        if (!(this.getFluid() instanceof FlowableFluid)) {
+    public boolean emptyContents(@Nullable Player player, Level world, BlockPos pos, @Nullable BlockHitResult hitResult) {
+        if (!(this.getFluid() instanceof FlowingFluid)) {
             return false;
         } else {
             BlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
-            boolean replaceable = state.canBucketPlace(this.getFluid());
-            if (!(state.isAir() || replaceable || block instanceof FluidFillable && ((FluidFillable) block).canFillWithFluid(world, pos, state, this.getFluid()))) {
-                return hitResult != null && this.placeFluid(player, world, hitResult.getBlockPos().offset(hitResult.getSide()), null);
-            } else if (world.getDimension().ultrawarm() && this.getFluid().isIn(FluidTags.WATER)) {
+            boolean replaceable = state.canBeReplaced(this.getFluid());
+            if (!(state.isAir() || replaceable || block instanceof LiquidBlockContainer && ((LiquidBlockContainer) block).canPlaceLiquid(world, pos, state, this.getFluid()))) {
+                return hitResult != null && this.emptyContents(player, world, hitResult.getBlockPos().relative(hitResult.getDirection()), null);
+            } else if (world.dimensionType().ultraWarm() && this.getFluid().is(FluidTags.WATER)) {
                 int i = pos.getX();
                 int j = pos.getY();
                 int k = pos.getZ();
-                world.playSound(player, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.random.nextFloat() - world.random.nextFloat()) * 0.8F);
+                world.playSound(player, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (world.random.nextFloat() - world.random.nextFloat()) * 0.8F);
                 for (int l = 0; l < 8; ++l) {
                     world.addParticle(ParticleTypes.LARGE_SMOKE, (double) i + Math.random(), (double) j + Math.random(), (double) k + Math.random(), 0.0D, 0.0D, 0.0D);
                 }
@@ -246,15 +250,15 @@ public class GoldenBucketItem extends Item implements FluidModificationItem {
 //                }
 //                return true;
             //}
-            else if (block instanceof FluidFillable && ((FluidFillable) block).canFillWithFluid(world, pos, state, getFluid())) {
-                ((FluidFillable) block).canFillWithFluid(world, pos, state, ((FlowableFluid) this.getFluid()).getStill(false).getFluid());
+            else if (block instanceof LiquidBlockContainer && ((LiquidBlockContainer) block).canPlaceLiquid(world, pos, state, getFluid())) {
+                ((LiquidBlockContainer) block).canPlaceLiquid(world, pos, state, ((FlowingFluid) this.getFluid()).getSource(false).getType());
                 this.playEmptySound(player, world, pos);
                 return true;
             } else {
-                if (!world.isClient() && replaceable) {
-                    world.breakBlock(pos, true);
+                if (!world.isClientSide() && replaceable) {
+                    world.destroyBlock(pos, true);
                 }
-                if (!world.setBlockState(pos, this.getFluid().getDefaultState().getBlockState(), 11) && !state.getFluidState().isStill()) {
+                if (!world.setBlock(pos, this.getFluid().defaultFluidState().createLegacyBlock(), 11) && !state.getFluidState().isSource()) {
                     return false;
                 } else {
                     this.playEmptySound(player, world, pos);
