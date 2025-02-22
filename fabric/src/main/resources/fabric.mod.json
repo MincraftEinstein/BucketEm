@@ -20,6 +20,9 @@
     ],
     "client": [
       "com.qzimyion.bucketem.fabric.client.ExampleModFabricClient"
+    ],
+    "fabric-datagen": [
+      "com.qzimyion.bucketem.fabric.BucketemDataGenerator"
     ]
   },
   "mixins": [
