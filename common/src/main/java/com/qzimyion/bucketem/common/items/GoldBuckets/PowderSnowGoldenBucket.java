@@ -12,6 +12,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DispensibleContainerItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -76,6 +77,17 @@ public class PowderSnowGoldenBucket extends BlockItem implements DispensibleCont
         } else {
             return false;
         }
+    }
+
+    @Override
+    public Item getCraftingRemainingItem() {
+        int level = new ItemStack(this).getOrCreateTag().getInt("FluidLevel");
+        if (level > 0) {
+            ItemStack newStack = new ItemStack(ModItems.GOLDEN_POWDER_SNOW_BUCKET.get());
+            newStack.getOrCreateTag().putInt("FluidLevel", level - 1);
+            return newStack.getItem();
+        }
+        return GoldenBucketItem.getEmptyBucket().getItem();
     }
 
 //    @Override
