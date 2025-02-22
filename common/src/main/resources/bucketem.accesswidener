@@ -3,3 +3,6 @@ accessWidener v2 named
 # Bee entity
 accessible method net/minecraft/world/entity/animal/Bee setHasNectar (Z)V
 accessible method net/minecraft/world/entity/animal/Bee setHasStung (Z)V
+
+#Items
+extendable method net/minecraft/world/item/Item getCraftingRemainingItem ()Lnet/minecraft/world/item/Item;

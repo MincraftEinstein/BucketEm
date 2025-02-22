@@ -1,19 +1,16 @@
 package com.qzimyion.bucketem.common.items;
 
-import com.qzimyion.bucketem.core.mixin.ItemMixin.IItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.monster.Slime;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -27,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class SlimeBottle extends Item implements IItem {
+public class SlimeBottle extends Item {
     protected boolean enableSlimeChunkExcitement = true;
     public SlimeBottle(Properties properties) {
         super(properties);
@@ -67,10 +64,10 @@ public class SlimeBottle extends Item implements IItem {
         return InteractionResult.CONSUME;
     }
 
-    @Override
-    public boolean allowNbtUpdateAnimation(Player player, InteractionHand hand, ItemStack oldStack, ItemStack newStack) {
-        return false;
-    }
+//    @Override
+//    public boolean allowNbtUpdateAnimation(Player player, InteractionHand hand, ItemStack oldStack, ItemStack newStack) {
+//        return false;
+//    }
 
     public static boolean isSlimeChunk(ServerLevel level, int x, int z) {
         ChunkPos chunkpos = new ChunkPos(new BlockPos(x, 0, z));

@@ -1,4 +1,4 @@
-package com.qzimyion.bucketem.common.items.frogs;
+package com.qzimyion.bucketem.common.items.Frogs;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

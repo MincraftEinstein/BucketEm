@@ -20,9 +20,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class MagmaCubeItem extends Item {
+public class MagmaCubeBottleItem extends Item {
 
-    public MagmaCubeItem(Properties properties) {
+    public MagmaCubeBottleItem(Properties properties) {
         super(properties);
     }
 

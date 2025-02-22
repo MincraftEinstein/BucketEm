@@ -26,7 +26,7 @@ import java.util.UUID;
 public class EntityBottleItem extends Item {
     private final EntityType<?> getType;
     private final SoundEvent soundEvent;
-    public EntityBottleItem(EntityType<?> entityType, SoundEvent soundEvent,Properties properties) {
+    public EntityBottleItem(EntityType<?> entityType, SoundEvent soundEvent, Properties properties) {
         super(properties);
         this.getType = entityType;
         this.soundEvent = soundEvent;

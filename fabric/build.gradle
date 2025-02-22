@@ -7,6 +7,10 @@ architectury {
     fabric()
 }
 
+fabricApi {
+    configureDataGeneration()
+}
+
 configurations {
     common {
         canBeResolved = true
@@ -35,7 +39,6 @@ dependencies {
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
-    modImplementation "maven.modrinth:moonlight:fabric_$rootProject.moonlight_version"
 }
 
 processResources {

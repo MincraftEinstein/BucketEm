@@ -19,10 +19,5 @@
   ],
   "injectors": {
     "defaultRequire": 1
-  },
-  "client": [
-    "accessors.IFluidRendererAccessor",
-    "accessors.IWorldRendererAccessor",
-    "ItemMixin.HeldItemMixin"
-  ]
+  }
 }
