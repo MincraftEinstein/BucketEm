@@ -1,7 +1,6 @@
 package com.qzimyion.bucketem.common.items.GoldBuckets;
 
 //import com.ordana.spelunkery.reg.ModFluids;
-import com.qzimyion.bucketem.common.items.dummyItems.CustomItem;
 import com.qzimyion.bucketem.core.registry.ModItems;
 import dev.architectury.hooks.item.ItemStackHooks;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -35,6 +34,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
@@ -87,7 +87,7 @@ public class GoldenBucketItem extends Item implements DispensibleContainerItem {
     }
 
     @Override
-    public ItemStack getDefaultInstance() {
+    public @NotNull ItemStack getDefaultInstance() {
         return resetFluidLevel(new ItemStack(this));
     }
 
@@ -97,7 +97,7 @@ public class GoldenBucketItem extends Item implements DispensibleContainerItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         CompoundTag tag = stack.getOrCreateTag();
         int bucketLevel = tag.getInt(NBT_TAG);
