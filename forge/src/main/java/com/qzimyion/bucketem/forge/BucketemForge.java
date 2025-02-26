@@ -14,8 +14,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import com.qzimyion.bucketem.BucketEmCommon;
 
 @Mod(BucketEmCommon.MOD_ID)
-public final class ExampleModForge {
-    public ExampleModForge() {
+public final class BucketemForge {
+    public BucketemForge() {
         // Submit our event bus to let Architectury API register our content on the right time.
         EventBuses.registerModEventBus(BucketEmCommon.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
 

@@ -16,10 +16,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.qzimyion.bucketem.fabric.ExampleModFabric"
+      "com.qzimyion.bucketem.fabric.BucketemFabric"
     ],
     "client": [
-      "com.qzimyion.bucketem.fabric.client.ExampleModFabricClient"
+      "com.qzimyion.bucketem.fabric.client.BucketemFabricClient"
     ],
     "fabric-datagen": [
       "com.qzimyion.bucketem.fabric.BucketemDataGenerator"

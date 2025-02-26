@@ -6,7 +6,7 @@ import net.fabricmc.api.ModInitializer;
 import com.qzimyion.bucketem.BucketEmCommon;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 
-public final class ExampleModFabric implements ModInitializer {
+public final class BucketemFabric implements ModInitializer {
     @Override
     public void onInitialize() {
         BucketEmCommon.init();
