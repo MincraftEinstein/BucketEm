@@ -26,7 +26,7 @@
     ]
   },
   "mixins": [
-    "bucketem.mixins.json"
+    "bucketem.mixins.json", "bucketemfabric.mixins.json"
   ],
   "accessWidener": "bucketem.accesswidener",
   "depends": {
