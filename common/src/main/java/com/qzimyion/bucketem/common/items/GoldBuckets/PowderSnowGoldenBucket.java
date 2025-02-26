@@ -1,6 +1,5 @@
 package com.qzimyion.bucketem.common.items.GoldBuckets;
 
-import com.qzimyion.bucketem.common.items.dummyItems.CustomBlockItem;
 import com.qzimyion.bucketem.core.registry.ModItems;
 import dev.architectury.hooks.item.ItemStackHooks;
 import net.minecraft.advancements.CriteriaTriggers;
