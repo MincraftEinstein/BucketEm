@@ -1,13 +1,14 @@
 package com.qzimyion.bucketem.forge;
 
+import com.qzimyion.bucketem.client.BucketEmCommonClient;
 import com.qzimyion.bucketem.core.registry.ModEvents;
 import dev.architectury.platform.forge.EventBuses;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import com.qzimyion.bucketem.BucketEmCommon;
@@ -25,10 +26,15 @@ public final class ExampleModForge {
     @SubscribeEvent
     public static void onPlayerInteract(PlayerInteractEvent.EntityInteract event){
         EntityHitResult hitResult = new EntityHitResult(event.getTarget());
-        var result = ModEvents.event(event.getEntity(), event.getLevel(), event.getHand(), event.getTarget(), hitResult);
+        var result = ModEvents.EntityEvents(event.getEntity(), event.getLevel(), event.getHand(), event.getTarget(), hitResult);
         if (result != InteractionResult.PASS) {
             event.setCanceled(true);
             event.setCancellationResult(result);
         }
+    }
+
+    @SubscribeEvent
+    public static void clientReg(FMLClientSetupEvent event) {
+        event.enqueueWork(BucketEmCommonClient::init);
     }
 }
