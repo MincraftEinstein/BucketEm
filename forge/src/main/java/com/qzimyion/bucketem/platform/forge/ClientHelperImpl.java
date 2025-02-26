@@ -1,8 +1,12 @@
 package com.qzimyion.bucketem.platform.forge;
 
 import com.qzimyion.bucketem.platform.ClientHelper;
+import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import java.util.function.Consumer;
@@ -15,7 +19,7 @@ public class ClientHelperImpl {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(eventConsumer);
     }
 
-    public static void addModelPredicatesRegistration(Consumer<ClientHelper.ModelPredicates> eventListener){
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(event -> eventListener.accept(ItemProperties::register));
+    public static void addModelPredicatesRegistration(Consumer<ClientHelper.ModelPredicates> eventListener) {
+        FMLJavaModLoadingContext.get().getModEventBus().addListener((FMLClientSetupEvent event) -> eventListener.accept(ItemProperties::register));
     }
 }

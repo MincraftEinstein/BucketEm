@@ -2,8 +2,8 @@
   "required": true,
   "package": "com.qzimyion.bucketem.core.mixin",
   "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
   "mixins": [
-    "BlockEntityMixins.AbstractFurnaceBlockEntityMixin",
     "BlockEntityMixins.ChiseledBookshelfMixin",
     "BlockEntityMixins.FurnaceFuelSlotMixin",
     "EntityMixins.BeeEntityMixin",
@@ -14,8 +14,7 @@
     "EntityMixins.SquidEntityMixin",
     "EntityMixins.StriderEntityMixin",
     "EntityMixins.TurtleEntityMixin",
-    "EntityMixins.VexEntityMixin",
-    "ItemMixins.EntityBucketItemAccessor"
+    "EntityMixins.VexEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

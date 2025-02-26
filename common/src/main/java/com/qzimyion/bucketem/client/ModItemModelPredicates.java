@@ -1,17 +1,10 @@
 package com.qzimyion.bucketem.client;
 
-import com.qzimyion.bucketem.core.mixin.ItemMixins.EntityBucketItemAccessor;
 import com.qzimyion.bucketem.platform.ClientHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
-import net.minecraft.world.entity.animal.Bucketable;
-import net.minecraft.world.entity.animal.axolotl.Axolotl;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.MobBucketItem;
 
 import static com.qzimyion.bucketem.core.registry.ModItems.*;
 import static net.minecraft.world.item.Items.*;
@@ -51,18 +44,6 @@ public class ModItemModelPredicates {
             if (itemStack.getTag() != null && itemStack.getTag().contains("Age") && itemStack.getTag().getInt("Age") < 0)
                 age = 0;
             return age;
-        });
-        event.register(AXOLOTL_BUCKET, new ResourceLocation("variant"), (itemStack, world, holder, seed) -> {
-            Item item = itemStack.getItem();
-            if (!(item instanceof MobBucketItem)) {
-                return 0f;
-            }
-            Entity entity = ((EntityBucketItemAccessor) item).type().create(Minecraft.getInstance().level);
-            if (!(entity instanceof Axolotl) || entity == null) {
-                return 0f;
-            }
-            ((Bucketable) entity).loadFromBucketTag(itemStack.getOrCreateTag());
-            return ((Axolotl) entity).getVariant().ordinal() / 10f;
         });
 
         //==Bee stuff==//

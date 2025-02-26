@@ -3,6 +3,7 @@ package com.qzimyion.bucketem.common.items.GoldBuckets;
 //import com.ordana.spelunkery.reg.ModFluids;
 import com.qzimyion.bucketem.core.registry.ModItems;
 import dev.architectury.hooks.item.ItemStackHooks;
+import dev.architectury.injectables.annotations.PlatformOnly;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,6 +22,7 @@ import net.minecraft.world.item.DispensibleContainerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -85,6 +87,11 @@ public class GoldenBucketItem extends Item implements DispensibleContainerItem {
         }
         return getEmptyBucket();
     }
+
+//    @PlatformOnly("forge")
+//    public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
+//        return itemStack.getItem()==ModItems.GOLDEN_LAVA_BUCKET.get() ? 20000 : 0;
+//    }
 
     @Override
     public @NotNull ItemStack getDefaultInstance() {
@@ -179,8 +186,7 @@ public class GoldenBucketItem extends Item implements DispensibleContainerItem {
     public static ItemStack getEmptySuccessItem(ItemStack stack, Player player) {
         int level = stack.getOrCreateTag().getInt(NBT_TAG);
         ItemStack returnStack = level > 0 ? stack : getEmptyBucket();
-        if (player == null || !player.getAbilities().instabuild)
-            decreaseFluidLevel(returnStack);
+        if (player == null || !player.getAbilities().instabuild) decreaseFluidLevel(returnStack);
         return player == null || !player.getAbilities().instabuild ? returnStack : stack;
     }
 

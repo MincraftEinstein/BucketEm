@@ -20,12 +20,14 @@ public class ClientHelper {
     }
 
     @ExpectPlatform
-    public static void addItemColorsRegistration(Consumer<ItemColorEvent> eventListener) {
+    public static void addModelPredicatesRegistration(Consumer<ModelPredicates> eventListener){
         throw new AssertionError();
     }
 
     @ExpectPlatform
-    public static void addModelPredicatesRegistration(Consumer<ModelPredicates> eventListener){
+    public static void addItemColorsRegistration(Consumer<ItemColorEvent> eventListener) {
         throw new AssertionError();
     }
+
+
 }
