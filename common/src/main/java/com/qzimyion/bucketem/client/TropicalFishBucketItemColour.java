@@ -8,6 +8,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 
 public class TropicalFishBucketItemColour implements ItemColor {
+
     @Override
     public int getColor(ItemStack itemStack, int i) {
         if (i == 0) return 0xFFFFFF;
