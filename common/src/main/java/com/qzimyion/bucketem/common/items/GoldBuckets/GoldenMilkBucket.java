@@ -1,6 +1,7 @@
 package com.qzimyion.bucketem.common.items.GoldBuckets;
 
 import com.google.common.collect.ImmutableList;
+import dev.architectury.hooks.item.ItemStackHooks;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -15,6 +16,8 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+
+import static com.qzimyion.bucketem.core.registry.ModItems.*;
 
 public class GoldenMilkBucket extends Item {
 
@@ -48,7 +51,7 @@ public class GoldenMilkBucket extends Item {
     }
 
     @Override
-    public UseAnim getUseAnimation(ItemStack stack) {
+    public @NotNull UseAnim getUseAnimation(ItemStack stack) {
         return UseAnim.DRINK;
     }
 
@@ -57,16 +60,18 @@ public class GoldenMilkBucket extends Item {
         return ItemUtils.startUsingInstantly(world, user, hand);
     }
 
-    
+    @Override
+    public Item getCraftingRemainingItem(){
+        return ItemStackHooks.getCraftingRemainingItem(getRecipeRemainder(new ItemStack(this))).getItem();
+    }
 
-//    @Override
-//    public ItemStack getRecipeRemainder(ItemStack stack) {
-//        int level = stack.getOrCreateTag().getInt("FluidLevel");
-//        if (level > 0){
-//            ItemStack newStack = new ItemStack(GOLDEN_MILK_BUCKET);
-//            newStack.getOrCreateTag().putInt("FluidLevel", level - 1);
-//            return newStack;
-//        }
-//        return GoldenBucketItem.getEmptyBucket();
-//    }
+    public ItemStack getRecipeRemainder(ItemStack stack) {
+        int level = stack.getOrCreateTag().getInt("FluidLevel");
+        if (level > 0){
+            ItemStack newStack = new ItemStack(GOLDEN_MILK_BUCKET.get());
+            newStack.getOrCreateTag().putInt("FluidLevel", level - 1);
+            return newStack;
+        }
+        return GoldenBucketItem.getEmptyBucket();
+    }
 }

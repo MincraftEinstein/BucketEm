@@ -1,7 +1,9 @@
 package com.qzimyion.bucketem.common.items.GoldBuckets;
 
 //import com.ordana.spelunkery.reg.ModFluids;
+import com.qzimyion.bucketem.common.items.dummyItems.CustomItem;
 import com.qzimyion.bucketem.core.registry.ModItems;
+import dev.architectury.hooks.item.ItemStackHooks;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -67,6 +69,21 @@ public class GoldenBucketItem extends Item implements DispensibleContainerItem {
 
     public static boolean canBeFilled(ItemStack stack) {
         return stack.getOrCreateTag().getInt(NBT_TAG) < 2;
+    }
+
+    @Override
+    public @Nullable Item getCraftingRemainingItem() {
+        return ItemStackHooks.getCraftingRemainingItem(getRecipeRemainder(new ItemStack(this))).getItem();
+    }
+
+    public ItemStack getRecipeRemainder(ItemStack stack) {
+        int level = stack.getOrCreateTag().getInt(NBT_TAG);
+        ItemStack newStack = getFilledBucket(this.getFluid());
+        if (level > 0 && newStack != null) {
+            setFluidLevel(newStack, level - 1);
+            return newStack;
+        }
+        return getEmptyBucket();
     }
 
     @Override
@@ -202,17 +219,6 @@ public class GoldenBucketItem extends Item implements DispensibleContainerItem {
 //            if (state.getFluidState().isOf(ModFluids.SPRING_WATER.get())) return new ItemStack(SpelunkeryBucketemItems.GOLDEN_SPRING_WATER_BUCKET);
 //        }
         return null;
-    }
-
-    @Override
-    public ItemStack getRecipeRemainder(ItemStack stack) {
-        int level = stack.getOrCreateTag().getInt(NBT_TAG);
-        ItemStack newStack = getFilledBucket(this.getFluid());
-        if (level > 0 && newStack != null) {
-            setFluidLevel(newStack, level - 1);
-            return newStack;
-        }
-        return getEmptyBucket();
     }
 
     public static ItemStack getEmptyBucket() {

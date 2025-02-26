@@ -1,6 +1,8 @@
 package com.qzimyion.bucketem.common.items.GoldBuckets;
 
+import com.qzimyion.bucketem.common.items.dummyItems.CustomBlockItem;
 import com.qzimyion.bucketem.core.registry.ModItems;
+import dev.architectury.hooks.item.ItemStackHooks;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -80,24 +82,17 @@ public class PowderSnowGoldenBucket extends BlockItem implements DispensibleCont
     }
 
     @Override
-    public Item getCraftingRemainingItem() {
-        int level = new ItemStack(this).getOrCreateTag().getInt("FluidLevel");
+    public @Nullable Item getCraftingRemainingItem() {
+        return ItemStackHooks.getCraftingRemainingItem(getRecipeRemainder(new ItemStack(this))).getItem();
+    }
+
+    public ItemStack getRecipeRemainder(ItemStack stack) {
+        int level = stack.getOrCreateTag().getInt("FluidLevel");
         if (level > 0) {
             ItemStack newStack = new ItemStack(ModItems.GOLDEN_POWDER_SNOW_BUCKET.get());
             newStack.getOrCreateTag().putInt("FluidLevel", level - 1);
-            return newStack.getItem();
+            return newStack;
         }
-        return GoldenBucketItem.getEmptyBucket().getItem();
+        return GoldenBucketItem.getEmptyBucket();
     }
-
-//    @Override
-//    public ItemStack getRecipeRemainder(ItemStack stack) {
-//        int level = stack.getOrCreateTag().getInt("FluidLevel");
-//        if (level > 0) {
-//            ItemStack newStack = new ItemStack(ModItems.GOLDEN_POWDER_SNOW_BUCKET.get());
-//            newStack.getOrCreateTag().putInt("FluidLevel", level - 1);
-//            return newStack;
-//        }
-//        return GoldenBucketItem.getEmptyBucket();
-//    }
 }
