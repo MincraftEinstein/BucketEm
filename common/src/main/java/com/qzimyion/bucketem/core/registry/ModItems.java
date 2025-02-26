@@ -46,7 +46,7 @@ public class ModItems {
             ()-> new DryFrogBuckets(FrogVariant.COLD, Fluids.WATER, new Item.Properties().stacksTo(1)));
     public static final RegistrySupplier<Item> TURTLE_BUCKET = ITEMS.register("turtle_bucket",
             ()-> new MobBucketItem(EntityType.TURTLE, Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().stacksTo(1)));
-    public static final RegistrySupplier<Item> GOLDEN_BUCKET = ITEMS.register("golden_bucket", ()-> new Item(new Item.Properties().stacksTo(1)));
+    public static final RegistrySupplier<Item> GOLDEN_BUCKET = ITEMS.register("golden_bucket", ()-> new GoldenBucketItem(Fluids.EMPTY, new Item.Properties().stacksTo(1)));
     public static final RegistrySupplier<Item> GOLDEN_WATER_BUCKET = ITEMS.register("golden_water_bucket", ()-> new GoldenBucketItem(Fluids.WATER, new Item.Properties().stacksTo(1)));
     public static final RegistrySupplier<Item> GOLDEN_LAVA_BUCKET = ITEMS.register("golden_lava_bucket", ()-> new GoldenBucketItem(Fluids.LAVA, new Item.Properties().stacksTo(1)));
     public static final RegistrySupplier<Item> GOLDEN_MILK_BUCKET = ITEMS.register("golden_milk_bucket", ()-> new GoldenMilkBucket(new Item.Properties().stacksTo(1)));
