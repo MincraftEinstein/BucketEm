@@ -33,7 +33,7 @@ import static net.minecraft.world.item.Items.*;
 @SuppressWarnings("deprecation")
 public class ModEvents {
 
-    public static InteractionResult event(Player player, Level level, InteractionHand hand, Entity entity, @Nullable EntityHitResult entityHitResult) {
+    public static InteractionResult EntityEvents(Player player, Level level, InteractionHand hand, Entity entity, @Nullable EntityHitResult entityHitResult) {
         ItemStack itemStack = player.getItemInHand(hand);
 
         //Frog buckets
@@ -74,32 +74,27 @@ public class ModEvents {
         }
         //Slimes
         if (itemStack.getItem() == GLASS_BOTTLE && entity.isAlive() && entity instanceof Slime slime) {
-            ItemStack bottle = new ItemStack(SLIME_BOTTLE.get());
-            if (!player.isCreative()) itemStack.shrink(1);
-            int i = Mth.clamp(slime.getSize(), 2, 127);
+            if (slime.getSize() > 1) {
+                return InteractionResult.FAIL;
+            }
+            ItemStack bottle;
             if (slime.getType() == EntityType.SLIME && slime.getSize() == 1) {
                 player.playSound(SoundEvents.BOTTLE_FILL_DRAGONBREATH, 1.0f, 1.0f);
-                Bucketable.saveDefaultDataToBucketTag(slime, bottle);
-                ItemStack itemstack2 = ItemUtils.createFilledResult(itemStack, player, bottle, false);
-                player.setItemInHand(hand, itemstack2);
-                entity.discard();
-            } else {
-                if (slime.getType() == EntityType.SLIME && (slime.getSize() == i)){
-                    return InteractionResult.FAIL;
-                }
-            }
-            if (slime.getType() == EntityType.MAGMA_CUBE && slime.getSize() == 1) {
+                bottle = new ItemStack(SLIME_BOTTLE.get());
+            } else if (slime.getType() == EntityType.MAGMA_CUBE && slime.getSize() == 1) {
                 player.playSound(SoundEvents.BOTTLE_FILL_DRAGONBREATH, 1.0f, 1.0f);
                 bottle = new ItemStack(MAGMA_CUBE_BOTTLE.get());
-                Bucketable.saveDefaultDataToBucketTag(slime, bottle);
-                ItemStack itemstack2 = ItemUtils.createFilledResult(itemStack, player, bottle, false);
-                player.setItemInHand(hand, itemstack2);
-                entity.discard();
             } else {
-                if (slime.getType() == EntityType.MAGMA_CUBE && (slime.getSize() == i)){
-                    return InteractionResult.FAIL;
-                }
+                return InteractionResult.FAIL;
             }
+            if (!player.isCreative()) {
+                itemStack.shrink(1);
+            }
+            Bucketable.saveDefaultDataToBucketTag(slime, bottle);
+            if (!player.getInventory().add(bottle)) {
+                player.drop(bottle, false);
+            }
+            entity.discard();
             return InteractionResult.SUCCESS;
         }
         //Bee
@@ -157,7 +152,6 @@ public class ModEvents {
             player.setItemInHand(hand, itemstack2);
             entity.discard();
             return InteractionResult.SUCCESS;
-
         }
         return InteractionResult.PASS;
     }
