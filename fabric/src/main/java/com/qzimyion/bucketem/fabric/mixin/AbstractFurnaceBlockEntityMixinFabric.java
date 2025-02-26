@@ -1,13 +1,16 @@
-package com.qzimyion.bucketem.core.mixin.BlockEntityMixins;
+package com.qzimyion.bucketem.fabric.mixin;
 
-
+import com.google.common.collect.Maps;
 import com.qzimyion.bucketem.common.items.GoldBuckets.GoldenBucketItem;
 import com.qzimyion.bucketem.core.registry.ModItems;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,16 +19,18 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Map;
+
 @SuppressWarnings("DiscouragedShift")
 @Mixin(AbstractFurnaceBlockEntity.class)
-public class AbstractFurnaceBlockEntityMixin {
+public abstract class AbstractFurnaceBlockEntityMixinFabric {
 
     @Shadow protected NonNullList<ItemStack> items;
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;shrink(I)V", shift = At.Shift.BEFORE), method = "burn")
     private static void burn(RegistryAccess registryManager, Recipe<?> recipe, NonNullList<ItemStack> slots, int count, CallbackInfoReturnable<Boolean> cir) {
         ItemStack stack = slots.get(1);
-        if (slots.get(0).is(Blocks.WET_SPONGE.asItem()) && !stack.isEmpty()) {
+        if (slots.get(0).is(Items.WET_SPONGE) && !stack.isEmpty()) {
             if (stack.is(ModItems.GOLDEN_BUCKET.get())) {
                 slots.set(1, new ItemStack(ModItems.GOLDEN_WATER_BUCKET.get()));
             } else if (stack.is(ModItems.GOLDEN_WATER_BUCKET.get()) && GoldenBucketItem.canBeFilled(stack)) {
