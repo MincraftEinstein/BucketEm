@@ -1,14 +1,11 @@
 package com.qzimyion.bucketem.forge;
 
 import com.qzimyion.bucketem.client.BucketEmCommonClient;
-import com.qzimyion.bucketem.core.registry.ModItems;
 import com.qzimyion.bucketem.forge.mixin.ItemMixins.EntityBucketItemAccessor;
 import com.qzimyion.bucketem.core.registry.DispenserBehaviorRegistry;
-import com.qzimyion.bucketem.core.registry.ModCreativeTabs;
 import com.qzimyion.bucketem.core.registry.ModEvents;
 import com.qzimyion.bucketem.platform.ClientHelper;
 import com.qzimyion.bucketem.platform.PlatformHelper;
-import com.qzimyion.bucketem.platform.forge.CommonHelperImpl;
 import dev.architectury.platform.forge.EventBuses;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
@@ -20,7 +17,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -28,12 +24,11 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import com.qzimyion.bucketem.BucketEmCommon;
 
-import static com.qzimyion.bucketem.core.registry.ModItems.ITEMS;
 import static net.minecraft.world.item.Items.AXOLOTL_BUCKET;
 
 @SuppressWarnings("removal")
 @Mod(BucketEmCommon.MOD_ID)
-@Mod.EventBusSubscriber(modid = BucketEmCommon.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = BucketEmCommon.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class BucketemForge {
     public BucketemForge() {
         EventBuses.registerModEventBus(BucketEmCommon.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
@@ -66,7 +61,11 @@ public final class BucketemForge {
     }
 
     @SubscribeEvent
-    public void onPlayerInteract(PlayerInteractEvent.EntityInteract event){
-        ModEvents.EntityEvents(event.getEntity(), event.getLevel(), event.getHand(), event.getTarget(), new EntityHitResult(event.getTarget()));
+    public static void onPlayerInteract(PlayerInteractEvent.EntityInteract event){
+        InteractionResult result = ModEvents.EntityEvents(event.getEntity(), event.getLevel(), event.getHand(), event.getTarget(), new EntityHitResult(event.getTarget()));
+        if (result == InteractionResult.SUCCESS){
+            event.setCanceled(true);
+            event.setCancellationResult(InteractionResult.SUCCESS);
+        }
     }
 }
