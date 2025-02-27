@@ -1,5 +1,6 @@
 package com.qzimyion.bucketem.core.registry;
 
+import com.qzimyion.bucketem.common.items.Kidnapping.PouchItem;
 import com.qzimyion.bucketem.common.items.MagmaCubeBottleItem;
 import com.qzimyion.bucketem.common.items.Frogs.DryFrogBuckets;
 import com.qzimyion.bucketem.common.items.EntityBottleItem;
@@ -58,6 +59,9 @@ public class ModItems {
             ()-> new EntityBottleItem(EntityType.ENDERMITE, SoundEvents.BOTTLE_FILL_DRAGONBREATH, new Item.Properties().stacksTo(1)));
     public static final RegistrySupplier<Item> SLIME_BOTTLE = ITEMS.register("slime_bottle", ()-> new SlimeBottle(new Item.Properties().stacksTo(1)));
     public static final RegistrySupplier<Item> MAGMA_CUBE_BOTTLE = ITEMS.register("magma_bottle", ()-> new MagmaCubeBottleItem(new Item.Properties().stacksTo(1)));
+
+    //==Pouches==//
+    public static final RegistrySupplier<Item> PIG_POUCH_ITEM = ITEMS.register("pig_pouch", ()-> new PouchItem(new Item.Properties().stacksTo(16), EntityType.PIG));
 
     public static void registerItems(){
         ITEMS.register();

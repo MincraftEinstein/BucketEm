@@ -1,5 +1,6 @@
 package com.qzimyion.bucketem.client;
 
+import com.qzimyion.bucketem.common.items.Kidnapping.PouchItem;
 import com.qzimyion.bucketem.platform.ClientHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -73,5 +74,7 @@ public class ModItemModelPredicates {
                 anger = 0;
             return anger;
         });
+        //==Pouch==//
+        event.register(PIG_POUCH_ITEM.get(), new ResourceLocation("filled"), ((itemStack, clientLevel, livingEntity, i) -> PouchItem.getFullnessDisplay(itemStack)));
     }
 }
