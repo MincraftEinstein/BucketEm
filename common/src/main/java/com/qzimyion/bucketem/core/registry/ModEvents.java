@@ -36,18 +36,20 @@ public class ModEvents {
 
     public static void LootTableEvent(){
         LootEvent.MODIFY_LOOT_TABLE.register(((lootDataManager, id, context, builtin) -> {
-            //==Ruined portal==//
             LootPool.Builder pool = LootPool.lootPool();
             //==Bastions==//
             if (BuiltInLootTables.BASTION_BRIDGE.equals(id) || BuiltInLootTables.BASTION_OTHER.equals(id) || BuiltInLootTables.BASTION_HOGLIN_STABLE.equals(id)){
                 pool.add(LootItem.lootTableItem(STRIDER_BUCKET.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))));
             }
+            //==OW==//
+            //--Villagers
             if (BuiltInLootTables.VILLAGE_FISHER.equals(id)){
                 pool.add(LootItem.lootTableItem(SQUID_BUCKET.get()).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))));
                 pool.add(LootItem.lootTableItem(COD_BUCKET).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))));
                 pool.add(LootItem.lootTableItem(SALMON_BUCKET).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))));
                 pool.add(LootItem.lootTableItem(PUFFERFISH_BUCKET).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))));
             }
+            //--Mineshaft
             if (BuiltInLootTables.ABANDONED_MINESHAFT.equals(id)){
                 pool.add(LootItem.lootTableItem(GLOW_SQUID_BUCKET.get()).setWeight(20).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))));
             }
@@ -57,7 +59,6 @@ public class ModEvents {
 
     public static InteractionResult EntityEvents(Player player, Level level, InteractionHand hand, Entity entity, @Nullable EntityHitResult entityHitResult) {
         ItemStack itemStack = player.getItemInHand(hand);
-
         //Frog buckets
         if (itemStack.getItem() == WATER_BUCKET && entity.isAlive() && entity instanceof Frog frog){
             player.playSound(SoundEvents.BUCKET_FILL_FISH, 1.0f, 1.0f);
