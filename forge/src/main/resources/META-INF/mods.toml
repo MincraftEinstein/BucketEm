@@ -1,35 +1,35 @@
 modLoader = "javafml"
 loaderVersion = "[47,)"
-#issueTrackerURL = ""
-license = "MIT"
+issueTrackerURL = "https://github.com/Qzimyion/BucketEm/issues"
+license = "${mod_license}"
 
 [[mods]]
-modId = "bucketem"
-version = "${version}"
-displayName = "Bucket'em"
-authors = "Me!"
+modId = "${mod_id}"
+version = "${mod_version}"
+displayName = "${mod_name}"
+authors = "${mod_authors}"
 description = '''
-This is an example description! Tell everyone what your mod is about!
+${mod_description}
 '''
-logoFile = "assets/bucketem/icon.png"
+logoFile = "META-INF/img.png"
 
-[[dependencies.bucketem]]
+[[dependencies.${mod_id}]]
 modId = "forge"
 mandatory = true
 versionRange = "[47,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.bucketem]]
+[[dependencies.${mod_id}]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.20.1,)"
+versionRange = "[${minecraft_version},)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.bucketem]]
+[[dependencies.${mod_id}]]
 modId = "architectury"
 mandatory = true
-versionRange = "[9.2.14,)"
+versionRange = "[${architectury_api_version},)"
 ordering = "AFTER"
 side = "BOTH"
