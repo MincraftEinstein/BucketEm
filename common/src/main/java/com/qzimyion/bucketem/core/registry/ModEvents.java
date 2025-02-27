@@ -1,10 +1,19 @@
 package com.qzimyion.bucketem.core.registry;
 
+import com.qzimyion.bucketem.common.items.GoldBuckets.GoldenBucketItem;
+import dev.architectury.event.events.common.LootEvent;
+import net.minecraft.data.loot.packs.VanillaChestLoot;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraft.world.phys.EntityHitResult;
 import org.jetbrains.annotations.Nullable;
 import net.minecraft.nbt.CompoundTag;
@@ -31,6 +40,24 @@ import static net.minecraft.world.item.Items.*;
 
 @SuppressWarnings("deprecation")
 public class ModEvents {
+
+    public static void LootTableEvent(){
+        LootEvent.MODIFY_LOOT_TABLE.register(((lootDataManager, id, context, builtin) -> {
+            //==Ruined portal==//
+            LootPool.Builder pool = LootPool.lootPool().apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)));
+            if (BuiltInLootTables.RUINED_PORTAL.equals(id)){
+                pool.add(LootItem.lootTableItem(GOLDEN_BUCKET.get()).setWeight(4));
+            }
+            //==Bastions==//
+            if (BuiltInLootTables.BASTION_TREASURE.equals(id)){
+                pool.add(LootItem.lootTableItem(GOLDEN_BUCKET.get()).setWeight(12));
+            }
+            if (BuiltInLootTables.BASTION_BRIDGE.equals(id) || BuiltInLootTables.BASTION_OTHER.equals(id) || BuiltInLootTables.BASTION_HOGLIN_STABLE.equals(id)){
+                pool.add(LootItem.lootTableItem(GOLDEN_BUCKET.get()).setWeight(4));
+            }
+            context.addPool(pool);
+        }));
+    }
 
     public static InteractionResult EntityEvents(Player player, Level level, InteractionHand hand, Entity entity, @Nullable EntityHitResult entityHitResult) {
         ItemStack itemStack = player.getItemInHand(hand);
