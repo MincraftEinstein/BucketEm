@@ -1,8 +1,6 @@
 package com.qzimyion.bucketem.core.registry;
 
-import com.qzimyion.bucketem.common.items.GoldBuckets.GoldenBucketItem;
 import dev.architectury.event.events.common.LootEvent;
-import net.minecraft.data.loot.packs.VanillaChestLoot;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -10,7 +8,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
-import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
@@ -19,20 +16,16 @@ import org.jetbrains.annotations.Nullable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.entity.animal.FrogVariant;
 import net.minecraft.world.entity.animal.allay.Allay;
 import net.minecraft.world.entity.animal.frog.Frog;
-import net.minecraft.world.entity.animal.goat.Goat;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
-import net.minecraft.world.level.gameevent.GameEvent;
 
 import static com.qzimyion.bucketem.core.registry.ModItems.*;
 import static net.minecraft.world.item.Items.*;
@@ -44,16 +37,19 @@ public class ModEvents {
     public static void LootTableEvent(){
         LootEvent.MODIFY_LOOT_TABLE.register(((lootDataManager, id, context, builtin) -> {
             //==Ruined portal==//
-            LootPool.Builder pool = LootPool.lootPool().apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)));
-            if (BuiltInLootTables.RUINED_PORTAL.equals(id)){
-                pool.add(LootItem.lootTableItem(GOLDEN_BUCKET.get()).setWeight(4));
-            }
+            LootPool.Builder pool = LootPool.lootPool();
             //==Bastions==//
-            if (BuiltInLootTables.BASTION_TREASURE.equals(id)){
-                pool.add(LootItem.lootTableItem(GOLDEN_BUCKET.get()).setWeight(12));
-            }
             if (BuiltInLootTables.BASTION_BRIDGE.equals(id) || BuiltInLootTables.BASTION_OTHER.equals(id) || BuiltInLootTables.BASTION_HOGLIN_STABLE.equals(id)){
-                pool.add(LootItem.lootTableItem(GOLDEN_BUCKET.get()).setWeight(4));
+                pool.add(LootItem.lootTableItem(STRIDER_BUCKET.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))));
+            }
+            if (BuiltInLootTables.VILLAGE_FISHER.equals(id)){
+                pool.add(LootItem.lootTableItem(SQUID_BUCKET.get()).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))));
+                pool.add(LootItem.lootTableItem(COD_BUCKET).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))));
+                pool.add(LootItem.lootTableItem(SALMON_BUCKET).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))));
+                pool.add(LootItem.lootTableItem(PUFFERFISH_BUCKET).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))));
+            }
+            if (BuiltInLootTables.ABANDONED_MINESHAFT.equals(id)){
+                pool.add(LootItem.lootTableItem(GLOW_SQUID_BUCKET.get()).setWeight(20).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))));
             }
             context.addPool(pool);
         }));
@@ -145,27 +141,6 @@ public class ModEvents {
                 ItemStack itemstack2 = ItemUtils.createFilledResult(itemStack ,player, bottleItem, false);
                 player.setItemInHand(hand, itemstack2);
                 return InteractionResult.SUCCESS;
-            }
-        }
-
-        //Milking
-        if (entity.getType().is(ModTags.EntityTypeTagsForMod.MILKABLE_ENTITY)) {
-            if (entity instanceof LivingEntity livingEntity && !livingEntity.isBaby() && (itemStack.getItem() == GOLDEN_MILK_BUCKET.get() || itemStack.getItem() == GOLDEN_BUCKET.get())) {
-                CompoundTag tag = itemStack.getOrCreateTag();
-                ItemStack milkBucket = ItemUtils.createFilledResult(itemStack.copy(), player, GOLDEN_MILK_BUCKET.get().getDefaultInstance());
-                boolean fullBucket = false;
-                if (itemStack.getItem() == GOLDEN_MILK_BUCKET.get()) {
-                    fullBucket = tag.getInt("FluidLevel") >= 2;
-                    if (!fullBucket && !player.isCreative()) {
-                        milkBucket.getOrCreateTag().putInt("FluidLevel", tag.getInt("FluidLevel") + 1);
-                    }
-                }
-                if (!fullBucket) {
-                    player.playSound(entity instanceof Goat goat ? goat.isScreamingGoat() ? SoundEvents.GOAT_SCREAMING_MILK : SoundEvents.GOAT_MILK : SoundEvents.COW_MILK, 1.0F, 1.0F);
-                    entity.gameEvent(GameEvent.ENTITY_INTERACT);
-                    player.setItemInHand(hand, milkBucket);
-                    return InteractionResultHolder.success(level.isClientSide()).getResult();
-                }
             }
         }
 

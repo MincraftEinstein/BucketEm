@@ -1,8 +1,5 @@
 package com.qzimyion.bucketem.core.registry;
 
-import com.qzimyion.bucketem.common.items.GoldBuckets.GoldenBucketItem;
-import com.qzimyion.bucketem.common.items.GoldBuckets.GoldenMilkBucket;
-import com.qzimyion.bucketem.common.items.GoldBuckets.PowderSnowGoldenBucket;
 import com.qzimyion.bucketem.common.items.MagmaCubeBottleItem;
 import com.qzimyion.bucketem.common.items.Frogs.DryFrogBuckets;
 import com.qzimyion.bucketem.common.items.EntityBottleItem;
@@ -14,10 +11,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.FrogVariant;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.MobBucketItem;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
 
 import static com.qzimyion.bucketem.BucketEmCommon.MOD_ID;
@@ -47,11 +42,6 @@ public class ModItems {
             ()-> new DryFrogBuckets(FrogVariant.COLD, Fluids.WATER, new Item.Properties().stacksTo(1)));
     public static final RegistrySupplier<Item> TURTLE_BUCKET = ITEMS.register("turtle_bucket",
             ()-> new MobBucketItem(EntityType.TURTLE, Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().stacksTo(1)));
-    public static final RegistrySupplier<Item> GOLDEN_BUCKET = ITEMS.register("golden_bucket", ()-> new GoldenBucketItem(Fluids.EMPTY, new Item.Properties().stacksTo(16)));
-    public static final RegistrySupplier<Item> GOLDEN_WATER_BUCKET = ITEMS.register("golden_water_bucket", ()-> new GoldenBucketItem(Fluids.WATER, new Item.Properties().stacksTo(1)));
-    public static final RegistrySupplier<Item> GOLDEN_LAVA_BUCKET = ITEMS.register("golden_lava_bucket", ()-> new GoldenBucketItem(Fluids.LAVA, new Item.Properties().stacksTo(1)));
-    public static final RegistrySupplier<Item> GOLDEN_MILK_BUCKET = ITEMS.register("golden_milk_bucket", ()-> new GoldenMilkBucket(new Item.Properties().stacksTo(1)));
-    public static final RegistrySupplier<Item> GOLDEN_POWDER_SNOW_BUCKET = ITEMS.register("golden_powder_snow_bucket", ()-> new PowderSnowGoldenBucket(Blocks.POWDER_SNOW, SoundEvents.POWDER_SNOW_PLACE, new Item.Properties().stacksTo(1)));
 
     //==Books==//
     public static final RegistrySupplier<Item>  ALLAY_POSSESSED_BOOK = ITEMS.register("allay_possessed_book",

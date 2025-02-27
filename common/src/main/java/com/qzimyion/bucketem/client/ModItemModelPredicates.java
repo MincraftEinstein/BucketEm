@@ -12,13 +12,6 @@ import static net.minecraft.world.item.Items.*;
 public class ModItemModelPredicates {
 
     public static void registerModelProperties(ClientHelper.ModelPredicates event){
-        //==Axolotls==//
-        event.register(AXOLOTL_BUCKET, new ResourceLocation("age"), ((itemStack, clientLevel, livingEntity, i) -> {
-            float age = 1;
-            if (itemStack.getTag() != null && itemStack.getTag().contains("Age") && itemStack.getTag().getInt("Age") < 0)
-                age = 0;
-            return age;
-        }));
         //==Turtle==//
         event.register(TURTLE_BUCKET.get(), new ResourceLocation("age"), (itemStack, clientLevel, livingEntity, i) -> {
             float age = 1;
@@ -37,7 +30,6 @@ public class ModItemModelPredicates {
                 return 1;
             }
         });
-
         //==Axolotls==//
         event.register(AXOLOTL_BUCKET, new ResourceLocation("age"), (itemStack, clientLevel, livingEntity, i) -> {
             float age = 1;
@@ -81,11 +73,5 @@ public class ModItemModelPredicates {
                 anger = 0;
             return anger;
         });
-
-        //==Golden Buckets==//
-        event.register(GOLDEN_WATER_BUCKET.get(), new ResourceLocation("level"), (itemStack, level, entity, hash) -> itemStack.getOrCreateTag().getInt("FluidLevel") / 10f);
-        event.register(GOLDEN_LAVA_BUCKET.get(), new ResourceLocation("level"), (itemStack, level, entity, hash) -> itemStack.getOrCreateTag().getInt("FluidLevel") / 10f);
-        event.register(GOLDEN_MILK_BUCKET.get(), new ResourceLocation("level"), (itemStack, level, entity, hash) -> itemStack.getOrCreateTag().getInt("FluidLevel") / 10f);
-        event.register(GOLDEN_POWDER_SNOW_BUCKET.get(), new ResourceLocation("level"), (itemStack, level, entity, hash) -> itemStack.getOrCreateTag().getInt("FluidLevel") / 10f);
     }
 }

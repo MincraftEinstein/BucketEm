@@ -20,7 +20,7 @@ public class ModCreativeTabs {
     public static void addItems(CommonHelper.ItemToTabEvent event){
         after(event, Items.LAVA_BUCKET, CreativeModeTabs.TOOLS_AND_UTILITIES, ModItems.STRIDER_BUCKET);
         after(event, Items.TADPOLE_BUCKET, CreativeModeTabs.TOOLS_AND_UTILITIES, ModItems.DRY_TEMPERATE_FROG_BUCKET, ModItems.DRY_TROPICAL_FROG_BUCKET, ModItems.DRY_TUNDRA_FROG_BUCKET, ModItems.TEMPERATE_FROG_BUCKET, ModItems.TROPICAL_FROG_BUCKET, ModItems.TUNDRA_FROG_BUCKET, ModItems.GLOW_SQUID_BUCKET, ModItems.STRIDER_BUCKET);
-        after(event, Items.MILK_BUCKET, CreativeModeTabs.TOOLS_AND_UTILITIES, ModItems.GOLDEN_BUCKET, ModItems.GOLDEN_WATER_BUCKET, ModItems.GOLDEN_LAVA_BUCKET, ModItems.GOLDEN_MILK_BUCKET, ModItems.GOLDEN_POWDER_SNOW_BUCKET, ModItems.BEE_BOTTLE, ModItems.SILVERFISH_BOTTLE, ModItems.ENDERMITE_BOTTLE, ModItems.SLIME_BOTTLE, ModItems.MAGMA_CUBE_BOTTLE, ModItems.ALLAY_POSSESSED_BOOK, ModItems.VEX_POSSESSED_BOOK);
+        after(event, Items.MILK_BUCKET, CreativeModeTabs.TOOLS_AND_UTILITIES, ModItems.BEE_BOTTLE, ModItems.SILVERFISH_BOTTLE, ModItems.ENDERMITE_BOTTLE, ModItems.SLIME_BOTTLE, ModItems.MAGMA_CUBE_BOTTLE, ModItems.ALLAY_POSSESSED_BOOK, ModItems.VEX_POSSESSED_BOOK);
     }
 
     private static void after(CommonHelper.ItemToTabEvent event, Item target, ResourceKey<CreativeModeTab> tab, Supplier<?>... items) {
