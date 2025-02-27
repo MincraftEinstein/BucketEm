@@ -1,7 +1,7 @@
 package com.qzimyion.bucketem.fabric.client;
 
 import com.qzimyion.bucketem.client.BucketEmCommonClient;
-import com.qzimyion.bucketem.fabric.mixin.ItemMixins.EntityBucketItemAccessor;
+import com.qzimyion.bucketem.fabric.mixin.EntityBucketItemAccessor;
 import com.qzimyion.bucketem.fabric.fabricCompact.BucketemCompactRegFabric;
 import com.qzimyion.bucketem.platform.ClientHelper;
 import net.fabricmc.api.ClientModInitializer;

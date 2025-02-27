@@ -1,7 +1,7 @@
 package com.qzimyion.bucketem.forge;
 
 import com.qzimyion.bucketem.client.BucketEmCommonClient;
-import com.qzimyion.bucketem.forge.mixin.ItemMixins.EntityBucketItemAccessor;
+import com.qzimyion.bucketem.forge.mixin.EntityBucketItemAccessor;
 import com.qzimyion.bucketem.core.registry.DispenserBehaviorRegistry;
 import com.qzimyion.bucketem.core.registry.ModEvents;
 import com.qzimyion.bucketem.platform.ClientHelper;

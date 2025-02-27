@@ -1,6 +1,6 @@
 package com.qzimyion.bucketem.fabric.fabricCompact.WW;
 
-import com.qzimyion.bucketem.fabric.mixin.ItemMixins.EntityBucketItemAccessor;
+import com.qzimyion.bucketem.fabric.mixin.EntityBucketItemAccessor;
 import com.qzimyion.bucketem.platform.ClientHelper;
 import net.frozenblock.wilderwild.entity.Jellyfish;
 import net.frozenblock.wilderwild.entity.variant.JellyfishVariant;
