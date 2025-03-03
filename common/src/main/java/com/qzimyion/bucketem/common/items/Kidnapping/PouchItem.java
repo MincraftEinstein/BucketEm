@@ -64,7 +64,6 @@ public class PouchItem extends Item {
                 level.addFreshEntity(entity);
             }
         }
-
         itemStack.removeTagKey(TAG_ENTITIES);
         return true;
     }
