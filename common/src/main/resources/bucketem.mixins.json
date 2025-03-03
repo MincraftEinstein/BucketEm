@@ -13,7 +13,11 @@
     "EntityMixins.SquidEntityMixin",
     "EntityMixins.StriderEntityMixin",
     "EntityMixins.TurtleEntityMixin",
-    "EntityMixins.VexEntityMixin"
+    "EntityMixins.VexEntityMixin",
+    "ItemMixins.BucketItemMixin",
+    "ItemMixins.ItemsMixin",
+    "ItemMixins.MilkBucketItemMixin",
+    "ItemMixins.SolidBucketItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1
