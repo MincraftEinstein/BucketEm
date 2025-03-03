@@ -61,7 +61,7 @@ public class ModItems {
     public static final RegistrySupplier<Item> MAGMA_CUBE_BOTTLE = ITEMS.register("magma_bottle", ()-> new MagmaCubeBottleItem(new Item.Properties().stacksTo(1)));
 
     //==Pouches==//
-    public static final RegistrySupplier<Item> PIG_POUCH_ITEM = ITEMS.register("pig_pouch", ()-> new PouchItem(new Item.Properties().stacksTo(16), EntityType.PIG));
+    //public static final RegistrySupplier<Item> POUCH_ITEM = ITEMS.register("pouch", ()-> new PouchItem(new Item.Properties().stacksTo(16), EntityType.PIG));
 
     public static void registerItems(){
         ITEMS.register();

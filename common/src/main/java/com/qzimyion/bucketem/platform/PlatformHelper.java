@@ -19,13 +19,5 @@ public class PlatformHelper {
         public boolean isServer() {
             return this == SERVER;
         }
-
-        public void ifClient(Runnable runnable) {
-            if (isClient()) runnable.run();
-        }
-
-        public void ifServer(Runnable runnable) {
-            if (isServer()) runnable.run();
-        }
     }
 }
