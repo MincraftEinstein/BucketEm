@@ -15,6 +15,5 @@ public final class BucketemFabric implements ModInitializer {
         BucketEmCommon.init();
         UseEntityCallback.EVENT.register(ModEvents::EntityEvents);
         DispenserBehaviorRegistry.registerDispenserBehavior();
-        FuelRegistry.register(20000, ModItems.GOLDEN_LAVA_BUCKET.get());
     }
 }

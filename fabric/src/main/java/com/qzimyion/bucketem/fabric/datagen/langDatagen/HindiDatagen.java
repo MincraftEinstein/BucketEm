@@ -23,11 +23,6 @@ public class HindiDatagen extends FabricLanguageProvider {
         translationBuilder.add(DRY_TUNDRA_FROG_BUCKET.get(), "िमाच्छन्न मेंढक की सूखी बाल्टी");
         translationBuilder.add(TURTLE_BUCKET.get(), "कछुए की बाल्टी");
         translationBuilder.add(GLOW_SQUID_BUCKET.get(), "ग्लो स्क्विड की बाल्टी");
-        translationBuilder.add(GOLDEN_BUCKET.get(), "सोने की बाल्टी");
-        translationBuilder.add(GOLDEN_WATER_BUCKET.get(), "सुनहरी पानी की बाल्टी");
-        translationBuilder.add(GOLDEN_LAVA_BUCKET.get(), "सुनहरी लावा की बाल्टी");
-        translationBuilder.add(GOLDEN_MILK_BUCKET.get(), "सुनहरी दूध की बाल्टी");
-        translationBuilder.add(GOLDEN_POWDER_SNOW_BUCKET.get(), "सुनहरी पीसेे हुए बर्फ की बाल्टी");
 
         //==Books==//
         translationBuilder.add(ALLAY_POSSESSED_BOOK.get(), "अलाय की किताब");

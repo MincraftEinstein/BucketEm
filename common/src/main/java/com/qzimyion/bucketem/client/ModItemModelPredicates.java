@@ -75,6 +75,6 @@ public class ModItemModelPredicates {
             return anger;
         });
         //==Pouch==//
-        event.register(PIG_POUCH_ITEM.get(), new ResourceLocation("filled"), ((itemStack, clientLevel, livingEntity, i) -> PouchItem.getFullnessDisplay(itemStack)));
+        //event.register(PIG_POUCH_ITEM.get(), new ResourceLocation("filled"), ((itemStack, clientLevel, livingEntity, i) -> PouchItem.getFullnessDisplay(itemStack)));
     }
 }

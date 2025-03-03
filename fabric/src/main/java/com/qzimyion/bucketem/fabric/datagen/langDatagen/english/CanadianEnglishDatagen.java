@@ -32,10 +32,5 @@ public class CanadianEnglishDatagen extends FabricLanguageProvider {
         translationBuilder.add(ENDERMITE_BOTTLE.get(), "Endermite in a Bottle");
         translationBuilder.add(SLIME_BOTTLE.get(), "Slime in a Bottle");
         translationBuilder.add(MAGMA_CUBE_BOTTLE.get(), "Magma Cube in a Bottle");
-        translationBuilder.add(GOLDEN_BUCKET.get(), "Golden Bucket");
-        translationBuilder.add(GOLDEN_WATER_BUCKET.get(), "Golden Water Bucket");
-        translationBuilder.add(GOLDEN_LAVA_BUCKET.get(), "Golden Lava Bucket");
-        translationBuilder.add(GOLDEN_POWDER_SNOW_BUCKET.get(), "Golden Powder Snow Bucket");
-        translationBuilder.add(GOLDEN_MILK_BUCKET.get(), "Golden Milk Bucket");
     }
 }
