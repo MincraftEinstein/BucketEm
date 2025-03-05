@@ -14,7 +14,6 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,10 +25,12 @@ import java.util.UUID;
 public class EntityBottleItem extends Item {
     private final EntityType<?> getType;
     private final SoundEvent soundEvent;
-    public EntityBottleItem(EntityType<?> entityType, SoundEvent soundEvent, Properties properties) {
+    private final Item storeageItem;
+    public EntityBottleItem(EntityType<?> entityType, Item storeageItem, SoundEvent soundEvent, Properties properties) {
         super(properties);
         this.getType = entityType;
         this.soundEvent = soundEvent;
+        this.storeageItem = storeageItem;
     }
 
     @Override
@@ -53,7 +54,7 @@ public class EntityBottleItem extends Item {
 
             EntityType<?> entitytype = this.getType(itemStack.getTag());
             if (!Objects.requireNonNull(context.getPlayer()).getAbilities().instabuild){
-                context.getPlayer().setItemInHand(context.getHand(), new ItemStack(Items.GLASS_BOTTLE));
+                context.getPlayer().setItemInHand(context.getHand(), this.storeageItem.getDefaultInstance());
             }
             Entity entity = entitytype.spawn((ServerLevel) world, itemStack, context.getPlayer(), blockPos1, MobSpawnType.BUCKET, true, !Objects.equals(blockPos, blockPos1) && direction == Direction.UP);
             if (entity instanceof Mob){

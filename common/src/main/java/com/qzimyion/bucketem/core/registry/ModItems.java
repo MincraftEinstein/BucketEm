@@ -1,6 +1,5 @@
 package com.qzimyion.bucketem.core.registry;
 
-import com.qzimyion.bucketem.common.items.Kidnapping.PouchItem;
 import com.qzimyion.bucketem.common.items.MagmaCubeBottleItem;
 import com.qzimyion.bucketem.common.items.Frogs.DryFrogBuckets;
 import com.qzimyion.bucketem.common.items.EntityBottleItem;
@@ -13,6 +12,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.FrogVariant;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.level.material.Fluids;
 
@@ -46,17 +46,17 @@ public class ModItems {
 
     //==Books==//
     public static final RegistrySupplier<Item>  ALLAY_POSSESSED_BOOK = ITEMS.register("allay_possessed_book",
-            ()-> new EntityBottleItem(EntityType.ALLAY, SoundEvents.ENCHANTMENT_TABLE_USE, new Item.Properties().stacksTo(1)));
+            ()-> new EntityBottleItem(EntityType.ALLAY, Items.BOOK, SoundEvents.ENCHANTMENT_TABLE_USE, new Item.Properties().stacksTo(1)));
     public static final RegistrySupplier<Item>  VEX_POSSESSED_BOOK = ITEMS.register("vex_possessed_book",
-            ()-> new EntityBottleItem(EntityType.VEX, SoundEvents.ENCHANTMENT_TABLE_USE, new Item.Properties().stacksTo(1)));
+            ()-> new EntityBottleItem(EntityType.VEX, Items.BOOK, SoundEvents.ENCHANTMENT_TABLE_USE, new Item.Properties().stacksTo(1)));
 
     //==Bottles==//
     public static final RegistrySupplier<Item> BEE_BOTTLE = ITEMS.register("bee_bottle",
-            ()-> new EntityBottleItem(EntityType.BEE, SoundEvents.BOTTLE_FILL_DRAGONBREATH, new Item.Properties().stacksTo(1)));
+            ()-> new EntityBottleItem(EntityType.BEE, Items.GLASS_BOTTLE, SoundEvents.BOTTLE_FILL_DRAGONBREATH, new Item.Properties().stacksTo(1)));
     public static final RegistrySupplier<Item> SILVERFISH_BOTTLE = ITEMS.register("silverfish_bottle",
-            ()-> new EntityBottleItem(EntityType.SILVERFISH, SoundEvents.BOTTLE_FILL_DRAGONBREATH, new Item.Properties().stacksTo(1)));
+            ()-> new EntityBottleItem(EntityType.SILVERFISH, Items.GLASS_BOTTLE, SoundEvents.BOTTLE_FILL_DRAGONBREATH, new Item.Properties().stacksTo(1)));
     public static final RegistrySupplier<Item> ENDERMITE_BOTTLE = ITEMS.register("endermite_bottle",
-            ()-> new EntityBottleItem(EntityType.ENDERMITE, SoundEvents.BOTTLE_FILL_DRAGONBREATH, new Item.Properties().stacksTo(1)));
+            ()-> new EntityBottleItem(EntityType.ENDERMITE, Items.GLASS_BOTTLE, SoundEvents.BOTTLE_FILL_DRAGONBREATH, new Item.Properties().stacksTo(1)));
     public static final RegistrySupplier<Item> SLIME_BOTTLE = ITEMS.register("slime_bottle", ()-> new SlimeBottle(new Item.Properties().stacksTo(1)));
     public static final RegistrySupplier<Item> MAGMA_CUBE_BOTTLE = ITEMS.register("magma_bottle", ()-> new MagmaCubeBottleItem(new Item.Properties().stacksTo(1)));
 
