@@ -1,6 +1,5 @@
 package com.qzimyion.bucketem.client;
 
-import com.qzimyion.bucketem.common.items.Kidnapping.PouchItem;
 import com.qzimyion.bucketem.platform.ClientHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
