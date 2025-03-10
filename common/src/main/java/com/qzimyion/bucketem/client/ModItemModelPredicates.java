@@ -1,10 +1,17 @@
 package com.qzimyion.bucketem.client;
 
+import com.qzimyion.bucketem.core.registry.ModItems;
 import com.qzimyion.bucketem.platform.ClientHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.Bucketable;
+import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.MobBucketItem;
 
 import static com.qzimyion.bucketem.core.registry.ModItems.*;
 import static net.minecraft.world.item.Items.*;
@@ -73,7 +80,5 @@ public class ModItemModelPredicates {
                 anger = 0;
             return anger;
         });
-        //==Pouch==//
-        //event.register(PIG_POUCH_ITEM.get(), new ResourceLocation("filled"), ((itemStack, clientLevel, livingEntity, i) -> PouchItem.getFullnessDisplay(itemStack)));
     }
 }

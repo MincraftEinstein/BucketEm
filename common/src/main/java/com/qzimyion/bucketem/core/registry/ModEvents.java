@@ -1,6 +1,10 @@
 package com.qzimyion.bucketem.core.registry;
 
+import dev.architectury.event.CompoundEventResult;
+import dev.architectury.event.Event;
+import dev.architectury.event.events.common.InteractionEvent;
 import dev.architectury.event.events.common.LootEvent;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -35,6 +39,20 @@ import static net.minecraft.world.item.Items.*;
 public class ModEvents {
 
     public static void LootTableEvent(){
+        InteractionEvent.RIGHT_CLICK_ITEM.register(((player, hand) -> {
+            ItemStack itemStack = player.getItemInHand(hand);
+            Level level = player.level();
+            double x = player.getX() + player.getLookAngle().x * 4.5;
+            double y = player.getEyeY() + player.getLookAngle().y * 4.5;
+            double z = player.getZ() + player.getLookAngle().z * 4.5;
+
+            BlockPos pos = new BlockPos((int) Math.floor(x), (int) Math.floor(y), (int) Math.floor(z));
+            if (player.isInWater() && level.isInWorldBounds(pos) && level.getWorldBorder().isWithinBounds(pos)){
+
+            }
+            return CompoundEventResult.pass();
+        }));
+
         LootEvent.MODIFY_LOOT_TABLE.register(((lootDataManager, id, context, builtin) -> {
             LootPool.Builder pool = LootPool.lootPool();
             //==Bastions==//
