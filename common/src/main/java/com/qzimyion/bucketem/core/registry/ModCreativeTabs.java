@@ -13,13 +13,10 @@ public class ModCreativeTabs {
 
     //Code taken from here:https://github.com/AstralOrdana/Immersive-Weathering/blob/1.20.0-multiloader/common/src/main/java/com/ordana/immersive_weathering/reg/ModCreativeTab.java
 
-    public static void init(){
-        CommonHelper.addItemsToTabsRegistration(ModCreativeTabs::addItems);
-    }
 
     public static void addItems(CommonHelper.ItemToTabEvent event){
         after(event, Items.LAVA_BUCKET, CreativeModeTabs.TOOLS_AND_UTILITIES, ModItems.STRIDER_BUCKET);
-        after(event, Items.TADPOLE_BUCKET, CreativeModeTabs.TOOLS_AND_UTILITIES, ModItems.DRY_TEMPERATE_FROG_BUCKET, ModItems.DRY_TROPICAL_FROG_BUCKET, ModItems.DRY_TUNDRA_FROG_BUCKET, ModItems.TEMPERATE_FROG_BUCKET, ModItems.TROPICAL_FROG_BUCKET, ModItems.TUNDRA_FROG_BUCKET, ModItems.GLOW_SQUID_BUCKET, ModItems.STRIDER_BUCKET);
+        after(event, Items.TADPOLE_BUCKET, CreativeModeTabs.TOOLS_AND_UTILITIES, ModItems.DRY_TEMPERATE_FROG_BUCKET, ModItems.DRY_TROPICAL_FROG_BUCKET, ModItems.DRY_TUNDRA_FROG_BUCKET, ModItems.TEMPERATE_FROG_BUCKET, ModItems.TROPICAL_FROG_BUCKET, ModItems.TUNDRA_FROG_BUCKET, ModItems.GLOW_SQUID_BUCKET, ModItems.SQUID_BUCKET, ModItems.STRIDER_BUCKET);
         after(event, Items.MILK_BUCKET, CreativeModeTabs.TOOLS_AND_UTILITIES, ModItems.BEE_BOTTLE, ModItems.SILVERFISH_BOTTLE, ModItems.ENDERMITE_BOTTLE, ModItems.SLIME_BOTTLE, ModItems.MAGMA_CUBE_BOTTLE, ModItems.ALLAY_POSSESSED_BOOK, ModItems.VEX_POSSESSED_BOOK);
     }
 
