@@ -6,11 +6,6 @@
   "item.bucketem.dry_tundra_frog_bucket": "Сухе відро з тундровою жабою",
   "item.bucketem.endermite_bottle": "Ендермайт у пляшці",
   "item.bucketem.glow_squid_bucket": "Відро із сяйним спрутом",
-  "item.bucketem.golden_bucket": "Golden Bucket",
-  "item.bucketem.golden_lava_bucket": "Golden Lava Bucket",
-  "item.bucketem.golden_milk_bucket": "Golden Milk Bucket",
-  "item.bucketem.golden_powder_snow_bucket": "Golden Powder Snow Bucket",
-  "item.bucketem.golden_water_bucket": "Golden Water Bucket",
   "item.bucketem.magma_bottle": "Магмокуб у пляшці",
   "item.bucketem.silverfish_bottle": "Лусківниця в пляшці",
   "item.bucketem.slime_bottle": "Слимак у пляшці",
@@ -20,5 +15,6 @@
   "item.bucketem.tropical_frog_bucket": "Відро з тропічною жабою",
   "item.bucketem.tundra_frog_bucket": "Відро з тундровою жабою",
   "item.bucketem.turtle_bucket": "Відро з черепахою",
-  "item.bucketem.vex_possessed_book": "Книга володіння бісиком"
+  "item.bucketem.vex_possessed_book": "Книга володіння бісиком",
+  "modmenu.descriptionTranslation.bucketem": "A minecraft mod aiming towards making transporting certain mobs more convenient in both buckets and non bucket ways"
 }

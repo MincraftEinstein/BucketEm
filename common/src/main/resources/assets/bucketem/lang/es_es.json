@@ -15,5 +15,6 @@
   "item.bucketem.tropical_frog_bucket": "Cubo con Rana Tropical",
   "item.bucketem.tundra_frog_bucket": "Cubo con Rana Fría",
   "item.bucketem.turtle_bucket": "Cubo con Tortuga",
-  "item.bucketem.vex_possessed_book": "Libró Poseído por Vex"
+  "item.bucketem.vex_possessed_book": "Libró Poseído por Vex",
+  "modmenu.descriptionTranslation.bucketem": "A minecraft mod aiming towards making transporting certain mobs more convenient in both buckets and non bucket ways"
 }
