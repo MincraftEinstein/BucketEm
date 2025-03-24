@@ -1,31 +1,27 @@
-package com.qzimyion.bucketem.forge;
+package com.qzimyion.bucketem.neoforge;
 
+import com.qzimyion.bucketem.BucketEmCommon;
 import com.qzimyion.bucketem.client.BucketEmCommonClient;
 import com.qzimyion.bucketem.core.registry.DispenserBehaviorRegistry;
 import com.qzimyion.bucketem.core.registry.ModEvents;
-import com.qzimyion.bucketem.platform.ClientHelper;
 import com.qzimyion.bucketem.platform.PlatformHelper;
-import dev.architectury.platform.forge.EventBuses;
+import com.qzimyion.bucketem.platform.neoforge.PlatformHelperImpl;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
 
-import com.qzimyion.bucketem.BucketEmCommon;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
-@SuppressWarnings("removal")
 @Mod(BucketEmCommon.MOD_ID)
-@Mod.EventBusSubscriber(modid = BucketEmCommon.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public final class BucketemForge {
-    public BucketemForge() {
-        EventBuses.registerModEventBus(BucketEmCommon.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
+public final class BucketemNeoForge {
+    public BucketemNeoForge(IEventBus bus) {
         BucketEmCommon.init();
         if (PlatformHelper.getPhysicalSide().isClient()){
+            PlatformHelperImpl.startRegistering(bus);
             BucketEmCommonClient.init();
-            ClientHelper.addModelPredicatesRegistration(ForgeOnlyModelPredicates::register);
         }
     }
 
