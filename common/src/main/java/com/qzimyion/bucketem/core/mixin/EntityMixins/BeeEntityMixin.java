@@ -49,8 +49,9 @@ public abstract class BeeEntityMixin extends Animal implements Bucketable {
 
 
     @Inject(at = @At("HEAD"), method = "defineSynchedData")
-    public void initDataTracker(CallbackInfo ci){
-        this.entityData.define(FROM_BOTTLE, false);
+    public void initDataTracker(SynchedEntityData.Builder builder, CallbackInfo ci){
+        super.defineSynchedData(builder);
+        builder.define(FROM_BOTTLE, false);
     }
 
     @Inject(at = @At("HEAD"), method = "addAdditionalSaveData")
@@ -101,11 +102,12 @@ public abstract class BeeEntityMixin extends Animal implements Bucketable {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData entityData, @Nullable CompoundTag entityNbt) {
-        if (spawnReason == MobSpawnType.BUCKET) {
-            return entityData;
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
+        if (mobSpawnType == MobSpawnType.BUCKET) {
+            assert spawnGroupData != null;
+            return spawnGroupData;
         }
-        return super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityNbt);
+        return super.finalizeSpawn(serverLevelAccessor, difficultyInstance, mobSpawnType, spawnGroupData);
     }
 
     @Override

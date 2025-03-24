@@ -2,6 +2,7 @@ package com.qzimyion.bucketem.core.mixin.EntityMixins;
 
 import com.qzimyion.bucketem.core.registry.ModItems;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -24,6 +25,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.spongepowered.asm.mixin.*;
@@ -52,8 +54,9 @@ public abstract class StriderEntityMixin extends Animal implements Bucketable {
     }
 
     @Inject(at = @At("HEAD"), method = "defineSynchedData")
-    public void defineSynchedData(CallbackInfo ci){
-        this.entityData.define(FROM_BUCKET, false);
+    public void defineSynchedData(SynchedEntityData.Builder builder, CallbackInfo ci){
+        super.defineSynchedData(builder);
+        builder.define(FROM_BUCKET, false);
     }
 
     @Inject(at = @At("HEAD"), method = "addAdditionalSaveData")
@@ -97,9 +100,10 @@ public abstract class StriderEntityMixin extends Animal implements Bucketable {
     @Override
     public void saveToBucketTag(ItemStack stack) {
         Bucketable.saveDefaultDataToBucketTag(this, stack);
-        CompoundTag nbtCompound = stack.getOrCreateTag();
-        nbtCompound.putInt("Age", this.getAge());
-        nbtCompound.putBoolean("Saddle", this.steering.hasSaddle());
+        CustomData.update(DataComponents.BUCKET_ENTITY_DATA, stack, compoundTag -> {
+            compoundTag.putInt("Age", this.getAge());
+            compoundTag.putBoolean("Saddle", this.steering.hasSaddle());
+        });
     }
 
     @Override
@@ -125,9 +129,9 @@ public abstract class StriderEntityMixin extends Animal implements Bucketable {
     }
 
     @Inject(at = @At("HEAD"), method = "finalizeSpawn", cancellable = true)
-    public void initialize(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, SpawnGroupData entityData, CompoundTag entityNbt, CallbackInfoReturnable<SpawnGroupData> cir) {
-        if (spawnReason == MobSpawnType.BUCKET) {
-            cir.setReturnValue(entityData);
+    public void initialize(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, SpawnGroupData spawnGroupData, CallbackInfoReturnable<SpawnGroupData> cir) {
+        if (mobSpawnType == MobSpawnType.BUCKET) {
+            cir.setReturnValue(spawnGroupData);
         }
     }
 

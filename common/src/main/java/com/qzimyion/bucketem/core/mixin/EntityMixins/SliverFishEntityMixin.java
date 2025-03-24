@@ -40,9 +40,9 @@ public abstract class SliverFishEntityMixin extends Monster implements Bucketabl
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(FROM_BOTTLE, false);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(FROM_BOTTLE, false);
     }
 
     @Override
