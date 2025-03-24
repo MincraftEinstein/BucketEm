@@ -2,16 +2,21 @@ package com.qzimyion.bucketem.fabric.datagen.langDatagen;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.minecraft.core.HolderLookup;
+
+import java.util.concurrent.CompletableFuture;
 
 import static com.qzimyion.bucketem.core.registry.ModItems.*;
 
 public class HindiDatagen extends FabricLanguageProvider {
-    public HindiDatagen(FabricDataOutput dataOutput) {
-        super(dataOutput, "hi_in");
+
+
+    public HindiDatagen(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+        super(dataOutput, "hi_in", registryLookup);
     }
 
     @Override
-    public void generateTranslations(TranslationBuilder translationBuilder) {
+    public void generateTranslations(HolderLookup.Provider registryLookup, TranslationBuilder translationBuilder) {
         //==Buckets==//
         translationBuilder.add(STRIDER_BUCKET.get(), "स्ट्राइडर की बाल्टी");
         translationBuilder.add(SQUID_BUCKET.get(), "स्क्वीड की बाल्टी");

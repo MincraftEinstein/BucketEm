@@ -2,15 +2,19 @@ package com.qzimyion.bucketem.fabric.datagen.langDatagen.english;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.minecraft.core.HolderLookup;
+
+import java.util.concurrent.CompletableFuture;
 
 import static com.qzimyion.bucketem.core.registry.ModItems.*;
 public class BritishEnglishDatagen extends FabricLanguageProvider {
-    public BritishEnglishDatagen(FabricDataOutput dataOutput) {
-        super(dataOutput, "en_gb");
+
+    public BritishEnglishDatagen(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+        super(dataOutput, "en_gb", registryLookup);
     }
 
     @Override
-    public void generateTranslations(TranslationBuilder translationBuilder) {
+    public void generateTranslations(HolderLookup.Provider registryLookup, TranslationBuilder translationBuilder) {
         //Buckets
         translationBuilder.add(STRIDER_BUCKET.get(), "Bucket of Strider");
         translationBuilder.add(SQUID_BUCKET.get(), "Bucket of Squid");
