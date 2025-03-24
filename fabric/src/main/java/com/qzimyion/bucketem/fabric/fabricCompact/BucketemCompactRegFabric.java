@@ -9,7 +9,7 @@ public class BucketemCompactRegFabric {
     public static void initClientContent(){
         //==Wilder wild==//
         if (IsModLoadedForCrossContent.isWWLoaded()){
-            ClientHelperImpl.addModelPredicatesRegistration(WWBucketEmModelPredicates::register);
+            //ClientHelperImpl.addModelPredicatesRegistration(WWBucketEmModelPredicates::register);
         }
     }
 }

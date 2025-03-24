@@ -27,9 +27,8 @@
     ]
   },
   "mixins": [
-    "bucketem.mixins.json", "bucketemfabric.mixins.json"
+    "bucketem.mixins.json"
   ],
-  "accessWidener": "bucketem.accesswidener",
   "depends": {
     "fabricloader": ">=0.16.10",
     "minecraft": "~${minecraft_version}",

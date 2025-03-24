@@ -1,8 +1,10 @@
 package com.qzimyion.bucketem.common.items;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -12,8 +14,11 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.monster.MagmaCube;
+import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,6 +31,7 @@ public class EntityBottleItem extends Item {
     private final EntityType<?> getType;
     private final SoundEvent soundEvent;
     private final Item storeageItem;
+    private static final MapCodec<EntityType<?>> ENTITY_TYPE_MAP_CODEC = BuiltInRegistries.ENTITY_TYPE.byNameCodec().fieldOf("id");
     public EntityBottleItem(EntityType<?> entityType, Item storeageItem, SoundEvent soundEvent, Properties properties) {
         super(properties);
         this.getType = entityType;
@@ -52,7 +58,7 @@ public class EntityBottleItem extends Item {
                 blockPos1 = blockPos.relative(direction);
             }
 
-            EntityType<?> entitytype = this.getType(itemStack.getTag());
+            EntityType<?> entitytype = this.getType(itemStack);
             if (!Objects.requireNonNull(context.getPlayer()).getAbilities().instabuild){
                 context.getPlayer().setItemInHand(context.getHand(), this.storeageItem.getDefaultInstance());
             }
@@ -60,34 +66,41 @@ public class EntityBottleItem extends Item {
             if (entity instanceof Mob){
                 ((Mob) entity).setPersistenceRequired();
             }
-            CompoundTag nbt = itemStack.getOrCreateTag();
-            if (entity instanceof Bee bee){
-                int anger = nbt.contains("Anger") ? nbt.getInt("Anger") : 0;
-                UUID angryAt = nbt.contains("AngryAt") ? nbt.getUUID("AngryAt") : null;
-                int age = nbt.contains("Age") ? nbt.getInt("Age") : 0;
-                float health = nbt.contains("Health") ? nbt.getFloat("Health") : 10.0F;
-                boolean nectar = nbt.contains("HasNectar") && nbt.getBoolean("HasNectar");
-                boolean stung = nbt.contains("HasStung") && nbt.getBoolean("HasStung");
-
-                bee.setHasNectar(nectar);
-                bee.setHasStung(stung);
-                bee.setAge(age);
-                bee.setRemainingPersistentAngerTime(anger);
-                if (angryAt != null) bee.setPersistentAngerTarget(angryAt);
-                bee.setHealth(health);
-                bee.setPersistenceRequired();
-            }
+            CustomData.update(DataComponents.BUCKET_ENTITY_DATA, itemStack, compoundTag ->
+            {
+                int size = 1;
+                if (entity instanceof Bee bee) {
+                    int anger = compoundTag.contains("Anger") ? compoundTag.getInt("Anger") : 0;
+                    UUID angryAt = compoundTag.contains("AngryAt") ? compoundTag.getUUID("AngryAt") : null;
+                    int age = compoundTag.contains("Age") ? compoundTag.getInt("Age") : 0;
+                    float health = compoundTag.contains("Health") ? compoundTag.getFloat("Health") : 10.0F;
+                    boolean nectar = compoundTag.contains("HasNectar") && compoundTag.getBoolean("HasNectar");
+                    boolean stung = compoundTag.contains("HasStung") && compoundTag.getBoolean("HasStung");
+                    bee.setHasNectar(nectar);
+                    bee.setHasStung(stung);
+                    bee.setAge(age);
+                    bee.setRemainingPersistentAngerTime(anger);
+                    bee.setPersistentAngerTarget(angryAt);
+                    bee.setHealth(health);
+                    bee.setPersistenceRequired();
+                }
+                if (entity instanceof Slime slimeEntity) {
+                    slimeEntity.setSize(size, false);
+                }
+                if (entity instanceof MagmaCube magmaCubeEntity) {
+                    magmaCubeEntity.setSize(size, false);
+                }
+            });
             return InteractionResult.CONSUME;
         }
     }
 
-    public EntityType<?> getType(CompoundTag tag) {
-        if (tag != null && tag.contains("EntityTag", 10)){
-            CompoundTag nbtCompound = tag.getCompound("EntityTag");
-            if (nbtCompound.contains("id", 8)){
-                return EntityType.byString(nbtCompound.getString("id")).orElse(this.getType);
-            }
+    public EntityType<?> getType(ItemStack stack) {
+        CustomData nbtComponent = stack.getOrDefault(DataComponents.ENTITY_DATA, CustomData.EMPTY);
+        if (!nbtComponent.isEmpty()) {
+            return nbtComponent.read(ENTITY_TYPE_MAP_CODEC).result().orElse(this.getType);
         }
         return this.getType;
     }
+
 }

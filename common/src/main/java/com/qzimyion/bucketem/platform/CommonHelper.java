@@ -50,7 +50,7 @@ public class CommonHelper {
         }
 
         public void addAfter(ResourceKey<CreativeModeTab> tab, Predicate<ItemStack> target, ItemStack... items) {
-            action.accept(tab, target, true, java.util.List.of(items));
+            action.accept(tab, target, true, List.of(items));
         }
 
         public void addBefore(ResourceKey<CreativeModeTab> tab, Predicate<ItemStack> target, ItemLike... items) {
@@ -65,7 +65,7 @@ public class CommonHelper {
         }
 
         public void addBefore(ResourceKey<CreativeModeTab> tab, Predicate<ItemStack> target, ItemStack... items) {
-            action.accept(tab, target, false, java.util.List.of(items));
+            action.accept(tab, target, false, List.of(items));
         }
     }
 }

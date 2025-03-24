@@ -10,6 +10,5 @@ public final class BucketemFabricClient implements ClientModInitializer {
     public void onInitializeClient() {
         BucketEmCommonClient.init();
         BucketemCompactRegFabric.initClientContent();
-        ClientHelperImpl.addModelPredicatesRegistration(FabricOnlyModelPredicates::register);
     }
 }

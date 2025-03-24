@@ -2,7 +2,7 @@ architectury {
     common rootProject.enabled_platforms.split(',')
 }
 
-loom{
+loom {
     accessWidenerPath = file("src/main/resources/bucketem.accesswidener")
 }
 

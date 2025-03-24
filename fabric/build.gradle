@@ -7,11 +7,9 @@ architectury {
     fabric()
 }
 
-fabricApi {
-    configureDataGeneration()
+loom {
+    accessWidenerPath = project(":common").loom.accessWidenerPath
 }
-
-
 
 configurations {
     common {
@@ -43,10 +41,9 @@ dependencies {
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
 
     //Cross mod content
-    modImplementation "maven.modrinth:wilder-wild:3.0.7-mc1.20.1"
-    modImplementation "maven.modrinth:frozenlib:1.9.3-mc1.20.1"
-    modApi("com.jamieswhiteshirt:reach-entity-attributes:2.4.0")
-    modApi("com.terraformersmc:modmenu:7.2.2")
+    //modImplementation "maven.modrinth:wilder-wild:4.0-mc1.21.1"
+    //modImplementation "maven.modrinth:frozenlib:2.0.1-mc1.21.5-pre2"
+    //modApi("com.jamieswhiteshirt:reach-entity-attributes:2.4.0")
 }
 
 processResources {
