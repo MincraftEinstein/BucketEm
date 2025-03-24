@@ -1,61 +1,60 @@
-package com.qzimyion.bucketem.common.items;
+package com.qzimyion.bucketem.common.items.Frogs;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.monster.MagmaCube;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.entity.animal.FrogVariant;
+import net.minecraft.world.entity.animal.frog.Frog;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class MagmaCubeBottleItem extends Item {
-
-    public MagmaCubeBottleItem(Properties properties) {
-        super(properties);
+public class WarmDryFrogBuckets extends BucketItem {
+    public WarmDryFrogBuckets(Fluid fluid, Properties properties) {
+        super(fluid, properties);
     }
 
     @Override
     public @NotNull InteractionResult useOn(UseOnContext context) {
-        Level world = context.getLevel();
-        world.playSound(context.getPlayer(), context.getClickedPos(), SoundEvents.BOTTLE_FILL_DRAGONBREATH, SoundSource.BLOCKS, 1, 1);
-        if (world.isClientSide()){
+        Level level = context.getLevel();
+        level.playSound(context.getPlayer(), context.getClickedPos(), SoundEvents.BOTTLE_FILL_DRAGONBREATH, SoundSource.BLOCKS, 1, 1);
+        if (level.isClientSide()){
             return InteractionResult.SUCCESS;
         } else {
             ItemStack itemStack = context.getItemInHand();
             BlockPos blockPos = context.getClickedPos();
             Direction direction = context.getClickedFace();
-            BlockState blockState = world.getBlockState(blockPos);
+            BlockState blockState = level.getBlockState(blockPos);
 
-            BlockPos blockPos1;
-            if (blockState.getCollisionShape(world, blockPos).isEmpty()){
-                blockPos1 = blockPos;
+            BlockPos pos;
+            if (blockState.getCollisionShape(level, blockPos).isEmpty()){
+                pos = blockPos;
             } else {
-                blockPos1 = blockPos.relative(direction);
+                pos = blockPos.relative(direction);
             }
-            CompoundTag tag = itemStack.getOrCreateTag();
             if (!Objects.requireNonNull(context.getPlayer()).getAbilities().instabuild) {
                 context.getPlayer().setItemInHand(context.getHand(), new ItemStack(Items.GLASS_BOTTLE));
             }
-            MagmaCube entity = EntityType.MAGMA_CUBE.spawn((ServerLevel) world, itemStack, null, blockPos1, MobSpawnType.BUCKET, true, false);
+            Holder<FrogVariant> variantHolder = level.registryAccess().registryOrThrow(Registries.FROG_VARIANT).getHolder(FrogVariant.WARM).get();
+            Frog entity = EntityType.FROG.spawn((ServerLevel) level, itemStack, null, pos, MobSpawnType.BUCKET, true, false);
             if (entity != null) {
                 entity.setPersistenceRequired();
-                entity.setSize(1, false);
+                entity.setVariant(variantHolder);
             }
-            int size = tag.contains("Size") ? tag.getInt("Size") : 1;
-            assert entity != null;
-            entity.setSize(size, false);
         }
         return InteractionResult.CONSUME;
     }

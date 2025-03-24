@@ -1,6 +1,8 @@
 package com.qzimyion.bucketem.common.items.Frogs;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
@@ -14,11 +16,10 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.Nullable;
 
-public class FrogBuckets extends BucketItem {
-    final FrogVariant variant;
-    public FrogBuckets(FrogVariant variant ,Fluid fluid, Properties properties) {
+@SuppressWarnings("OptionalGetWithoutIsPresent")
+public class WarmFrogBuckets extends TemperateFrogBuckets {
+    public WarmFrogBuckets(Fluid fluid, Properties properties) {
         super(fluid, properties);
-        this.variant = variant;
     }
 
     @Override
@@ -29,11 +30,13 @@ public class FrogBuckets extends BucketItem {
         }
     }
 
+    @Override
     public void spawnEntity(ServerLevel level, ItemStack stack, BlockPos pos){
+        Holder<FrogVariant> variantHolder = level.registryAccess().registryOrThrow(Registries.FROG_VARIANT).getHolder(FrogVariant.WARM).get();
         Frog entity = EntityType.FROG.spawn(level, stack, null, pos, MobSpawnType.BUCKET, true, false);
         if (entity != null) {
             entity.setPersistenceRequired();
-            entity.setVariant(variant);
+            entity.setVariant(variantHolder);
         }
     }
 }
