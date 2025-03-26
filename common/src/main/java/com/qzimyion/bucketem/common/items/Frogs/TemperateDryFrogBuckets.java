@@ -31,7 +31,7 @@ public class TemperateDryFrogBuckets extends BucketItem {
     @Override
     public @NotNull InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
-        level.playSound(context.getPlayer(), context.getClickedPos(), SoundEvents.BOTTLE_FILL_DRAGONBREATH, SoundSource.BLOCKS, 1, 1);
+        level.playSound(context.getPlayer(), context.getClickedPos(), SoundEvents.BUCKET_FILL_TADPOLE, SoundSource.BLOCKS, 1, 1);
         if (level.isClientSide()){
             return InteractionResult.SUCCESS;
         } else {
@@ -47,7 +47,7 @@ public class TemperateDryFrogBuckets extends BucketItem {
                 pos = blockPos.relative(direction);
             }
             if (!Objects.requireNonNull(context.getPlayer()).getAbilities().instabuild) {
-                context.getPlayer().setItemInHand(context.getHand(), new ItemStack(Items.GLASS_BOTTLE));
+                context.getPlayer().setItemInHand(context.getHand(), new ItemStack(Items.BUCKET));
             }
             Holder<FrogVariant> variantHolder = level.registryAccess().registryOrThrow(Registries.FROG_VARIANT).getHolder(FrogVariant.TEMPERATE).get();
             Frog entity = EntityType.FROG.spawn((ServerLevel) level, itemStack, null, pos, MobSpawnType.BUCKET, true, false);
