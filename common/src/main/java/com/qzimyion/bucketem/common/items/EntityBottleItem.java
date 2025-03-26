@@ -71,7 +71,14 @@ public class EntityBottleItem extends Item {
                 int size = 1;
                 if (entity instanceof Bee bee) {
                     int anger = compoundTag.contains("Anger") ? compoundTag.getInt("Anger") : 0;
-                    UUID angryAt = compoundTag.contains("AngryAt") ? compoundTag.getUUID("AngryAt") : null;
+//                    UUID angryAt = compoundTag.getUUID("AngryAt");;
+//                    if (compoundTag.contains("AngryAt")){
+//                        angryAt = compoundTag.getUUID("AngryAt");
+//                    }
+//                    else{
+//                        assert bee.getPersistentAngerTarget() != null;
+//                        compoundTag.putUUID("AngryAt", bee.getPersistentAngerTarget());
+//                    }
                     int age = compoundTag.contains("Age") ? compoundTag.getInt("Age") : 0;
                     float health = compoundTag.contains("Health") ? compoundTag.getFloat("Health") : 10.0F;
                     boolean nectar = compoundTag.contains("HasNectar") && compoundTag.getBoolean("HasNectar");
@@ -80,7 +87,7 @@ public class EntityBottleItem extends Item {
                     bee.setHasStung(stung);
                     bee.setAge(age);
                     bee.setRemainingPersistentAngerTime(anger);
-                    bee.setPersistentAngerTarget(angryAt);
+                    //bee.setPersistentAngerTarget(angryAt);
                     bee.setHealth(health);
                     bee.setPersistenceRequired();
                 }
