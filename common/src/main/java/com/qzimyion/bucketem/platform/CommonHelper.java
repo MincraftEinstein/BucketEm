@@ -26,46 +26,45 @@ public class CommonHelper {
         throw new AssertionError();
     }
 
-    public record ItemToTabEvent(
-            QuadConsumer<ResourceKey<CreativeModeTab>, @Nullable Predicate<ItemStack>, Boolean, Collection<ItemStack>> action) {
+    public interface ItemToTabEvent {
+        void addItems(ResourceKey<CreativeModeTab> tab, @Nullable Predicate<ItemStack> target, boolean after, List<ItemStack> items);
 
-
-        public void add(ResourceKey<CreativeModeTab> tab, ItemLike... items) {
+        default void add(ResourceKey<CreativeModeTab> tab, ItemLike... items) {
             addAfter(tab, null, items);
         }
 
-        public void add(ResourceKey<CreativeModeTab> tab, ItemStack... items) {
+        default void add(ResourceKey<CreativeModeTab> tab, ItemStack... items) {
             addAfter(tab, null, items);
         }
 
-        public void addAfter(ResourceKey<CreativeModeTab> tab, Predicate<ItemStack> target, ItemLike... items) {
+        default void addAfter(ResourceKey<CreativeModeTab> tab, Predicate<ItemStack> target, ItemLike... items) {
+            List<ItemStack> stacks = new ArrayList<>();
+
+            for (var i : items) {
+                if (i.asItem().getDefaultInstance().isEmpty()) {
+                    throw new IllegalStateException("Attempted to add empty item " + i + " to item tabs");
+                } else stacks.add(i.asItem().getDefaultInstance());
+            }
+            addItems(tab, target, true, stacks);
+        }
+
+        default void addAfter(ResourceKey<CreativeModeTab> tab, Predicate<ItemStack> target, ItemStack... items) {
+            addItems(tab, target, true, java.util.List.of(items));
+        }
+
+        default void addBefore(ResourceKey<CreativeModeTab> tab, Predicate<ItemStack> target, ItemLike... items) {
             List<ItemStack> stacks = new ArrayList<>();
             for (var i : items) {
                 if (i.asItem().getDefaultInstance().isEmpty()) {
-                    if (Platform.getEnv()== EnvType.SERVER)
-                        throw new IllegalStateException("Attempted to add empty item " + i + " to item tabs");
+                    throw new IllegalStateException("Attempted to add empty item " + i + " to item tabs");
                 } else stacks.add(i.asItem().getDefaultInstance());
             }
-            action.accept(tab, target, true, stacks);
+            addItems(tab, target, false, stacks);
         }
 
-        public void addAfter(ResourceKey<CreativeModeTab> tab, Predicate<ItemStack> target, ItemStack... items) {
-            action.accept(tab, target, true, List.of(items));
+        default void addBefore(ResourceKey<CreativeModeTab> tab, Predicate<ItemStack> target, ItemStack... items) {
+            addItems(tab, target, false, java.util.List.of(items));
         }
 
-        public void addBefore(ResourceKey<CreativeModeTab> tab, Predicate<ItemStack> target, ItemLike... items) {
-            List<ItemStack> stacks = new ArrayList<>();
-            for (var i : items) {
-                if (i.asItem().getDefaultInstance().isEmpty()) {
-                    if (Platform.getEnv()== EnvType.SERVER)
-                        throw new IllegalStateException("Attempted to add empty item " + i + " to item tabs");
-                } else stacks.add(i.asItem().getDefaultInstance());
-            }
-            action.accept(tab, target, false, stacks);
-        }
-
-        public void addBefore(ResourceKey<CreativeModeTab> tab, Predicate<ItemStack> target, ItemStack... items) {
-            action.accept(tab, target, false, List.of(items));
-        }
     }
 }
