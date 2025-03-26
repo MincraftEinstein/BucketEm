@@ -1,17 +1,17 @@
 modLoader = "javafml"
 loaderVersion = "[4,)"
 #issueTrackerURL = ""
-license = "Insert License Here"
+license = "${mod_license}"
 
 [[mods]]
 modId = "${mod_id}"
 version = "${version}"
 displayName = "${mod_name}"
-authors = "&{mod_authors}"
+authors = "${mod_authors}"
 description = '''
 ${mod_description}
 '''
-#logoFile = ""
+logoFile = "icon.png"
 
 [[dependencies.${mod_id}]]
 modId = "neoforge"
@@ -30,7 +30,7 @@ side = "BOTH"
 [[dependencies.${mod_id}]]
 modId = "architectury"
 type = "required"
-versionRange = "[13.0.8,)"
+versionRange = "[${architectury_api_version},)"
 ordering = "AFTER"
 side = "BOTH"
 
