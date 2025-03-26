@@ -37,7 +37,6 @@ public abstract class GlowSquidEntityMixin extends WaterAnimal implements Bucket
 
     @Inject(at = @At("HEAD"), method = "defineSynchedData")
     public void initDataTracker(SynchedEntityData.Builder builder, CallbackInfo ci){
-        super.defineSynchedData(builder);
         builder.define(FROM_BUCKET, false);
     }
 

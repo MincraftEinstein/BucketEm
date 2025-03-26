@@ -23,7 +23,7 @@ public class SolidBucketItemMixin extends BlockItem {
         InteractionHand hand = useOnContext.getHand();
         InteractionResult interactionResult = super.useOn(useOnContext);
         if (interactionResult.consumesAction() && player != null && !player.isCreative()) {
-            if (!player.getAbilities().instabuild) {
+            if (!player.hasInfiniteMaterials()) {
                 ItemStack emptyBucket = new ItemStack(Items.BUCKET);
                 if (!player.getInventory().add(emptyBucket)) {
                     player.drop(emptyBucket, false);

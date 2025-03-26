@@ -20,7 +20,7 @@ public class MilkBucketItemMixin {
         if (itemStack.isEmpty()) {
             cir.setReturnValue(new ItemStack(Items.BUCKET));
         } else {
-            if (livingEntity instanceof Player player && !player.getAbilities().instabuild) {
+            if (livingEntity instanceof Player player && !player.hasInfiniteMaterials()) {
                 ItemStack itemStack2 = new ItemStack(Items.BUCKET);
                 if (!player.getInventory().add(itemStack2)) {
                     player.drop(itemStack2, false);

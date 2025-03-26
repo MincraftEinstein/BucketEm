@@ -37,10 +37,11 @@ public class SlimeBottle extends EntityBottleItem {
     }
 
     @PlatformOnly("fabric")
-    public boolean allowNbtUpdateAnimation(Player player, InteractionHand hand, ItemStack oldStack, ItemStack newStack) {
+    public boolean allowComponentsUpdateAnimation(Player player, InteractionHand hand, ItemStack oldStack, ItemStack newStack) {
         return false;
     }
 
+    //TODO: Figure out what's the method called in neoforge
     @PlatformOnly("neoforge")
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
         return false;

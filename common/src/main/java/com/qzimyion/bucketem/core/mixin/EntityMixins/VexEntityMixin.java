@@ -44,7 +44,6 @@ public abstract class VexEntityMixin extends Monster implements Bucketable {
 
     @Inject(at = @At("HEAD"), method = "defineSynchedData")
     public void defineSynchedData(SynchedEntityData.Builder builder, CallbackInfo ci){
-        super.defineSynchedData(builder);
         builder.define(FROM_BOOK, false);
     }
 

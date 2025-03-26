@@ -55,7 +55,6 @@ public abstract class StriderEntityMixin extends Animal implements Bucketable {
 
     @Inject(at = @At("HEAD"), method = "defineSynchedData")
     public void defineSynchedData(SynchedEntityData.Builder builder, CallbackInfo ci){
-        super.defineSynchedData(builder);
         builder.define(FROM_BUCKET, false);
     }
 

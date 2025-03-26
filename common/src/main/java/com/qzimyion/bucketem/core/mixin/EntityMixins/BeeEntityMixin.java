@@ -25,20 +25,28 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 
 @SuppressWarnings("deprecation")
 @Debug(export = true)
 @Mixin(Bee.class)
 public abstract class BeeEntityMixin extends Animal implements Bucketable {
+
+    @Shadow @Nullable public abstract UUID getPersistentAngerTarget();
+
+    @Shadow public abstract void setPersistentAngerTarget(@Nullable UUID uUID);
 
     @Unique
     private static final EntityDataAccessor<Boolean> FROM_BOTTLE = SynchedEntityData.defineId(BeeEntityMixin.class, EntityDataSerializers.BOOLEAN);
@@ -50,7 +58,6 @@ public abstract class BeeEntityMixin extends Animal implements Bucketable {
 
     @Inject(at = @At("HEAD"), method = "defineSynchedData")
     public void initDataTracker(SynchedEntityData.Builder builder, CallbackInfo ci){
-        super.defineSynchedData(builder);
         builder.define(FROM_BOTTLE, false);
     }
 
@@ -87,7 +94,7 @@ public abstract class BeeEntityMixin extends Animal implements Bucketable {
     }
 
     @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+    public @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
         return tryBottling(player, hand, this).orElse(super.mobInteract(player, hand));
     }
 
@@ -102,7 +109,7 @@ public abstract class BeeEntityMixin extends Animal implements Bucketable {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
+    public @NotNull SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
         if (mobSpawnType == MobSpawnType.BUCKET) {
             assert spawnGroupData != null;
             return spawnGroupData;
@@ -111,12 +118,12 @@ public abstract class BeeEntityMixin extends Animal implements Bucketable {
     }
 
     @Override
-    public ItemStack getBucketItemStack() {
+    public @NotNull ItemStack getBucketItemStack() {
         return new ItemStack(ModItems.BEE_BOTTLE.get());
     }
 
     @Override
-    public SoundEvent getPickupSound() {
+    public @NotNull SoundEvent getPickupSound() {
         return SoundEvents.BOTTLE_FILL_DRAGONBREATH;
     }
 

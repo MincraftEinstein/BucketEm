@@ -41,7 +41,6 @@ public abstract class EndermiteEntityMixin extends Monster implements Bucketable
 
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
         builder.define(FROM_BOTTLE, false);
     }
 

@@ -1,7 +1,9 @@
 package com.qzimyion.bucketem.core.registry;
 
 import dev.architectury.event.events.common.LootEvent;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -32,7 +34,7 @@ import static com.qzimyion.bucketem.core.registry.ModItems.*;
 import static net.minecraft.world.item.Items.*;
 
 
-@SuppressWarnings({"deprecation"})
+@SuppressWarnings({"deprecation", "OptionalGetWithoutIsPresent"})
 public class ModEvents {
 
     public static void LootTableEvent(){
@@ -40,19 +42,19 @@ public class ModEvents {
         LootEvent.MODIFY_LOOT_TABLE.register(((lootDataManager, id, context) -> {
             LootPool.Builder pool = LootPool.lootPool();
             //==Bastions==//
-            if (BuiltInLootTables.BASTION_BRIDGE.equals(id) || BuiltInLootTables.BASTION_OTHER.equals(id) || BuiltInLootTables.BASTION_HOGLIN_STABLE.equals(id)){
+            if (BuiltInLootTables.BASTION_BRIDGE.equals(lootDataManager) || BuiltInLootTables.BASTION_OTHER.equals(lootDataManager) || BuiltInLootTables.BASTION_HOGLIN_STABLE.equals(lootDataManager)){
                 pool.add(LootItem.lootTableItem(STRIDER_BUCKET.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))));
             }
             //==OW==//
             //--Villagers
-            if (BuiltInLootTables.VILLAGE_FISHER.equals(id)){
+            if (BuiltInLootTables.VILLAGE_FISHER.equals(lootDataManager)){
                 pool.add(LootItem.lootTableItem(SQUID_BUCKET.get()).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))));
                 pool.add(LootItem.lootTableItem(COD_BUCKET).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))));
                 pool.add(LootItem.lootTableItem(SALMON_BUCKET).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))));
                 pool.add(LootItem.lootTableItem(PUFFERFISH_BUCKET).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))));
             }
             //--Mineshaft
-            if (BuiltInLootTables.ABANDONED_MINESHAFT.equals(id)){
+            if (BuiltInLootTables.ABANDONED_MINESHAFT.equals(lootDataManager)){
                 pool.add(LootItem.lootTableItem(GLOW_SQUID_BUCKET.get()).setWeight(20).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))));
             }
             id.addPool(pool);
@@ -63,39 +65,27 @@ public class ModEvents {
         ItemStack itemStack = player.getItemInHand(hand);
         //Frog buckets
         if (itemStack.getItem() == WATER_BUCKET && entity.isAlive() && entity instanceof Frog frog){
-            player.playSound(SoundEvents.BUCKET_FILL_FISH, 1.0f, 1.0f);
-            ItemStack bucket;
-            if (frog.getVariant()== FrogVariant.TEMPERATE){
-                bucket = new ItemStack(TEMPERATE_FROG_BUCKET.get());
-            } else if (frog.getVariant()== FrogVariant.WARM) {
-                bucket = new ItemStack(TROPICAL_FROG_BUCKET.get());
-            } else if (frog.getVariant()== FrogVariant.COLD) {
-                bucket = new ItemStack(TUNDRA_FROG_BUCKET.get());
-            } else {
-                return InteractionResult.SUCCESS;
-            }
+            player.playSound(SoundEvents.BUCKET_FILL_TADPOLE, 1.0f, 1.0f);
+            Holder<FrogVariant> variantHolderTemperate = level.registryAccess().registryOrThrow(Registries.FROG_VARIANT).getHolder(FrogVariant.TEMPERATE).get();
+            Holder<FrogVariant> variantHolderWarm = level.registryAccess().registryOrThrow(Registries.FROG_VARIANT).getHolder(FrogVariant.WARM).get();
+            ItemStack bucket = frog.getVariant() == variantHolderTemperate ? new ItemStack(TEMPERATE_FROG_BUCKET.get()) : frog.getVariant() == variantHolderWarm ? new ItemStack(TROPICAL_FROG_BUCKET.get()) : new ItemStack(TUNDRA_FROG_BUCKET.get());
             Bucketable.saveDefaultDataToBucketTag(frog, bucket);
             ItemStack itemstack2 = ItemUtils.createFilledResult(itemStack ,player, bucket, false);
             player.setItemInHand(hand, itemstack2);
             entity.discard();
+            return InteractionResult.SUCCESS;
         }
         //Dry variant
         if (itemStack.getItem() == BUCKET && entity.isAlive() && entity instanceof Frog frog){
-            player.playSound(SoundEvents.BUCKET_FILL_FISH, 1.0f, 1.0f);
-            ItemStack bucket;
-            if (frog.getVariant()== FrogVariant.TEMPERATE){
-                bucket = new ItemStack(DRY_TEMPERATE_FROG_BUCKET.get());
-            } else if (frog.getVariant()== FrogVariant.WARM) {
-                bucket = new ItemStack(DRY_TROPICAL_FROG_BUCKET.get());
-            } else if (frog.getVariant()== FrogVariant.COLD) {
-                bucket = new ItemStack(DRY_TUNDRA_FROG_BUCKET.get());
-            } else {
-                return InteractionResult.SUCCESS;
-            }
+            player.playSound(SoundEvents.BUCKET_FILL_TADPOLE, 1.0f, 1.0f);
+            Holder<FrogVariant> variantHolderTemperate = level.registryAccess().registryOrThrow(Registries.FROG_VARIANT).getHolder(FrogVariant.TEMPERATE).get();
+            Holder<FrogVariant> variantHolderWarm = level.registryAccess().registryOrThrow(Registries.FROG_VARIANT).getHolder(FrogVariant.WARM).get();
+            ItemStack bucket = frog.getVariant() == variantHolderTemperate ? new ItemStack(DRY_TEMPERATE_FROG_BUCKET.get()) : frog.getVariant() == variantHolderWarm ? new ItemStack(DRY_TROPICAL_FROG_BUCKET.get()) : new ItemStack(DRY_TUNDRA_FROG_BUCKET.get());
             Bucketable.saveDefaultDataToBucketTag(frog, bucket);
             ItemStack itemstack2 = ItemUtils.createFilledResult(itemStack ,player, bucket, false);
             player.setItemInHand(hand, itemstack2);
             entity.discard();
+            return InteractionResult.SUCCESS;
         }
         //Slimes
         if (itemStack.getItem() == GLASS_BOTTLE && entity.isAlive() && entity instanceof Slime slime) {
@@ -135,7 +125,7 @@ public class ModEvents {
                     compoundTag.putInt("Anger", bee.getRemainingPersistentAngerTime());
                     compoundTag.putInt("Age", bee.getAge());
                     compoundTag.putFloat("Health", bee.getHealth());
-                    if (bee.getPersistentAngerTarget() != null) compoundTag.putUUID("AngryAt", bee.getPersistentAngerTarget());
+                    //compoundTag.putUUID("AngryAt", bee.getPersistentAngerTarget());
                 });
                 itemStack.shrink(1);
                 player.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
