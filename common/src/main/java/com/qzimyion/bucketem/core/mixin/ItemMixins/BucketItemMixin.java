@@ -1,5 +1,7 @@
 package com.qzimyion.bucketem.core.mixin.ItemMixins;
 
+import dev.architectury.injectables.annotations.PlatformOnly;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
@@ -12,21 +14,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(BucketItem.class)
 public class BucketItemMixin {
 
-    @Inject(at = @At("RETURN"), method = "getEmptySuccessItem", cancellable = true)
+    @PlatformOnly("fabric")
+    @Inject(at = @At("TAIL"), method = "getEmptySuccessItem", cancellable = true)
     private static void getEmptySuccessItem(ItemStack itemStack, Player player, CallbackInfoReturnable<ItemStack> cir){
-        if (!player.getAbilities().instabuild) {
-            if (itemStack.getCount() > 1) {
-                itemStack.shrink(1);
-                ItemStack emptyBucket = new ItemStack(Items.BUCKET);
-                if (!player.getInventory().add(emptyBucket)) {
-                    player.drop(emptyBucket, false);
-                }
-                cir.setReturnValue(itemStack);
-            } else {
-                cir.setReturnValue(new ItemStack(Items.BUCKET));
+        InteractionHand hand = player.getUsedItemHand();
+        ItemStack stack = player.getItemInHand(hand);
+        if (!player.hasInfiniteMaterials() && stack.getCount() > 1) {
+            stack.shrink(1);
+            ItemStack emptyBucket = new ItemStack(Items.BUCKET);
+            if (!player.getInventory().add(emptyBucket)) {
+                player.drop(emptyBucket, false);
             }
-        } else {
-            cir.setReturnValue(itemStack.copy());
+            cir.setReturnValue(stack);
         }
     }
 }

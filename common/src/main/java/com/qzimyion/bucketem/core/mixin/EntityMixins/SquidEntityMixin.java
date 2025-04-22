@@ -16,11 +16,9 @@ import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
-@Debug(export = true)
 @Mixin(Squid.class)
 @SuppressWarnings("deprecation")
 public abstract class SquidEntityMixin extends WaterAnimal implements Bucketable {

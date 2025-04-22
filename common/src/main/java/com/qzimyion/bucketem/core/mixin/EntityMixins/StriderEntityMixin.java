@@ -37,7 +37,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Optional;
 
 @SuppressWarnings("deprecation")
-@Debug(export = true)
 @Mixin(Strider.class)
 public abstract class StriderEntityMixin extends Animal implements Bucketable {
 

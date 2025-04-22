@@ -28,7 +28,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
 @SuppressWarnings("deprecation")
-@Debug(export = true)
 @Mixin(Endermite.class)
 public abstract class EndermiteEntityMixin extends Monster implements Bucketable {
 

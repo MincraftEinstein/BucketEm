@@ -1,13 +1,11 @@
 package com.qzimyion.bucketem.core.mixin.EntityMixins;
 
 import com.qzimyion.bucketem.core.registry.ModItems;
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import java.util.Optional;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.nbt.CompoundTag;
@@ -31,7 +29,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
 @SuppressWarnings("deprecation")
-@Debug(export = true)
 @Mixin(Vex.class)
 public abstract class VexEntityMixin extends Monster implements Bucketable {
 

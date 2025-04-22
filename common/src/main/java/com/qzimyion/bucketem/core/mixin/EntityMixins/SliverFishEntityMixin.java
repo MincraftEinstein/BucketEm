@@ -1,7 +1,6 @@
 package com.qzimyion.bucketem.core.mixin.EntityMixins;
 
 import com.qzimyion.bucketem.core.registry.ModItems;
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
@@ -27,7 +26,6 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
-@Debug(export = true)
 @Mixin(Silverfish.class)
 @SuppressWarnings("deprecation")
 public abstract class SliverFishEntityMixin extends Monster implements Bucketable {
