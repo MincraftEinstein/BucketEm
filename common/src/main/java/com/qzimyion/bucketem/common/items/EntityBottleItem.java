@@ -25,7 +25,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class EntityBottleItem extends Item {
     private final EntityType<?> getType;
