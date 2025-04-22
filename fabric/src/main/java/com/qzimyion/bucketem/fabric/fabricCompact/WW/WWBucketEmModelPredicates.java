@@ -42,7 +42,7 @@ public class WWBucketEmModelPredicates {
 //            return texture == JellyfishVariants.PINK ? 0f : 1f;
 //        });
 //        //Jellyfish age
-//        event.register(WWItems.JELLYFISH_BUCKET, ResourceLocation.parse("age"), (itemStack, clientLevel, livingEntity, i) -> {
+//        event.register(WWItems.JELLYFISH_BUCKET, ResourceLocation.parse("age"), (itemStack, clientLevel, livingEntity, layer) -> {
 //            AtomicBoolean ageBL = new AtomicBoolean(false);
 //            CustomData.update(DataComponents.BUCKET_ENTITY_DATA, itemStack, nbt -> {
 //                nbt.get("age");

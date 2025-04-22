@@ -10,9 +10,9 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.monster.MagmaCube;
 import net.minecraft.world.entity.monster.Slime;
@@ -62,7 +62,7 @@ public class EntityBottleItem extends Item {
             if (!Objects.requireNonNull(context.getPlayer()).getAbilities().instabuild){
                 context.getPlayer().setItemInHand(context.getHand(), this.storeageItem.getDefaultInstance());
             }
-            Entity entity = entitytype.spawn((ServerLevel) world, itemStack, context.getPlayer(), blockPos1, MobSpawnType.BUCKET, true, !Objects.equals(blockPos, blockPos1) && direction == Direction.UP);
+            Entity entity = entitytype.spawn((ServerLevel) world, itemStack, context.getPlayer(), blockPos1, EntitySpawnReason.BUCKET, true, !Objects.equals(blockPos, blockPos1) && direction == Direction.UP);
             if (entity instanceof Mob){
                 ((Mob) entity).setPersistenceRequired();
             }
@@ -71,14 +71,14 @@ public class EntityBottleItem extends Item {
                 int size = 1;
                 if (entity instanceof Bee bee) {
                     int anger = compoundTag.contains("Anger") ? compoundTag.getInt("Anger") : 0;
-//                    UUID angryAt = compoundTag.getUUID("AngryAt");;
-//                    if (compoundTag.contains("AngryAt")){
-//                        angryAt = compoundTag.getUUID("AngryAt");
-//                    }
-//                    else{
-//                        assert bee.getPersistentAngerTarget() != null;
-//                        compoundTag.putUUID("AngryAt", bee.getPersistentAngerTarget());
-//                    }
+                    UUID angryAt = compoundTag.getUUID("AngryAt");;
+                    if (compoundTag.contains("AngryAt")){
+                        angryAt = compoundTag.getUUID("AngryAt");
+                    }
+                    else{
+                        assert bee.getPersistentAngerTarget() != null;
+                        compoundTag.putUUID("AngryAt", bee.getPersistentAngerTarget());
+                    }
                     int age = compoundTag.contains("Age") ? compoundTag.getInt("Age") : 0;
                     float health = compoundTag.contains("Health") ? compoundTag.getFloat("Health") : 10.0F;
                     boolean nectar = compoundTag.contains("HasNectar") && compoundTag.getBoolean("HasNectar");
@@ -87,7 +87,7 @@ public class EntityBottleItem extends Item {
                     bee.setHasStung(stung);
                     bee.setAge(age);
                     bee.setRemainingPersistentAngerTime(anger);
-                    //bee.setPersistentAngerTarget(angryAt);
+                    bee.setPersistentAngerTarget(angryAt);
                     bee.setHealth(health);
                     bee.setPersistenceRequired();
                 }

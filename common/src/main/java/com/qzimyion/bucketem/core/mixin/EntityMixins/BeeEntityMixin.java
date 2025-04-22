@@ -12,9 +12,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bee;
@@ -109,8 +109,8 @@ public abstract class BeeEntityMixin extends Animal implements Bucketable {
     }
 
     @Override
-    public @NotNull SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
-        if (mobSpawnType == MobSpawnType.BUCKET) {
+    public @NotNull SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, EntitySpawnReason mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
+        if (mobSpawnType == EntitySpawnReason.BUCKET) {
             assert spawnGroupData != null;
             return spawnGroupData;
         }
@@ -141,7 +141,7 @@ public abstract class BeeEntityMixin extends Animal implements Bucketable {
                 CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer)player, itemStack2);
             }
             entity.discard();
-            return Optional.of(InteractionResult.sidedSuccess(world.isClientSide));
+            return Optional.of(InteractionResult.SUCCESS);
         }
         return Optional.empty();
     }

@@ -1,10 +1,8 @@
 package com.qzimyion.bucketem.neoforge;
 
 import com.qzimyion.bucketem.BucketEmCommon;
-import com.qzimyion.bucketem.client.BucketEmCommonClient;
 import com.qzimyion.bucketem.core.registry.DispenserBehaviorRegistry;
 import com.qzimyion.bucketem.core.registry.ModEvents;
-import com.qzimyion.bucketem.platform.PlatformHelper;
 import com.qzimyion.bucketem.platform.neoforge.PlatformHelperImpl;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -24,9 +22,9 @@ public final class BucketemNeoForge {
         PlatformHelperImpl.startRegistering(bus);
         BucketEmCommon.init();
         bus.addListener(this::dispenserReg);
-        if (PlatformHelper.getPhysicalSide().isClient()){
-            BucketEmCommonClient.init();
-        }
+//        if (PlatformHelper.getPhysicalSide().isClient()){
+//            BucketEmCommonClient.init();
+//        }
     }
 
     public void dispenserReg(final FMLCommonSetupEvent event) {

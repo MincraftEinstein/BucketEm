@@ -12,7 +12,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.GlowSquid;
 import net.minecraft.world.entity.animal.Bucketable;
-import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.entity.animal.Squid;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -26,12 +26,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @SuppressWarnings("deprecation")
 @Debug(export = true)
 @Mixin(GlowSquid.class)
-public abstract class GlowSquidEntityMixin extends WaterAnimal implements Bucketable {
+public abstract class GlowSquidEntityMixin extends Squid implements Bucketable {
 
     @Unique
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(GlowSquidEntityMixin.class, EntityDataSerializers.BOOLEAN);
 
-    protected GlowSquidEntityMixin(EntityType<? extends WaterAnimal> entityType, Level world) {
+    protected GlowSquidEntityMixin(EntityType<? extends Squid> entityType, Level world) {
         super(entityType, world);
     }
 

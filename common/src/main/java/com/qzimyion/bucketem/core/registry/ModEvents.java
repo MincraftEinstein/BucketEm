@@ -3,7 +3,6 @@ package com.qzimyion.bucketem.core.registry;
 import dev.architectury.event.events.common.LootEvent;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -34,7 +33,7 @@ import static com.qzimyion.bucketem.core.registry.ModItems.*;
 import static net.minecraft.world.item.Items.*;
 
 
-@SuppressWarnings({"deprecation", "OptionalGetWithoutIsPresent"})
+@SuppressWarnings({"deprecation"})
 public class ModEvents {
 
     public static void LootTableEvent(){
@@ -66,9 +65,8 @@ public class ModEvents {
         //Frog buckets
         if (itemStack.getItem() == WATER_BUCKET && entity.isAlive() && entity instanceof Frog frog){
             player.playSound(SoundEvents.BUCKET_FILL_TADPOLE, 1.0f, 1.0f);
-            Holder<FrogVariant> variantHolderTemperate = level.registryAccess().registryOrThrow(Registries.FROG_VARIANT).getHolder(FrogVariant.TEMPERATE).get();
-            Holder<FrogVariant> variantHolderWarm = level.registryAccess().registryOrThrow(Registries.FROG_VARIANT).getHolder(FrogVariant.WARM).get();
-            ItemStack bucket = frog.getVariant() == variantHolderTemperate ? new ItemStack(TEMPERATE_FROG_BUCKET.get()) : frog.getVariant() == variantHolderWarm ? new ItemStack(TROPICAL_FROG_BUCKET.get()) : new ItemStack(TUNDRA_FROG_BUCKET.get());
+            Holder<FrogVariant> variantHolder = frog.getVariant();
+            ItemStack bucket = variantHolder.is(FrogVariant.TEMPERATE) ? new ItemStack(TEMPERATE_FROG_BUCKET.get()) : variantHolder.is(FrogVariant.WARM) ? new ItemStack(TROPICAL_FROG_BUCKET.get()) : new ItemStack(TUNDRA_FROG_BUCKET.get());
             Bucketable.saveDefaultDataToBucketTag(frog, bucket);
             ItemStack itemstack2 = ItemUtils.createFilledResult(itemStack ,player, bucket, false);
             player.setItemInHand(hand, itemstack2);
@@ -78,9 +76,8 @@ public class ModEvents {
         //Dry variant
         if (itemStack.getItem() == BUCKET && entity.isAlive() && entity instanceof Frog frog){
             player.playSound(SoundEvents.BUCKET_FILL_TADPOLE, 1.0f, 1.0f);
-            Holder<FrogVariant> variantHolderTemperate = level.registryAccess().registryOrThrow(Registries.FROG_VARIANT).getHolder(FrogVariant.TEMPERATE).get();
-            Holder<FrogVariant> variantHolderWarm = level.registryAccess().registryOrThrow(Registries.FROG_VARIANT).getHolder(FrogVariant.WARM).get();
-            ItemStack bucket = frog.getVariant() == variantHolderTemperate ? new ItemStack(DRY_TEMPERATE_FROG_BUCKET.get()) : frog.getVariant() == variantHolderWarm ? new ItemStack(DRY_TROPICAL_FROG_BUCKET.get()) : new ItemStack(DRY_TUNDRA_FROG_BUCKET.get());
+            Holder<FrogVariant> variantHolder = frog.getVariant();
+            ItemStack bucket = variantHolder.is(FrogVariant.TEMPERATE) ? new ItemStack(TEMPERATE_FROG_BUCKET.get()) : variantHolder.is(FrogVariant.WARM) ? new ItemStack(TROPICAL_FROG_BUCKET.get()) : new ItemStack(TUNDRA_FROG_BUCKET.get());
             Bucketable.saveDefaultDataToBucketTag(frog, bucket);
             ItemStack itemstack2 = ItemUtils.createFilledResult(itemStack ,player, bucket, false);
             player.setItemInHand(hand, itemstack2);
@@ -125,7 +122,7 @@ public class ModEvents {
                     compoundTag.putInt("Anger", bee.getRemainingPersistentAngerTime());
                     compoundTag.putInt("Age", bee.getAge());
                     compoundTag.putFloat("Health", bee.getHealth());
-                    //compoundTag.putUUID("AngryAt", bee.getPersistentAngerTarget());
+                    compoundTag.putUUID("AngryAt", bee.getPersistentAngerTarget());
                 });
                 itemStack.shrink(1);
                 player.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));

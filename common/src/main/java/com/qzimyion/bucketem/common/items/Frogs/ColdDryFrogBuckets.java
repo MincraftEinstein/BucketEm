@@ -4,12 +4,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.registries.VanillaRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.animal.FrogVariant;
 import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.item.BucketItem;
@@ -49,12 +50,11 @@ public class ColdDryFrogBuckets extends BucketItem {
             if (!Objects.requireNonNull(context.getPlayer()).getAbilities().instabuild) {
                 context.getPlayer().setItemInHand(context.getHand(), new ItemStack(Items.BUCKET));
             }
-            Holder<FrogVariant> variantHolder = level.registryAccess().registryOrThrow(Registries.FROG_VARIANT).getHolder(FrogVariant.COLD).get();
-            Frog entity = EntityType.FROG.spawn((ServerLevel) level, itemStack, null, pos, MobSpawnType.BUCKET, true, false);
-            if (entity != null) {
-                entity.setPersistenceRequired();
-                entity.setVariant(variantHolder);
-            }
+            Frog entity = EntityType.FROG.spawn((ServerLevel) level, itemStack, null, pos, EntitySpawnReason.DISPENSER, true, false);
+            assert entity != null;
+            Holder<FrogVariant> variant = VanillaRegistries.createLookup().lookup(Registries.FROG_VARIANT).orElseThrow().getOrThrow(FrogVariant.COLD);
+            entity.setPersistenceRequired();
+            entity.setVariant(variant);
         }
         return InteractionResult.CONSUME;
     }

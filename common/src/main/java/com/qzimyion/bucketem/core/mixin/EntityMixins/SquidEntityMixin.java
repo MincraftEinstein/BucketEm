@@ -10,6 +10,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.AgeableWaterCreature;
 import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.entity.animal.Squid;
 import net.minecraft.world.entity.animal.WaterAnimal;
@@ -23,12 +24,12 @@ import org.spongepowered.asm.mixin.Unique;
 @Debug(export = true)
 @Mixin(Squid.class)
 @SuppressWarnings("deprecation")
-public abstract class SquidEntityMixin extends WaterAnimal implements Bucketable {
+public abstract class SquidEntityMixin extends AgeableWaterCreature implements Bucketable {
 
     @Unique
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(SquidEntityMixin.class, EntityDataSerializers.BOOLEAN);
 
-    protected SquidEntityMixin(EntityType<? extends WaterAnimal> entityType, Level world) {
+    protected SquidEntityMixin(EntityType<? extends AgeableWaterCreature> entityType, Level world) {
         super(entityType, world);
     }
 

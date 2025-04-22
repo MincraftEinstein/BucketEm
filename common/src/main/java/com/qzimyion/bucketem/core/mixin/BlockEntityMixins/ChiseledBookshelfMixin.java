@@ -20,8 +20,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ChiseledBookShelfBlock.class)
 public class ChiseledBookshelfMixin {
 
-    //Please add a tag for Enchanted books Mojang
-
     @Inject(at = @At("RETURN"), method = "addBook")
     private static void addBook(Level world, BlockPos pos, Player player, ChiseledBookShelfBlockEntity blockEntity, ItemStack stack, int slot, CallbackInfo ci){
         SoundEvent soundEvents = stack.is(ModItems.ALLAY_POSSESSED_BOOK.get()) ? SoundEvents.ALLAY_AMBIENT_WITHOUT_ITEM : SoundEvents.ALLAY_AMBIENT_WITH_ITEM;

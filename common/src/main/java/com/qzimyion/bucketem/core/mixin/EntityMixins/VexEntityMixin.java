@@ -118,7 +118,7 @@ public abstract class VexEntityMixin extends Monster implements Bucketable {
                 CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer)player, itemStack2);
             }
             entity.discard();
-            return Optional.of(InteractionResult.sidedSuccess(world.isClientSide));
+            return Optional.of(InteractionResult.SUCCESS);
         }
         return Optional.empty();
     }

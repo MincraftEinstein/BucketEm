@@ -1,20 +1,18 @@
 {
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "bucketem:item/turtle_bucket"
-  },
-  "overrides": [
-    {
-      "predicate": {
-        "age": 0
-      },
+  "model": {
+    "type": "minecraft:condition",
+    "property": "minecraft:custom_model_data",
+    "on_false": {
+      "type": "minecraft:model",
+      "model": "bucketem:item/turtle_bucket"
+    },
+    "on_true": {
+      "type": "minecraft:model",
       "model": "bucketem:item/turtle_bucket_baby"
     },
-    {
-      "predicate": {
-        "age": 1
-      },
-      "model": "bucketem:item/turtle_bucket_adult"
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "bucketem:item/turtle_bucket"
     }
-  ]
+  }
 }

@@ -12,7 +12,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bucketable;
@@ -104,8 +104,8 @@ public abstract class TurtleEntityMixin extends Animal implements Bucketable {
     }
 
     @Inject(at = @At("HEAD"), method = "finalizeSpawn", cancellable = true)
-    public void initialize(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, SpawnGroupData spawnGroupData, CallbackInfoReturnable<SpawnGroupData> cir) {
-        if (mobSpawnType == MobSpawnType.BUCKET) {
+    public void initialize(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, EntitySpawnReason mobSpawnType, SpawnGroupData spawnGroupData, CallbackInfoReturnable<SpawnGroupData> cir) {
+        if (mobSpawnType == EntitySpawnReason.BUCKET) {
             cir.setReturnValue(spawnGroupData);
         }
     }

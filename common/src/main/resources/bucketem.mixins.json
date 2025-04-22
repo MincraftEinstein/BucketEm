@@ -14,14 +14,12 @@
     "EntityMixins.TurtleEntityMixin",
     "EntityMixins.VexEntityMixin",
     "ItemMixins.BucketItemMixin",
-    "ItemMixins.EntityBucketItemAccessor",
-    "ItemMixins.ItemsMixin",
-    "ItemMixins.MilkBucketItemMixin",
     "ItemMixins.SolidBucketItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
+    "ItemMixins.ItemTintSourcesMixin"
   ]
 }

@@ -3,20 +3,20 @@ package com.qzimyion.bucketem.common.items.Frogs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.registries.VanillaRegistries;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.animal.FrogVariant;
 import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("OptionalGetWithoutIsPresent")
+
 public class WarmFrogBuckets extends TemperateFrogBuckets {
     public WarmFrogBuckets(Fluid fluid, Properties properties) {
         super(fluid, properties);
@@ -32,11 +32,11 @@ public class WarmFrogBuckets extends TemperateFrogBuckets {
 
     @Override
     public void spawnEntity(ServerLevel level, ItemStack stack, BlockPos pos){
-        Holder<FrogVariant> variantHolder = level.registryAccess().registryOrThrow(Registries.FROG_VARIANT).getHolder(FrogVariant.WARM).get();
-        Frog entity = EntityType.FROG.spawn(level, stack, null, pos, MobSpawnType.BUCKET, true, false);
+        Frog entity = EntityType.FROG.spawn(level, stack, null, pos, EntitySpawnReason.BUCKET, true, false);
+        Holder<FrogVariant> variant = VanillaRegistries.createLookup().lookup(Registries.FROG_VARIANT).orElseThrow().getOrThrow(FrogVariant.WARM);
         if (entity != null) {
             entity.setPersistenceRequired();
-            entity.setVariant(variantHolder);
+            entity.setVariant(variant);
         }
     }
 }

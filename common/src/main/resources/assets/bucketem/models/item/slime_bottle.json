@@ -1,20 +1,19 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "bucketem:item/slime_bottle"
-  },
-  "overrides": [
-    {
-      "predicate": {
-        "slime_chunk": 0
-      },
+  "model": {
+    "type": "minecraft:condition",
+    "component": "bucketem:slime_chunk_component",
+    "property": "minecraft:custom_model_data",
+    "on_false": {
+      "type": "minecraft:model",
       "model": "bucketem:item/slime_bottle"
     },
-    {
-      "predicate": {
-        "slime_chunk": 1
-      },
+    "on_true": {
+      "type": "minecraft:model",
       "model": "bucketem:item/slime_bottle_happy"
+    },
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "bucketem:item/slime_bottle"
     }
-  ]
+  }
 }

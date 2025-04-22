@@ -13,11 +13,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ItemBasedSteering;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.entity.monster.Strider;
@@ -128,8 +124,8 @@ public abstract class StriderEntityMixin extends Animal implements Bucketable {
     }
 
     @Inject(at = @At("HEAD"), method = "finalizeSpawn", cancellable = true)
-    public void initialize(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, SpawnGroupData spawnGroupData, CallbackInfoReturnable<SpawnGroupData> cir) {
-        if (mobSpawnType == MobSpawnType.BUCKET) {
+    public void initialize(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, EntitySpawnReason mobSpawnType, SpawnGroupData spawnGroupData, CallbackInfoReturnable<SpawnGroupData> cir) {
+        if (mobSpawnType == EntitySpawnReason.BUCKET) {
             cir.setReturnValue(spawnGroupData);
         }
     }
@@ -148,7 +144,7 @@ public abstract class StriderEntityMixin extends Animal implements Bucketable {
                 CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer)player, itemStack2);
             }
             entity.discard();
-            return Optional.of(InteractionResult.sidedSuccess(world.isClientSide));
+            return Optional.of(InteractionResult.SUCCESS);
         }
         return Optional.empty();
     }

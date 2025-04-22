@@ -1,78 +1,88 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "minecraft:item/axolotl_bucket"
-  },
-  "overrides": [
-    {
-      "predicate": {
-        "age": 0,
-        "variant": 0
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:component",
+    "component": "minecraft:axolotl/variant",
+    "cases": [
+      {
+        "when": "lucy",
+        "model": {
+          "type": "minecraft:condition",
+          "property": "minecraft:custom_model_data",
+          "on_false": {
+            "type": "minecraft:model",
+            "model": "minecraft:item/axolotl_bucket"
+          },
+          "on_true": {
+            "type": "minecraft:model",
+            "model": "minecraft:item/axolotl_bucket_baby"
+          }
+        }
       },
-      "model": "minecraft:item/axolotl_bucket_baby"
-    },
-    {
-      "predicate": {
-        "age": 1,
-        "variant": 0
+      {
+        "when": "wild",
+        "model": {
+          "type": "minecraft:condition",
+          "property": "minecraft:custom_model_data",
+          "on_false": {
+              "type": "minecraft:model",
+              "model": "cellulose:item/brown_axolotl_bucket"
+          },
+          "on_true": {
+              "type": "minecraft:model",
+              "model": "cellulose:item/brown_axolotl_bucket_baby"
+          }
+        }
       },
+      {
+        "when": "gold",
+        "model": {
+          "type": "minecraft:condition",
+          "property": "minecraft:custom_model_data",
+          "on_false": {
+            "type": "minecraft:model",
+            "model": "cellulose:item/gold_axolotl_bucket"
+          },
+          "on_true": {
+            "type": "minecraft:model",
+            "model": "cellulose:item/gold_axolotl_bucket_baby"
+          }
+        }
+      },
+      {
+        "when": "cyan",
+        "model": {
+          "type": "minecraft:condition",
+          "property": "minecraft:custom_model_data",
+          "on_false": {
+            "type": "minecraft:model",
+            "model": "cellulose:item/cyan_axolotl_bucket"
+          },
+          "on_true": {
+            "type": "minecraft:model",
+            "model": "cellulose:item/cyan_axolotl_bucket_baby"
+          }
+        }
+      },
+      {
+        "when": "blue",
+        "model": {
+          "type": "minecraft:condition",
+          "property": "minecraft:custom_model_data",
+          "on_false": {
+            "type": "minecraft:model",
+            "model": "cellulose:item/blue_axolotl_bucket"
+          },
+          "on_true": {
+            "type": "minecraft:model",
+            "model": "cellulose:item/blue_axolotl_bucket_baby"
+          }
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
       "model": "minecraft:item/axolotl_bucket"
-    },
-    {
-      "predicate": {
-        "age": 0,
-        "variant": 0.1
-      },
-      "model": "bucketem:item/brown_axolotl_bucket_baby"
-    },
-    {
-      "predicate": {
-        "age": 1,
-        "variant": 0.1
-      },
-      "model": "bucketem:item/brown_axolotl_bucket"
-    },
-    {
-      "predicate": {
-        "age": 0,
-        "variant": 0.2
-      },
-      "model": "bucketem:item/gold_axolotl_bucket_baby"
-    },
-    {
-      "predicate": {
-        "age": 1,
-        "variant": 0.2
-      },
-      "model": "bucketem:item/gold_axolotl_bucket"
-    },
-    {
-      "predicate": {
-        "age": 0,
-        "variant": 0.3
-      },
-      "model": "bucketem:item/cyan_axolotl_bucket_baby"
-    },
-    {
-      "predicate": {
-        "age": 1,
-        "variant": 0.3
-      },
-      "model": "bucketem:item/cyan_axolotl_bucket"
-    },
-    {
-      "predicate": {
-        "age": 0,
-        "variant": 0.4
-      },
-      "model": "bucketem:item/blue_axolotl_bucket_baby"
-    },
-    {
-      "predicate": {
-        "age": 1,
-        "variant": 0.4
-      },
-      "model": "bucketem:item/blue_axolotl_bucket"
     }
-  ]
+  }
 }

@@ -12,9 +12,8 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(SolidBucketItem.class)
 public class SolidBucketItemMixin extends BlockItem {
 
-
     public SolidBucketItemMixin(Block block, Properties properties) {
-        super(block, properties);
+        super(block, properties.stacksTo(16));
     }
 
     @Override
