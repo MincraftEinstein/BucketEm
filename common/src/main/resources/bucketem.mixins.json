@@ -5,6 +5,7 @@
   "minVersion": "0.8",
   "mixins": [
     "BlockEntityMixins.ChiseledBookshelfMixin",
+    "BlockEntityMixins.GrindStoneMenuMixin",
     "EntityMixins.BeeEntityMixin",
     "EntityMixins.EndermiteEntityMixin",
     "EntityMixins.GlowSquidEntityMixin",

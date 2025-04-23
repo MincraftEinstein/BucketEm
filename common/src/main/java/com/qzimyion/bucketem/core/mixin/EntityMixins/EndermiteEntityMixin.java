@@ -1,7 +1,6 @@
 package com.qzimyion.bucketem.core.mixin.EntityMixins;
 
 import com.qzimyion.bucketem.core.registry.ModItems;
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
@@ -40,6 +39,7 @@ public abstract class EndermiteEntityMixin extends Monster implements Bucketable
 
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
         builder.define(FROM_BOTTLE, false);
     }
 
