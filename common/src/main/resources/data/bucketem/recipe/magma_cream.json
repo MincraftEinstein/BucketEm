@@ -3,11 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "bucketem:slime_bottle"
+      "item": "bucketem:magma_bottle"
     }
   ],
   "result": {
     "count": 3,
-    "item": "minecraft:slime_ball"
+    "id": "minecraft:magma_cream"
   }
 }

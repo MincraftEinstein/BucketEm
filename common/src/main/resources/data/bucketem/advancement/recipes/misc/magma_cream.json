@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:slime_ball"
-            ]
+            "items": "minecraft:magma_cream"
           }
         ]
       },
@@ -15,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:slime_ball"
+        "recipe": "minecraft:magma_cream"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:slime_ball"
+      "minecraft:magma_cream"
     ]
   }
 }

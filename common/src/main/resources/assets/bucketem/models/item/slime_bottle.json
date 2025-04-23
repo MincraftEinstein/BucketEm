@@ -2,19 +2,5 @@
   "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "bucketem:item/slime_bottle"
-  },
-  "overrides": [
-    {
-      "predicate": {
-        "slime_chunk": 0
-      },
-      "model": "bucketem:item/slime_bottle"
-    },
-    {
-      "predicate": {
-        "slime_chunk": 1
-      },
-      "model": "bucketem:item/slime_bottle_happy"
-    }
-  ]
+  }
 }
