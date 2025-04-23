@@ -1,0 +1,88 @@
+{
+  "parent": "minecraft:adventure/slime_ranching",
+  "criteria": {
+    "got_bee_bottle": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bucketem:bee_bottle"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "got_endermite_bottle": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bucketem:endermite_bottle"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "got_magma_cube_bottle": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bucketem:magma_bottle"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "got_silverfish_bottle": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bucketem:silverfish_bottle"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "got_slime_bottle": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bucketem:slime_bottle"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "bucketem.advancements.adventure.entomology.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "bucketem:bee_bottle"
+    },
+    "title": {
+      "translate": "bucketem.advancements.adventure.entomology.title"
+    }
+  },
+  "requirements": [
+    [
+      "got_silverfish_bottle"
+    ],
+    [
+      "got_endermite_bottle"
+    ],
+    [
+      "got_slime_bottle"
+    ],
+    [
+      "got_magma_cube_bottle"
+    ],
+    [
+      "got_bee_bottle"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": true
+}

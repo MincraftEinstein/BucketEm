@@ -1,0 +1,46 @@
+{
+  "parent": "minecraft:adventure/bottling",
+  "criteria": {
+    "got_magma_cube_bottle": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bucketem:magma_bottle"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "got_slime_bottle": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bucketem:slime_bottle"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "bucketem.advancements.adventure.slime_ranching.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "bucketem:slime_bottle"
+    },
+    "title": {
+      "translate": "bucketem.advancements.adventure.slime_ranching.title"
+    }
+  },
+  "requirements": [
+    [
+      "got_slime_bottle"
+    ],
+    [
+      "got_magma_cube_bottle"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

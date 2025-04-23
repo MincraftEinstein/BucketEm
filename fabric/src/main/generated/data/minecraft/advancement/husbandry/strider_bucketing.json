@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:husbandry/tactical_fishing",
+  "criteria": {
+    "strider_bucket": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bucketem:strider_bucket"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "bucketem.advancements.husbandry.strider_bucketing.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "bucketem:strider_bucket"
+    },
+    "title": {
+      "translate": "bucketem.advancements.husbandry.strider_bucketing.title"
+    }
+  },
+  "requirements": [
+    [
+      "strider_bucket"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

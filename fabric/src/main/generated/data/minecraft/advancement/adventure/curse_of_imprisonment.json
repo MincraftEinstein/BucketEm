@@ -1,0 +1,45 @@
+{
+  "parent": "minecraft:adventure/root",
+  "criteria": {
+    "got_allay_possessed_book": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bucketem:allay_possessed_book"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "got_vex_possessed_book": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bucketem:vex_possessed_book"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "bucketem.advancements.adventure.curse_of_imprisonment.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "bucketem:allay_possessed_book"
+    },
+    "title": {
+      "translate": "bucketem.advancements.adventure.curse_of_imprisonment.title"
+    }
+  },
+  "requirements": [
+    [
+      "got_allay_possessed_book",
+      "got_vex_possessed_book"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

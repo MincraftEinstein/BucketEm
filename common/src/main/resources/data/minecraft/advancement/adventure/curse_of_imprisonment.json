@@ -1,25 +1,21 @@
 {
   "parent": "minecraft:adventure/root",
   "criteria": {
-    "got_magma_cube_bottle": {
+    "got_allay_possessed_book": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "bucketem:magma_bottle"
-            ]
+            "items": "bucketem:allay_possessed_book"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "got_slime_bottle": {
+    "got_vex_possessed_book": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "bucketem:slime_bottle"
-            ]
+            "items": "bucketem:vex_possessed_book"
           }
         ]
       },
@@ -28,21 +24,21 @@
   },
   "display": {
     "description": {
-      "translate": "Bottle up slimes and magma cubes"
+      "translate": "bucketem.advancements.adventure.curse_of_imprisonment.description"
     },
+    "frame": "goal",
     "icon": {
-      "item": "bucketem:slime_bottle"
+      "count": 1,
+      "id": "bucketem:allay_possessed_book"
     },
     "title": {
-      "translate": "Slime Rancher"
+      "translate": "bucketem.advancements.adventure.curse_of_imprisonment.title"
     }
   },
   "requirements": [
     [
-      "got_slime_bottle"
-    ],
-    [
-      "got_magma_cube_bottle"
+      "got_allay_possessed_book",
+      "got_vex_possessed_book"
     ]
   ],
   "sends_telemetry_event": true

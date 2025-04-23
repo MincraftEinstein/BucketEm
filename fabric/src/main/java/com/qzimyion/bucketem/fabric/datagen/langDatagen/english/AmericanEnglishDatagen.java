@@ -37,5 +37,16 @@ public class AmericanEnglishDatagen extends FabricLanguageProvider {
         translationBuilder.add(ENDERMITE_BOTTLE.get(), "Endermite in a Bottle");
         translationBuilder.add(SLIME_BOTTLE.get(), "Slime in a Bottle");
         translationBuilder.add(MAGMA_CUBE_BOTTLE.get(), "Magma Cube in a Bottle");
+        //Advancements
+        translationBuilder.add("bucketem.advancements.husbandry.strider_bucketing.title", "Hardcore Bucketing");
+        translationBuilder.add("bucketem.advancements.husbandry.strider_bucketing.description", "Bucket up a Strider using a lava bucket");
+        translationBuilder.add("bucketem.advancements.adventure.bottling.title", "Critter Collector");
+        translationBuilder.add("bucketem.advancements.adventure.bottling.description", "Bottle up a mob using a glass bottle");
+        translationBuilder.add("bucketem.advancements.adventure.slime_ranching.title", "Slime Rancher");
+        translationBuilder.add("bucketem.advancements.adventure.slime_ranching.description", "Capture both a slime and a magma cube inside a glass bottle");
+        translationBuilder.add("bucketem.advancements.adventure.entomology.title", "Entomology");
+        translationBuilder.add("bucketem.advancements.adventure.entomology.description", "Capture all the mobs that can be bottled");
+        translationBuilder.add("bucketem.advancements.adventure.curse_of_imprisonment.title", "Curse of Imprisonment");
+        translationBuilder.add("bucketem.advancements.adventure.curse_of_imprisonment.description", "Capture an Allay or a Vex using a book");
     }
 }
