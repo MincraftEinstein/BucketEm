@@ -127,7 +127,6 @@ public class ModEvents {
                     compoundTag.putFloat("Health", bee.getHealth());
                     //compoundTag.putUUID("AngryAt", bee.getPersistentAngerTarget());
                 });
-                itemStack.shrink(1);
                 player.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
                 entity.discard();
                 Bucketable.saveDefaultDataToBucketTag(bee, bottleItem);
