@@ -1,4 +1,4 @@
-package com.qzimyion.bucketem.core.mixin.BlockEntityMixins;
+package com.qzimyion.bucketem.core.mixin.block_entities;
 
 import com.qzimyion.bucketem.core.registry.ModItems;
 import net.minecraft.core.BlockPos;
@@ -10,23 +10,21 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.ChiseledBookShelfBlock;
 import net.minecraft.world.level.block.entity.ChiseledBookShelfBlockEntity;
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Debug(export = true)
 @Mixin(ChiseledBookShelfBlock.class)
 public class ChiseledBookshelfMixin {
 
-    //Please add a tag for Enchanted books Mojang
-
     @Inject(at = @At("RETURN"), method = "addBook")
-    private static void addBook(Level world, BlockPos pos, Player player, ChiseledBookShelfBlockEntity blockEntity, ItemStack stack, int slot, CallbackInfo ci){
-        SoundEvent soundEvents = stack.is(ModItems.ALLAY_POSSESSED_BOOK.get()) ? SoundEvents.ALLAY_AMBIENT_WITHOUT_ITEM : SoundEvents.ALLAY_AMBIENT_WITH_ITEM;
-        SoundEvent soundEvents1 = stack.is(ModItems.VEX_POSSESSED_BOOK.get()) ? SoundEvents.VEX_AMBIENT : SoundEvents.VEX_HURT;
-        world.playSound(null, pos, soundEvents, SoundSource.BLOCKS, 1.0f, 1.0f);
-        world.playSound(null, pos, soundEvents1, SoundSource.BLOCKS, 1.0f, 1.0f);
+    private static void addBook(Level level, BlockPos pos, Player player, ChiseledBookShelfBlockEntity blockEntity, ItemStack stack, int slot, CallbackInfo ci) {
+        if (!level.isClientSide) {
+            SoundEvent soundEvent = stack.is(ModItems.ALLAY_POSSESSED_BOOK.get()) ? SoundEvents.ALLAY_AMBIENT_WITH_ITEM : stack.is(ModItems.VEX_POSSESSED_BOOK.get()) ? SoundEvents.VEX_AMBIENT : null;
+            if (soundEvent != null) {
+                level.playSound(null, pos, soundEvent, SoundSource.BLOCKS, 0.5F, 1);
+            }
+        }
     }
 }

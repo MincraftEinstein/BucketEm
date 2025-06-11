@@ -4,7 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "mixins": [
-    "BlockEntityMixins.ChiseledBookshelfMixin",
+    "block_entities.ChiseledBookshelfMixin",
     "EntityMixins.BeeEntityMixin",
     "EntityMixins.EndermiteEntityMixin",
     "EntityMixins.GlowSquidEntityMixin",
