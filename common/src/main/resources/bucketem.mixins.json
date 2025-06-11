@@ -14,10 +14,10 @@
     "EntityMixins.StriderEntityMixin",
     "EntityMixins.TurtleEntityMixin",
     "EntityMixins.VexEntityMixin",
-    "ItemMixins.BucketItemMixin",
-    "ItemMixins.ItemsMixin",
-    "ItemMixins.MilkBucketItemMixin",
-    "ItemMixins.SolidBucketItemMixin"
+    "items.BucketItemMixin",
+    "items.ItemsMixin",
+    "items.MilkBucketItemMixin",
+    "items.SolidBucketItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1

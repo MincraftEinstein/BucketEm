@@ -1,4 +1,4 @@
-package com.qzimyion.bucketem.core.mixin.ItemMixins;
+package com.qzimyion.bucketem.core.mixin.items;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import net.minecraft.world.InteractionHand;

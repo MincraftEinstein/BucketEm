@@ -1,4 +1,4 @@
-package com.qzimyion.bucketem.core.mixin.ItemMixins;
+package com.qzimyion.bucketem.core.mixin.items;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
