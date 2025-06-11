@@ -1,32 +1,29 @@
 package com.qzimyion.bucketem.core.mixin.ItemMixins;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BucketItem.class)
 public class BucketItemMixin {
 
-    @Inject(at = @At("RETURN"), method = "getEmptySuccessItem", cancellable = true)
-    private static void getEmptySuccessItem(ItemStack itemStack, Player player, CallbackInfoReturnable<ItemStack> cir){
+    @ModifyReturnValue(method = "getEmptySuccessItem", at = @At("RETURN"))
+    private static ItemStack getEmptySuccessItem(ItemStack original, ItemStack stack, Player player) {
         if (!player.getAbilities().instabuild) {
-            if (itemStack.getCount() > 1) {
-                itemStack.shrink(1);
+            if (stack.getCount() > 1) {
+                stack.shrink(1);
                 ItemStack emptyBucket = new ItemStack(Items.BUCKET);
                 if (!player.getInventory().add(emptyBucket)) {
                     player.drop(emptyBucket, false);
                 }
-                cir.setReturnValue(itemStack);
-            } else {
-                cir.setReturnValue(new ItemStack(Items.BUCKET));
+                return stack;
             }
-        } else {
-            cir.setReturnValue(itemStack.copy());
+            return new ItemStack(Items.BUCKET);
         }
+        return stack;
     }
 }
