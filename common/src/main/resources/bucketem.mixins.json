@@ -5,7 +5,6 @@
   "minVersion": "0.8",
   "mixins": [
     "block_entities.ChiseledBookshelfMixin",
-    "entities.BeeEntityMixin",
     "entities.MobMixin",
     "entities.MultiEntityMixin",
     "items.BucketItemMixin",
