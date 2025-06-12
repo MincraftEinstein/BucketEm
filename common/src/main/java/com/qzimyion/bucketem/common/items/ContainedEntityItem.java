@@ -67,7 +67,7 @@ public class ContainedEntityItem extends Item {
 
     protected void loadEntity(Entity entity, ItemStack stack) {
         if (entity instanceof Bucketable bucketable) {
-            bucketable.loadFromBucketTag(stack.getTag());
+            bucketable.loadFromBucketTag(stack.getOrCreateTag());
             bucketable.setFromBucket(true);
         }
     }

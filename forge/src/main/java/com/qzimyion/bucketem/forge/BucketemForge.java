@@ -5,7 +5,10 @@ import com.qzimyion.bucketem.client.BucketEmCommonClient;
 import com.qzimyion.bucketem.core.registry.DispenserBehaviorRegistry;
 import com.qzimyion.bucketem.platform.ClientHelper;
 import com.qzimyion.bucketem.platform.PlatformHelper;
+import com.qzimyion.bucketem.util.BuckEmBucketable;
 import dev.architectury.platform.forge.EventBuses;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -29,5 +32,12 @@ public final class BucketemForge {
     @SubscribeEvent
     public static void dispenserReg(FMLCommonSetupEvent event) {
         event.enqueueWork(DispenserBehaviorRegistry::registerDispenserBehavior);
+    }
+
+    @SubscribeEvent
+    public static void onFinalizeSpawn(MobSpawnEvent.FinalizeSpawn event) {
+        if (event.getEntity() instanceof BuckEmBucketable && event.getSpawnType() == MobSpawnType.BUCKET) {
+            event.setCanceled(true);
+        }
     }
 }
