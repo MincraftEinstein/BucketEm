@@ -12,6 +12,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -57,25 +58,8 @@ public class EntityBottleItem extends Item {
                 context.getPlayer().setItemInHand(context.getHand(), this.storeageItem.getDefaultInstance());
             }
             Entity entity = entitytype.spawn((ServerLevel) world, itemStack, context.getPlayer(), blockPos1, MobSpawnType.BUCKET, true, !Objects.equals(blockPos, blockPos1) && direction == Direction.UP);
-            if (entity instanceof Mob){
-                ((Mob) entity).setPersistenceRequired();
-            }
-            CompoundTag nbt = itemStack.getOrCreateTag();
-            if (entity instanceof Bee bee){
-                int anger = nbt.contains("Anger") ? nbt.getInt("Anger") : 0;
-                UUID angryAt = nbt.contains("AngryAt") ? nbt.getUUID("AngryAt") : null;
-                int age = nbt.contains("Age") ? nbt.getInt("Age") : 0;
-                float health = nbt.contains("Health") ? nbt.getFloat("Health") : 10.0F;
-                boolean nectar = nbt.contains("HasNectar") && nbt.getBoolean("HasNectar");
-                boolean stung = nbt.contains("HasStung") && nbt.getBoolean("HasStung");
-
-                bee.setHasNectar(nectar);
-                bee.setHasStung(stung);
-                bee.setAge(age);
-                bee.setRemainingPersistentAngerTime(anger);
-                if (angryAt != null) bee.setPersistentAngerTarget(angryAt);
-                bee.setHealth(health);
-                bee.setPersistenceRequired();
+            if (entity instanceof Mob mob){
+                mob.setPersistenceRequired();
             }
             return InteractionResult.CONSUME;
         }
